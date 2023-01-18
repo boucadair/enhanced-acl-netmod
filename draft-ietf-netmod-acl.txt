@@ -790,7 +790,7 @@ Table of Contents
          "RFC 6991: Common YANG Data Types";
      }
      import ietf-access-control-list {
-       prefix ietf-acl;
+       prefix acl;
        reference
          "RFC 8519: YANG Data Model for Network Access
                     Control Lists (ACLs), Section 4.1";
@@ -817,7 +817,7 @@ Table of Contents
      description
        "This module contains YANG definitions for enhanced ACLs.
 
-        Copyright (c) 2022 IETF Trust and the persons identified as
+        Copyright (c) 2023 IETF Trust and the persons identified as
         authors of the code. All rights reserved.
 
         Redistribution and use in source and binary forms, with or
@@ -986,7 +986,7 @@ Table of Contents
        }
      }
 
-     augment "/ietf-acl:acls" {
+     augment "/acl:acls" {
        description
          "add a new container to store sets (prefix
           sets, port sets, etc";
@@ -1134,8 +1134,8 @@ Table of Contents
        }
      }
 
-     augment "/ietf-acl:acls/ietf-acl:acl/ietf-acl:aces"
-           + "/ietf-acl:ace/ietf-acl:matches" {
+     augment "/acl:acls/acl:acl/acl:aces/acl:ace"
+           + "/acl:matches" {
        description
          "Add a new match types.";
        choice payload {
@@ -1150,8 +1150,8 @@ Table of Contents
        }
      }
 
-     augment "/ietf-acl:acls/ietf-acl:acl/ietf-acl:aces"
-           + "/ietf-acl:ace/ietf-acl:matches/ietf-acl:l3/ietf-acl:ipv4" {
+     augment "/acl:acls/acl:acl/acl:aces"
+           + "/acl:ace/acl:matches/acl:l3/acl:ipv4" {
        description
          "Handle non-initial and initial fragments for IPv4 packets.";
        container ipv4-fragment {
@@ -1182,8 +1182,8 @@ Table of Contents
        }
      }
 
-     augment "/ietf-acl:acls/ietf-acl:acl/ietf-acl:aces"
-           + "/ietf-acl:ace/ietf-acl:matches/ietf-acl:l3/ietf-acl:ipv6" {
+     augment "/acl:acls/acl:acl/acl:aces"
+           + "/acl:ace/acl:matches/acl:l3/acl:ipv6" {
        description
          "Handles non-initial and initial fragments for IPv6 packets.";
        container ipv6-fragment {
@@ -1214,8 +1214,8 @@ Table of Contents
        }
      }
 
-     augment "/ietf-acl:acls/ietf-acl:acl/ietf-acl:aces"
-           + "/ietf-acl:ace/ietf-acl:matches/ietf-acl:l4/ietf-acl:tcp" {
+     augment "/acl:acls/acl:acl/acl:aces"
+           + "/acl:ace/acl:matches/acl:l4/acl:tcp" {
        description
          "Handles TCP flags and port sets.";
        container flags-bitmask {
@@ -1239,8 +1239,8 @@ Table of Contents
        }
      }
 
-     augment "/ietf-acl:acls/ietf-acl:acl/ietf-acl:aces"
-           + "/ietf-acl:ace/ietf-acl:matches/ietf-acl:l4/ietf-acl:udp" {
+     augment "/acl:acls/acl:acl/acl:aces"
+           + "/acl:ace/acl:matches/acl:l4/acl:udp" {
        description
          "Handle UDP port sets.";
        leaf source-udp-port-set {
@@ -1259,8 +1259,8 @@ Table of Contents
        }
      }
 
-     augment "/ietf-acl:acls/ietf-acl:acl/ietf-acl:aces"
-           + "/ietf-acl:ace/ietf-acl:matches/ietf-acl:l4/ietf-acl:icmp" {
+     augment "/acl:acls/acl:acl/acl:aces"
+           + "/acl:ace/acl:matches/acl:l4/acl:icmp" {
        description
          "Handle ICMP type sets.";
        leaf icmp-set {
@@ -1272,12 +1272,12 @@ Table of Contents
        }
      }
 
-     augment "/ietf-acl:acls/ietf-acl:acl/ietf-acl:aces"
-           + "/ietf-acl:ace/ietf-acl:actions" {
+     augment "/acl:acls/acl:acl/acl:aces"
+           + "/acl:ace/acl:actions" {
        description
          "Rate-limit action.";
        leaf rate-limit {
-         when "../ietf-acl:forwarding = 'ietf-acl:accept'" {
+         when "../acl:forwarding = 'acl:accept'" {
            description
              "Rate-limit valid only when accept action is used.";
          }
