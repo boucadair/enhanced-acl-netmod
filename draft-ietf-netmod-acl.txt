@@ -5,9 +5,9 @@
 netmod                                                     O. G. D. Dios
 Internet-Draft                                                S. Barguil
 Intended status: Standards Track                              Telefonica
-Expires: 21 July 2023                                       M. Boucadair
+Expires: 22 July 2023                                       M. Boucadair
                                                                   Orange
-                                                         17 January 2023
+                                                         18 January 2023
 
 
         Extensions to the Access Control Lists (ACLs) YANG Model
@@ -45,7 +45,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 21 July 2023.
+   This Internet-Draft will expire on 22 July 2023.
 
 Copyright Notice
 
@@ -986,7 +986,7 @@ Table of Contents
        }
      }
 
-     augment "/ietf-acl:acls/ietf-acl:acl" {
+     augment "/ietf-acl:acls" {
        description
          "add a new container to store sets (prefix
           sets, port sets, etc";
