@@ -460,8 +460,10 @@ Table of Contents
 
 4.1.  Enhanced ACL
 
+   Figure 5 shows the full enhanced ACL tree:
+
    module: ietf-acl-enh
-     augment /ietf-acl:acls/ietf-acl:acl:
+     augment /acl:acls:
        +--rw defined-sets
           +--rw ipv4-prefix-sets
           |  +--rw prefix-set* [name]
@@ -499,8 +501,7 @@ Table of Contents
                    +--rw type              uint8
                    +--rw code?             uint8
                    +--rw rest-of-header?   binary
-     augment /ietf-acl:acls/ietf-acl:acl/ietf-acl:aces/ietf-acl:ace
-               /ietf-acl:matches:
+     augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:matches:
        +--rw (payload)?
           +--:(prefix-pattern)
              +--rw prefix-pattern {match-on-payload}?
@@ -508,42 +509,41 @@ Table of Contents
                 +--rw offset-end?   uint64
                 +--rw operator?     operator
                 +--rw prefix?       binary
-     augment /ietf-acl:acls/ietf-acl:acl/ietf-acl:aces/ietf-acl:ace
-               /ietf-acl:matches/ietf-acl:l3/ietf-acl:ipv4:
+     augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:matches/acl:l3
+               /acl:ipv4:
        +--rw ipv4-fragment
        |  +--rw operator?   operator
        |  +--rw type?       fragment-type
        +--rw source-ipv4-prefix-list?        leafref
        +--rw destination-ipv4-prefix-list?   leafref
        +--rw next-header-set?                leafref
-     augment /ietf-acl:acls/ietf-acl:acl/ietf-acl:aces/ietf-acl:ace
-               /ietf-acl:matches/ietf-acl:l3/ietf-acl:ipv6:
+     augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:matches/acl:l3
+               /acl:ipv6:
        +--rw ipv6-fragment
        |  +--rw operator?   operator
        |  +--rw type?       fragment-type
        +--rw source-ipv6-prefix-list?        leafref
        +--rw destination-ipv6-prefix-list?   leafref
        +--rw protocol-set?                   leafref
-     augment /ietf-acl:acls/ietf-acl:acl/ietf-acl:aces/ietf-acl:ace
-               /ietf-acl:matches/ietf-acl:l4/ietf-acl:tcp:
+     augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:matches/acl:l4
+               /acl:tcp:
        +--rw flags-bitmask
        |  +--rw operator?   operator
        |  +--rw bitmask?    uint16
        +--rw source-tcp-port-set?
-       |       -> ../../../../defined-sets/port-sets/port-set/name
+       |       -> ../../../../../defined-sets/port-sets/port-set/name
        +--rw destination-tcp-port-set?
-               -> ../../../../defined-sets/port-sets/port-set/name
-     augment /ietf-acl:acls/ietf-acl:acl/ietf-acl:aces/ietf-acl:ace
-               /ietf-acl:matches/ietf-acl:l4/ietf-acl:udp:
+               -> ../../../../../defined-sets/port-sets/port-set/name
+     augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:matches/acl:l4
+               /acl:udp:
        +--rw source-udp-port-set?
-       |       -> ../../../../defined-sets/port-sets/port-set/name
+       |       -> ../../../../../defined-sets/port-sets/port-set/name
        +--rw destination-udp-port-set?
-               -> ../../../../defined-sets/port-sets/port-set/name
-     augment /ietf-acl:acls/ietf-acl:acl/ietf-acl:aces/ietf-acl:ace
-               /ietf-acl:matches/ietf-acl:l4/ietf-acl:icmp:
+               -> ../../../../../defined-sets/port-sets/port-set/name
+     augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:matches/acl:l4
+               /acl:icmp:
        +--rw icmp-set?   leafref
-     augment /ietf-acl:acls/ietf-acl:acl/ietf-acl:aces/ietf-acl:ace
-               /ietf-acl:actions:
+     augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:actions:
        +--rw rate-limit?   decimal64
 
                         Figure 5: Enhanced ACL tree

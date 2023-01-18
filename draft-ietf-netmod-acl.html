@@ -1647,12 +1647,13 @@ logical infrastructure.<a href="#section-3.8-3.4" class="pilcrow">¶</a>
         <h3 id="name-enhanced-acl">
 <a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-enhanced-acl" class="section-name selfRef">Enhanced ACL</a>
         </h3>
+<p id="section-4.1-1"><a href="#enh-acl-tree" class="auto internal xref">Figure 5</a> shows the full enhanced ACL tree:<a href="#section-4.1-1" class="pilcrow">¶</a></p>
 <span id="name-enhanced-acl-tree"></span><div id="enh-acl-tree">
 <figure id="figure-5">
-          <div class="alignLeft art-ascii-art art-text artwork" id="section-4.1-1.1">
+          <div class="alignLeft art-ascii-art art-text artwork" id="section-4.1-2.1">
 <pre>
 module: ietf-acl-enh
-  augment /ietf-acl:acls/ietf-acl:acl:
+  augment /acl:acls:
     +--rw defined-sets
        +--rw ipv4-prefix-sets
        |  +--rw prefix-set* [name]
@@ -1690,8 +1691,7 @@ module: ietf-acl-enh
                 +--rw type              uint8
                 +--rw code?             uint8
                 +--rw rest-of-header?   binary
-  augment /ietf-acl:acls/ietf-acl:acl/ietf-acl:aces/ietf-acl:ace
-            /ietf-acl:matches:
+  augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:matches:
     +--rw (payload)?
        +--:(prefix-pattern)
           +--rw prefix-pattern {match-on-payload}?
@@ -1699,42 +1699,41 @@ module: ietf-acl-enh
              +--rw offset-end?   uint64
              +--rw operator?     operator
              +--rw prefix?       binary
-  augment /ietf-acl:acls/ietf-acl:acl/ietf-acl:aces/ietf-acl:ace
-            /ietf-acl:matches/ietf-acl:l3/ietf-acl:ipv4:
+  augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:matches/acl:l3
+            /acl:ipv4:
     +--rw ipv4-fragment
     |  +--rw operator?   operator
     |  +--rw type?       fragment-type
     +--rw source-ipv4-prefix-list?        leafref
     +--rw destination-ipv4-prefix-list?   leafref
     +--rw next-header-set?                leafref
-  augment /ietf-acl:acls/ietf-acl:acl/ietf-acl:aces/ietf-acl:ace
-            /ietf-acl:matches/ietf-acl:l3/ietf-acl:ipv6:
+  augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:matches/acl:l3
+            /acl:ipv6:
     +--rw ipv6-fragment
     |  +--rw operator?   operator
     |  +--rw type?       fragment-type
     +--rw source-ipv6-prefix-list?        leafref
     +--rw destination-ipv6-prefix-list?   leafref
     +--rw protocol-set?                   leafref
-  augment /ietf-acl:acls/ietf-acl:acl/ietf-acl:aces/ietf-acl:ace
-            /ietf-acl:matches/ietf-acl:l4/ietf-acl:tcp:
+  augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:matches/acl:l4
+            /acl:tcp:
     +--rw flags-bitmask
     |  +--rw operator?   operator
     |  +--rw bitmask?    uint16
     +--rw source-tcp-port-set?
-    |       -&gt; ../../../../defined-sets/port-sets/port-set/name
+    |       -&gt; ../../../../../defined-sets/port-sets/port-set/name
     +--rw destination-tcp-port-set?
-            -&gt; ../../../../defined-sets/port-sets/port-set/name
-  augment /ietf-acl:acls/ietf-acl:acl/ietf-acl:aces/ietf-acl:ace
-            /ietf-acl:matches/ietf-acl:l4/ietf-acl:udp:
+            -&gt; ../../../../../defined-sets/port-sets/port-set/name
+  augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:matches/acl:l4
+            /acl:udp:
     +--rw source-udp-port-set?
-    |       -&gt; ../../../../defined-sets/port-sets/port-set/name
+    |       -&gt; ../../../../../defined-sets/port-sets/port-set/name
     +--rw destination-udp-port-set?
-            -&gt; ../../../../defined-sets/port-sets/port-set/name
-  augment /ietf-acl:acls/ietf-acl:acl/ietf-acl:aces/ietf-acl:ace
-            /ietf-acl:matches/ietf-acl:l4/ietf-acl:icmp:
+            -&gt; ../../../../../defined-sets/port-sets/port-set/name
+  augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:matches/acl:l4
+            /acl:icmp:
     +--rw icmp-set?   leafref
-  augment /ietf-acl:acls/ietf-acl:acl/ietf-acl:aces/ietf-acl:ace
-            /ietf-acl:actions:
+  augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:actions:
     +--rw rate-limit?   decimal64
 </pre>
 </div>
