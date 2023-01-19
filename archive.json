@@ -1,0 +1,219 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2023-01-19T01:21:14.513974+00:00",
+  "repo": "boucadair/enhanced-acl-netmod",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [
+    {
+      "number": 1,
+      "id": "I_kwDOIykBHs5bjHX1",
+      "title": "Create standalone container for Defined Set",
+      "url": "https://github.com/boucadair/enhanced-acl-netmod/issues/1",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "WG feedback https://github.com/ietf 115 meeting was that a standalone container could be best usable by other models.\r\n\r\n(initially created here: https://github.com/oscargdd/draft-dbb-netmod-enhanced-acl/issues/3)",
+      "createdAt": "2023-01-17T07:55:42Z",
+      "updatedAt": "2023-01-18T13:46:57Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "boucadair",
+          "authorAssociation": "OWNER",
+          "body": "Agree to define them at the root level",
+          "createdAt": "2023-01-18T13:46:57Z",
+          "updatedAt": "2023-01-18T13:46:57Z"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "id": "I_kwDOIykBHs5bjHjk",
+      "title": "(From Eliot Lear) Implication on existing ACL augmentations",
+      "url": "https://github.com/boucadair/enhanced-acl-netmod/issues/2",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "> I have no objections to the WG adopting this, but I do have a question\r\n> about augmentations of the earlier ACL model. Should those\r\n> augmentations be updated if this work is approved?\r\n\r\n(initially here: https://github.com/oscargdd/draft-dbb-netmod-enhanced-acl/issues/4)",
+      "createdAt": "2023-01-17T07:56:26Z",
+      "updatedAt": "2023-01-18T13:54:36Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "oscargdd",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "In the draft we need to add pointers to other extensions. Action point to collect current RFCs with ACL augmentations.",
+          "createdAt": "2023-01-18T13:51:15Z",
+          "updatedAt": "2023-01-18T13:51:15Z"
+        },
+        {
+          "author": "oscargdd",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Check https://yangcatalog.org/yang-search/impact_analysis/ietf-packet-fields@2019-03-04 to document current augments and asses the impact",
+          "createdAt": "2023-01-18T13:54:36Z",
+          "updatedAt": "2023-01-18T13:54:36Z"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "id": "I_kwDOIykBHs5bj1Ya",
+      "title": "(from Qin) Factorize scheduled ACLs",
+      "url": "https://github.com/boucadair/enhanced-acl-netmod/issues/3",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Happy new year, Qiufang and I are working on the update of draft-ma-opsawg-ucl-acl, we haven't finished yet, but like to share the draft version(see attached).\r\nOne issue we have addressed in the latest version is to factor out calendar data from UCL YANG model, defined them as grouping,\r\n```\r\n   module: ietf-calendar\r\n     grouping period:\r\n       +-- period-of-time\r\n          +-- (forms)?\r\n             +--:(period-explicit)\r\n             |  +-- explicit-start?   yang:date-and-time\r\n             |  +-- explicit-end?     yang:date-and-time\r\n             +--:(period-start)\r\n                +-- start?            yang:date-and-time\r\n                +-- duration?         yang:time-no-zone\r\n     grouping recurrence:\r\n       +-- recurrence\r\n          +-- freq           enumeration\r\n          +-- (until-or-count)?\r\n          |  +--:(until)\r\n          |  |  +-- until?   union\r\n          |  +--:(count)\r\n          |     +-- count?   uint32\r\n          +-- interval?      uint32\r\n          +-- bysecond*      uint32\r\n          +-- byminute*      uint32\r\n          +-- byhour*        uint32\r\n          +-- byday* [weekday]\r\n          |  +-- direction?   int32\r\n          |  +-- weekday?     ical:weekday\r\n          +-- bymonthday*    int32\r\n          +-- byyearday*     int32\r\n          +-- byyearweek*    int32\r\n          +-- byyearmonth*   uint32\r\n          +-- bysetpos*      int32\r\n          +-- wkst*          ical:weekday\r\n\r\n```\r\nSo we can reuses these grouping in the following YANG snippet:\r\n```\r\n        augment \"/acl:acls/acl:acl/acl:aces/acl:ace\" {\r\n          if-feature \"match-on-time\";\r\n          description\r\n            \"Add a new parameter to the Access Control Entry (ACE).\";\r\n          container time-range {\r\n            description\r\n              \"This container defines when the access control\r\n               entry rules are in effect.\r\n               If it is not configured, the access control entry\r\n               is immediately and always in effect.\";\r\n            choice time-range-type {\r\n              description\r\n                \"Choice based on the type of the time range.\";\r\n              case periodic-range {\r\n                description\r\n                  \"A periodic range of time to take effect.\";\r\n                uses ical:recurrence;\r\n              }\r\n              case absolute-range {\r\n                description\r\n                  \"A single precise period of time to take effect.\";\r\n                uses ical:period;\r\n              }\r\n            }\r\n          }\r\n        }\r\n```\r\nI am wondering these part should be factored into draft-dbb-netmod-acl-03?\r\n",
+      "createdAt": "2023-01-17T10:18:35Z",
+      "updatedAt": "2023-01-18T13:56:40Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "oscargdd",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Wait until having an stable version of the draft",
+          "createdAt": "2023-01-18T13:56:40Z",
+          "updatedAt": "2023-01-18T13:56:40Z"
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "id": "I_kwDOIykBHs5bqdmA",
+      "title": "EVPN Filtering",
+      "url": "https://github.com/boucadair/enhanced-acl-netmod/issues/4",
+      "state": "OPEN",
+      "author": "sbarguil",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Hi all,\r\n\r\nFor the EVPN use case it is intering to consider additional filters such as:\r\n\r\n- Service identifiers (MAC ISID Filter Policy)\r\n\r\n```\r\nmac-filter 90 create\r\n\tdescription \"filter-wan-man\"\r\n\tscope template\r\n\ttype isid\r\n\tentry 1 create\r\n\t\tdescription \"drop-local-isids\"\r\n\t\tmatch\r\n\t\t\tisid 100 to 1000\r\n\t\texit\r\n\t\taction drop\r\n\texit\r\n\tentry 2 create\r\n\t\tdescription \"allow-wan-isids\"\r\n\t\tmatch\r\n\t\t\tisid 150\r\n\t\texit\r\n\t\taction forward\r\n\texit\r\n```\r\n\r\n- Vlan IDs (MAC VID Filter Policy)\r\n\r\n\r\n```\r\n      default-action forward\r\n      type vic\r\n      entry 1 create\r\n         match frame-type ethernet_II\r\n           ouiter-tag 85 4095\r\n         exit\r\n         action drop\r\n      exit\r\n      entry 2 create\r\n         match frame-type ethernet_II\r\n           ouiter-tag 43 4095\r\n         exit\r\n         action drop\r\n      exit   \r\n```    \r\n",
+      "createdAt": "2023-01-18T11:46:08Z",
+      "updatedAt": "2023-01-18T13:58:44Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "oscargdd",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@sbarguil Please provide a motivation of the use case for both functionalities. ",
+          "createdAt": "2023-01-18T13:58:44Z",
+          "updatedAt": "2023-01-18T13:58:44Z"
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "id": "I_kwDOIykBHs5bqeW3",
+      "title": "Action Redirect",
+      "url": "https://github.com/boucadair/enhanced-acl-netmod/issues/5",
+      "state": "OPEN",
+      "author": "sbarguil",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Can we complement the actions with a redirect option.\r\n\r\nThis will be highly dependant of the routers capabilities but this redirection can be to a Captive Portal for HTTP traffic, for example:\r\n\r\n```\r\n            entry 30 create\r\n                match protocol tcp\r\n                    dst-ip 10.10.10.91/24\r\n                    dst-port eq 80\r\n                exit\r\n                action http-redirect \"http://100.0.0.2/login.cgi?mac=$MAC$sap=$S\r\nAP&ip=$IP&orig_url=$URL\"\r\n```",
+      "createdAt": "2023-01-18T11:48:43Z",
+      "updatedAt": "2023-01-18T11:48:53Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 6,
+      "id": "I_kwDOIykBHs5brHqC",
+      "title": "add a reference to point to sets from other modules",
+      "url": "https://github.com/boucadair/enhanced-acl-netmod/issues/6",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-01-18T13:45:59Z",
+      "updatedAt": "2023-01-18T13:45:59Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
+  "pulls": [
+    {
+      "number": 7,
+      "id": "PR_kwDOIykBHs5HoKEr",
+      "title": "Move defined-sets to top-level container",
+      "url": "https://github.com/boucadair/enhanced-acl-netmod/pull/7",
+      "state": "MERGED",
+      "author": "oscargdd",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Solves Issue #1 ",
+      "createdAt": "2023-01-18T13:47:14Z",
+      "updatedAt": "2023-01-18T14:11:47Z",
+      "baseRepository": "boucadair/enhanced-acl-netmod",
+      "baseRefName": "main",
+      "baseRefOid": "de372113f3e214efd64087b071b0dbab1dd44c09",
+      "headRepository": "oscargdd/enhanced-acl-netmod",
+      "headRefName": "patch-1",
+      "headRefOid": "a714aaa387faddad8beee0930fc64bb0bca907c5",
+      "closedAt": "2023-01-18T14:11:47Z",
+      "mergedAt": "2023-01-18T14:11:47Z",
+      "mergedBy": "boucadair",
+      "mergeCommit": {
+        "oid": "70fa0b28d691f2c6a97628f64c05f69717ad2c1f"
+      },
+      "comments": [],
+      "reviews": []
+    }
+  ]
+}
