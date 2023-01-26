@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-01-19T01:21:14.513974+00:00",
+  "timestamp": "2023-01-26T01:17:43.399151+00:00",
   "repo": "boucadair/enhanced-acl-netmod",
   "labels": [
     {
@@ -139,17 +139,24 @@
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
-      "body": "Hi all,\r\n\r\nFor the EVPN use case it is intering to consider additional filters such as:\r\n\r\n- Service identifiers (MAC ISID Filter Policy)\r\n\r\n```\r\nmac-filter 90 create\r\n\tdescription \"filter-wan-man\"\r\n\tscope template\r\n\ttype isid\r\n\tentry 1 create\r\n\t\tdescription \"drop-local-isids\"\r\n\t\tmatch\r\n\t\t\tisid 100 to 1000\r\n\t\texit\r\n\t\taction drop\r\n\texit\r\n\tentry 2 create\r\n\t\tdescription \"allow-wan-isids\"\r\n\t\tmatch\r\n\t\t\tisid 150\r\n\t\texit\r\n\t\taction forward\r\n\texit\r\n```\r\n\r\n- Vlan IDs (MAC VID Filter Policy)\r\n\r\n\r\n```\r\n      default-action forward\r\n      type vic\r\n      entry 1 create\r\n         match frame-type ethernet_II\r\n           ouiter-tag 85 4095\r\n         exit\r\n         action drop\r\n      exit\r\n      entry 2 create\r\n         match frame-type ethernet_II\r\n           ouiter-tag 43 4095\r\n         exit\r\n         action drop\r\n      exit   \r\n```    \r\n",
+      "body": "Hi all,\r\n\r\nFor the EVPN use case it is intering to consider additional filters such as:\r\n\r\n- Service identifiers (MAC ISID Filter Policy): \r\n\r\nProvider backbone bridging (PBB) was originally defined as IEEE 802.1ah standard, and operates in exactly the same manner as IEEE 802.1ad standard. However, instead of multiplexing VLANs, PBB duplicates the MAC layer of the customer frame and separates it from the provider domain, by encapsulating it in a 24 bit instance service identifier (I-SID). This allows for complete transparency between the customer network and the provider network.\r\n\r\nThe I-component forms the customer or access facing interface or routing instance. The I-component is responsible for mapping customer Ethernet traffic to the appropriate I-SID. In the netrowk is mandatory to configure the default service identifier (I-SID).\r\n\r\nBeign able to filter by I-Component Service identifier is a feature of the PBB configuration. \r\n\r\n```\r\nmac-filter 90 create\r\n\tdescription \"filter-wan-man\"\r\n\tscope template\r\n\ttype isid\r\n\tentry 1 create\r\n\t\tdescription \"drop-local-isids\"\r\n\t\tmatch\r\n\t\t\tisid 100 to 1000\r\n\t\texit\r\n\t\taction drop\r\n\texit\r\n\tentry 2 create\r\n\t\tdescription \"allow-wan-isids\"\r\n\t\tmatch\r\n\t\t\tisid 150\r\n\t\texit\r\n\t\taction forward\r\n\texit\r\n```\r\n\r\n",
       "createdAt": "2023-01-18T11:46:08Z",
-      "updatedAt": "2023-01-18T13:58:44Z",
+      "updatedAt": "2023-01-25T13:04:23Z",
       "closedAt": null,
       "comments": [
         {
           "author": "oscargdd",
-          "authorAssociation": "CONTRIBUTOR",
+          "authorAssociation": "COLLABORATOR",
           "body": "@sbarguil Please provide a motivation of the use case for both functionalities. ",
           "createdAt": "2023-01-18T13:58:44Z",
           "updatedAt": "2023-01-18T13:58:44Z"
+        },
+        {
+          "author": "sbarguil",
+          "authorAssociation": "COLLABORATOR",
+          "body": "With more innovative technologies like VLAN Based-EVPN as decribed by [Juniper](https://www.juniper.net/documentation/us/en/software/junos/evpn-vxlan/topics/concept/evpn-based-services.html), VxLAN implemented by [Cisco](https://www.cisco.com/c/en/us/td/docs/switches/lan/catalyst6500/ios/12-2SX/configuration/guide/book/vacl.html#14906) or as [Huawei](https://support.huawei.com/enterprise/en/doc/EDOC1000178116/671214b/how-can-i-apply-an-acl-to-a-vlan)  simply the flexibility to apply a traffic filter to a VLAN; there is a common necessity to control all packets that are bridged within a VLAN or that are routed into or out of a VLAN or a WAN interface for the ACL capture.. \r\n\r\nIt can be defined as:\r\n\r\n- traffic-filter vlan _vlan-id_ inbound acl _acl-name_\r\n- traffic-filter vlan _vlan-id_ outbound acl _acl-name_\r\n\r\nThe _vlan-id_ can be a single vlan a range or a list. \r\n\r\nFor example include vlans from 12 to 16:\r\n- traffic-filter vlan *12-16* inbound acl _acl-name_\r\n\r\nFor example include vlan 2 and vlans from 4 to 6:\r\n- traffic-filter vlan *2*, *4-6* outbound acl _acl-name_\r\n \r\n- Vlan IDs (MAC VID Filter Policy)\r\n\r\n```\r\n      default-action forward\r\n      type vic\r\n      entry 1 create\r\n         match frame-type ethernet_II\r\n           ouiter-tag 85 4095\r\n         exit\r\n         action drop\r\n      exit\r\n      entry 2 create\r\n         match frame-type ethernet_II\r\n           ouiter-tag 43 4095\r\n         exit\r\n         action drop\r\n      exit   \r\n```    ",
+          "createdAt": "2023-01-25T12:28:24Z",
+          "updatedAt": "2023-01-25T13:04:23Z"
         }
       ]
     },
