@@ -8,7 +8,7 @@ Intended status: Standards Track                              Telefonica
 Expires: 5 August 2023                                      M. Boucadair
                                                                   Orange
                                                                    Q. Wu
-                                                                 Huaweim
+                                                                  Huawei
                                                          1 February 2023
 
 
@@ -1454,5 +1454,5 @@ Authors' Addresses
 
 
    Qin Wu
-   Huaweim
+   Huawei
    Email: bill.wu@huawei.com
