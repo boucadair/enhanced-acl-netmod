@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-01-26T01:17:43.399151+00:00",
+  "timestamp": "2023-02-05T01:24:40.653654+00:00",
   "repo": "boucadair/enhanced-acl-netmod",
   "labels": [
     {
@@ -189,6 +189,38 @@
       "body": "",
       "createdAt": "2023-01-18T13:45:59Z",
       "updatedAt": "2023-01-18T13:45:59Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 8,
+      "id": "I_kwDOIykBHs5djgLI",
+      "title": "ICMP matches: include identities for Types and Codes",
+      "url": "https://github.com/boucadair/enhanced-acl-netmod/issues/8",
+      "state": "OPEN",
+      "author": "oscargdd",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Currently the members of an ICMP match are numbers. For the user defining the ACL, it is more intuitive and less prone to errors to write identities. However, given that ICMP types and codes are well documented by IANA, the suggestion is to create identities. A separate IANA-maintained module would be a good candidate to host the identities. ",
+      "createdAt": "2023-02-03T10:08:36Z",
+      "updatedAt": "2023-02-03T10:08:36Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 9,
+      "id": "I_kwDOIykBHs5djhp-",
+      "title": "IPv6 extended header matches",
+      "url": "https://github.com/boucadair/enhanced-acl-netmod/issues/9",
+      "state": "OPEN",
+      "author": "oscargdd",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Use case: match extended header of an IPv6 packet, for example routing headers ",
+      "createdAt": "2023-02-03T10:12:33Z",
+      "updatedAt": "2023-02-03T10:12:33Z",
       "closedAt": null,
       "comments": []
     }
