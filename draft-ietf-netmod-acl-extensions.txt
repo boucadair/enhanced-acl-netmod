@@ -5,11 +5,11 @@
 netmod                                                     O. G. D. Dios
 Internet-Draft                                                S. Barguil
 Intended status: Standards Track                              Telefonica
-Expires: 5 August 2023                                      M. Boucadair
+Expires: 21 August 2023                                     M. Boucadair
                                                                   Orange
                                                                    Q. Wu
                                                                   Huawei
-                                                         1 February 2023
+                                                        17 February 2023
 
 
         Extensions to the Access Control Lists (ACLs) YANG Model
@@ -47,7 +47,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 August 2023.
+   This Internet-Draft will expire on 21 August 2023.
 
 Copyright Notice
 
@@ -85,7 +85,7 @@ Table of Contents
      4.5.  Rate-Limit Traffic
    5.  YANG Modules
      5.1.  Enhanced ACL
-   6.  Security Considerations (TBC)
+   6.  Security Considerations
    7.  IANA Considerations
      7.1.  URI Registration
      7.2.  YANG Module Name Registration
@@ -597,7 +597,7 @@ Table of Contents
                 "name": "null-attack",
                 "matches": {
                   "tcp": {
-                    "flags-bitmask": {
+                    "acl-enh:flags-bitmask": {
                       "operator": "not any",
                       "bitmask": 4095
                     }
@@ -643,7 +643,7 @@ Table of Contents
                     "name": "drop-all-fragments",
                     "matches": {
                       "ipv4": {
-                        "ipv4-fragment": {
+                        "acl-enh:ipv4-fragment": {
                           "operator": "match",
                           "type": "isf"
                         }
@@ -704,7 +704,7 @@ Table of Contents
                     "name": "drop-all-fragments",
                     "matches": {
                       "ipv6": {
-                        "ipv6-fragment": {
+                        "acl-enh:ipv6-fragment": {
                           "operator": "match",
                           "type": "isf"
                         }
@@ -758,7 +758,7 @@ Table of Contents
                 "name": "rate-limit-syn",
                 "matches": {
                   "tcp": {
-                    "flags-bitmask": {
+                    "acl-enh:flags-bitmask": {
                       "operator": "match",
                       "bitmask": 2
                     }
@@ -766,7 +766,7 @@ Table of Contents
                 },
                 "actions": {
                   "forwarding": "accept",
-                  "rate-limit": "20.00"
+                  "acl-enh:rate-limit": "20.00"
                 }
               }]
             }
@@ -1294,7 +1294,7 @@ Table of Contents
    }
    <CODE ENDS>
 
-6.  Security Considerations (TBC)
+6.  Security Considerations
 
    The YANG modules specified in this document define a schema for data
    that is designed to be accessed via network management protocol such
@@ -1347,7 +1347,7 @@ Table of Contents
             name: ietf-acl-enh
             namespace: urn:ietf:params:xml:ns:yang:ietf-ietf-acl-enh
             maintained by IANA: N
-            prefix: enh-acl
+            prefix: acl-enh
             reference: RFC XXXX
 
 8.  References
@@ -1430,7 +1430,7 @@ Appendix A.  Acknowledgements
    Many thanks to Jon Shallow and Miguel Cros for the review and
    comments to the document, incuding priror to publishing the document.
 
-   Thanks for Qin Wu and Qiufang Ma for the comments and suggestions.
+   Thanks to Qiufang Ma for the comments and suggestions.
 
    This work is partially supported by the European Commission under
    Horizon 2020 Secured autonomic traffic management for a Tera of SDN
