@@ -21,6 +21,8 @@ Abstract
    This document discusses a set of extensions that fix many of the
    limitations of the ACL model as initially defined in RFC 8519.
 
+   The document also defines an IANA-maintained module for ICMP types.
+
 Discussion Venues
 
    This note is to be removed before publishing as an RFC.
@@ -92,7 +94,11 @@ Table of Contents
    8.  References
      8.1.  Normative References
      8.2.  Informative References
-   Appendix A.  Acknowledgements
+   Appendix A.  XLTS Template to Generate The ICMP Type
+           IANA-Maintained Module
+   Appendix B.  Initial Version of the The ICMP Type IANA-Maintained
+           Module
+   Appendix C.  Acknowledgements
    Authors' Addresses
 
 1.  Introduction
@@ -142,6 +148,14 @@ Table of Contents
    [RFC8956].  Therefore, supporting means to easily map to the
    filtering rules conveyed in messages triggered by these tools is
    valuable from a network operation standpoint.
+
+   The document also defines an IANA-maintained module for ICMP types.
+   The design of the module adheres with the recommendations in
+   [I-D.boucadair-netmod-iana-registries].  A template to generate the
+   module is available at Appendix A.  Readers should refer to the IANA
+   website [REF_TBC] to retrieve the latest version of the module.  The
+   module is provided in Appendix B for the users convenience, but that
+   appendix will be removed from the final RFC.
 
 2.  Terminology
 
@@ -1331,23 +1345,33 @@ Table of Contents
 
 7.1.  URI Registration
 
-   This document requests IANA to register the following URI in the "ns"
-   subregistry within the "IETF XML Registry" [RFC3688]:
+   This document requests IANA to register the following URIs in the
+   "ns" subregistry within the "IETF XML Registry" [RFC3688]:
 
             URI: urn:ietf:params:xml:ns:yang:ietf-acl-enh
             Registrant Contact: The IESG.
             XML: N/A; the requested URI is an XML namespace.
 
+            URI: urn:ietf:params:xml:ns:yang:iana-icmp-types
+            Registrant Contact: The IESG.
+            XML: N/A; the requested URI is an XML namespace.
+
 7.2.  YANG Module Name Registration
 
-   This document requests IANA to register the following YANG module in
+   This document requests IANA to register the following YANG modules in
    the "YANG Module Names" subregistry [RFC6020] within the "YANG
    Parameters" registry.
 
             name: ietf-acl-enh
-            namespace: urn:ietf:params:xml:ns:yang:ietf-ietf-acl-enh
+            namespace: urn:ietf:params:xml:ns:yang:ietf-acl-enh
             maintained by IANA: N
             prefix: acl-enh
+            reference: RFC XXXX
+
+            name: ietf-icmp-types
+            namespace: urn:ietf:params:xml:ns:yang:iana-icmp-types
+            maintained by IANA: Y
+            prefix: iana-icmp-types
             reference: RFC XXXX
 
 8.  References
@@ -1410,6 +1434,13 @@ Table of Contents
 
 8.2.  Informative References
 
+   [I-D.boucadair-netmod-iana-registries]
+              Boucadair, M., "Recommendations for Creating IANA-
+              Maintained YANG Modules", Work in Progress, Internet-
+              Draft, draft-boucadair-netmod-iana-registries-07, 20
+              January 2023, <https://datatracker.ietf.org/doc/html/
+              draft-boucadair-netmod-iana-registries-07>.
+
    [RFC8340]  Bjorklund, M. and L. Berger, Ed., "YANG Tree Diagrams",
               BCP 215, RFC 8340, DOI 10.17487/RFC8340, March 2018,
               <https://www.rfc-editor.org/rfc/rfc8340>.
@@ -1425,7 +1456,407 @@ Table of Contents
               DOI 10.17487/RFC9132, September 2021,
               <https://www.rfc-editor.org/rfc/rfc9132>.
 
-Appendix A.  Acknowledgements
+Appendix A.  XLTS Template to Generate The ICMP Type IANA-Maintained
+             Module
+
+   <CODE BEGINS>
+   <?xml version="1.0" encoding="utf-8"?>
+   <stylesheet
+       xmlns="http://www.w3.org/1999/XSL/Transform"
+       xmlns:html="http://www.w3.org/1999/xhtml"
+       xmlns:iana="http://www.iana.org/assignments"
+       xmlns:yin="urn:ietf:params:xml:ns:yang:yin:1"
+       version="1.0">
+     <import href="../../../xslt/iana-yinx.xsl"/>
+     <output method="xml" encoding="utf-8"/>
+     <strip-space elements="*"/>
+
+     <template match="iana:registry[@id='icmp-parameters-types']">
+       <element name="yin:typedef">
+         <attribute name="name">icmp-type-name</attribute>
+         <element name="yin:type">
+           <attribute name="name">enumeration</attribute>
+           <apply-templates
+               select="iana:record[not(iana:description = 'Unassigned' or
+                       starts-with(iana:description, 'Reserved') or
+                       starts-with(iana:description, 'RFC3692')) or
+                       contains(iana:description, 'experimental')]"/>
+         </element>
+         <element name="yin:description">
+           <element name="yin:text">
+             This enumeration type defines mnemonic names and
+             corresponding numeric values of ICMP types.
+           </element>
+         </element>
+         <element name="yin:reference">
+           <element name="yin:text">
+             RFC 2708: IANA Allocation Guidelines For Values In
+                       the Internet Protocol and Related Headers
+           </element>
+         </element>
+       </element>
+       <element name="yin:typedef">
+         <attribute name="name">icmp-type</attribute>
+         <element name="yin:type">
+           <attribute name="name">union</attribute>
+           <element name="yin:type">
+             <attribute name="name">uint8/</attribute>
+           </element>
+           <element name="yin:type">
+             <attribute name="name">icmp-type-name</attribute>
+           </element>
+         </element>
+         <element name="yin:description">
+           <element name="yin:text">
+             This type allows reference to an ICMP type using either
+             the assigned mnemonic name or numeric value.
+           </element>
+         </element>
+       </element>
+     </template>
+
+     <template match="iana:record">
+       <call-template name="enum">
+         <with-param name="id">
+           <choose>
+             <when test="contains(iana:description, '(Deprecated)')">
+               <value-of select="translate(normalize-space(substring-before(iana:description,
+                     '(Deprecated)')),' ','')"/>
+             </when>
+             <otherwise>
+               <value-of select="translate(normalize-space(iana:description),' ','')"/>
+             </otherwise>
+           </choose>
+         </with-param>
+         <with-param name="deprecated"
+                     select="contains(iana:description, '(Deprecated)')"/>
+       </call-template>
+     </template>
+
+   </stylesheet>
+   <CODE ENDS>
+
+Appendix B.  Initial Version of the The ICMP Type IANA-Maintained Module
+
+   <CODE BEGINS> file "iana-icmp-types@2020-09-25.yang"
+   module iana-icmp-types {
+     yang-version 1.1;
+     namespace "urn:ietf:params:xml:ns:yang:iana-icmp-types";
+     prefix iana-icmp-types;
+
+     organization
+       "Internet Assigned Numbers Authority (IANA)";
+
+     contact
+       "Internet Assigned Numbers Authority
+
+        ICANN
+        12025 Waterfront Drive, Suite 300
+        Los Angeles, CA 90094
+
+
+        Tel: +1 424 254 5300
+
+        <mailto:iana@iana.org>";
+
+     description
+       "This YANG module translates IANA registry 'ICMP Type Numbers' to
+        YANG derived types.
+
+        Copyright (c) 2020 IETF Trust and the persons identified as
+        authors of the code. All rights reserved.
+
+        Redistribution and use in source and binary forms, with or
+        without modification, is permitted pursuant to, and subject to
+        the license terms contained in, the Revised BSD License set
+        forth in Section 4.c of the IETF Trust's Legal Provisions
+        Relating to IETF Documents
+        (https://trustee.ietf.org/license-info).
+
+        This version of this YANG module was generated from the
+        corresponding IANA registry using an XSLT stylesheet from the
+        'iana-yang' project (https://github.com/llhotka/iana-yang).";
+
+     reference
+       "Internet Control Message Protocol (ICMP) Parameters
+        (https://www.iana.org/assignments/icmp-parameters/)";
+
+     revision 2020-09-25 {
+       description
+         "Current revision as of the revision date specified in the XML
+          representation of the registry page.";
+       reference
+         "https://www.iana.org/assignments/icmp-parameters/icmp-parameters.xml";
+     }
+
+     /* Typedefs */
+
+     typedef icmp-type-name {
+       type enumeration {
+         enum EchoReply {
+           value 0;
+           description
+             "Echo Reply";
+           reference
+             "RFC 792";
+         }
+         enum DestinationUnreachable {
+           value 3;
+           description
+             "Destination Unreachable";
+           reference
+             "RFC 792";
+         }
+         enum SourceQuench {
+           value 4;
+           status deprecated;
+           description
+             "Source Quench (Deprecated)";
+           reference
+             "- RFC 792
+              - RFC 6633";
+         }
+         enum Redirect {
+           value 5;
+           description
+             "Redirect";
+           reference
+             "RFC 792";
+         }
+         enum AlternateHostAddress {
+           value 6;
+           status deprecated;
+           description
+             "Alternate Host Address (Deprecated)";
+           reference
+             "RFC 6918";
+         }
+         enum Echo {
+           value 8;
+           description
+             "Echo";
+           reference
+             "RFC 792";
+         }
+         enum RouterAdvertisement {
+           value 9;
+           description
+             "Router Advertisement";
+           reference
+             "RFC 1256";
+         }
+         enum RouterSolicitation {
+           value 10;
+           description
+             "Router Solicitation";
+           reference
+             "RFC 1256";
+         }
+         enum TimeExceeded {
+           value 11;
+           description
+             "Time Exceeded";
+           reference
+             "RFC 792";
+         }
+         enum ParameterProblem {
+           value 12;
+           description
+             "Parameter Problem";
+           reference
+             "RFC 792";
+         }
+         enum Timestamp {
+           value 13;
+           description
+             "Timestamp";
+           reference
+             "RFC 792";
+         }
+         enum TimestampReply {
+           value 14;
+           description
+             "Timestamp Reply";
+           reference
+             "RFC 792";
+         }
+         enum InformationRequest {
+           value 15;
+           status deprecated;
+           description
+             "Information Request (Deprecated)";
+           reference
+             "- RFC 792
+              - RFC 6918";
+         }
+         enum InformationReply {
+           value 16;
+           status deprecated;
+           description
+             "Information Reply (Deprecated)";
+           reference
+             "- RFC 792
+              - RFC 6918";
+         }
+         enum AddressMaskRequest {
+           value 17;
+           status deprecated;
+           description
+             "Address Mask Request (Deprecated)";
+           reference
+             "- RFC 950
+              - RFC 6918";
+         }
+         enum AddressMaskReply {
+           value 18;
+           status deprecated;
+           description
+             "Address Mask Reply (Deprecated)";
+           reference
+             "- RFC 950
+              - RFC 6918";
+         }
+         enum Traceroute {
+           value 30;
+           status deprecated;
+           description
+             "Traceroute (Deprecated)";
+           reference
+             "- RFC 1393
+              - RFC 6918";
+         }
+         enum DatagramConversionError {
+           value 31;
+           status deprecated;
+           description
+             "Datagram Conversion Error (Deprecated)";
+           reference
+             "- RFC 1475
+              - RFC 6918";
+         }
+         enum MobileHostRedirect {
+           value 32;
+           status deprecated;
+           description
+             "Mobile Host Redirect (Deprecated)";
+           reference
+             "- David Johnson <>
+              - RFC 6918";
+         }
+         enum IPv6Where-Are-You {
+           value 33;
+           status deprecated;
+           description
+             "IPv6 Where-Are-You (Deprecated)";
+           reference
+             "- Bill Simpson <mailto:Bill.Simpson&um.cc.umich.edu>
+              - RFC 6918";
+         }
+         enum IPv6I-Am-Here {
+           value 34;
+           status deprecated;
+           description
+             "IPv6 I-Am-Here (Deprecated)";
+           reference
+             "- Bill Simpson <mailto:Bill.Simpson&um.cc.umich.edu>
+              - RFC 6918";
+         }
+         enum MobileRegistrationRequest {
+           value 35;
+           status deprecated;
+           description
+             "Mobile Registration Request (Deprecated)";
+           reference
+             "- Bill Simpson <mailto:Bill.Simpson&um.cc.umich.edu>
+              - RFC 6918";
+         }
+         enum MobileRegistrationReply {
+           value 36;
+           status deprecated;
+           description
+             "Mobile Registration Reply (Deprecated)";
+           reference
+             "- Bill Simpson <mailto:Bill.Simpson&um.cc.umich.edu>
+              - RFC 6918";
+         }
+         enum DomainNameRequest {
+           value 37;
+           status deprecated;
+           description
+             "Domain Name Request (Deprecated)";
+           reference
+             "- RFC 1788
+              - RFC 6918";
+         }
+         enum DomainNameReply {
+           value 38;
+           status deprecated;
+           description
+             "Domain Name Reply (Deprecated)";
+           reference
+             "- RFC 1788
+              - RFC 6918";
+         }
+         enum SKIP {
+           value 39;
+           status deprecated;
+           description
+             "SKIP (Deprecated)";
+           reference
+             "- Tom Markson <mailto:markson&osmosys.incog.com>
+              - RFC 6918";
+         }
+         enum Photuris {
+           value 40;
+           description
+             "Photuris";
+           reference
+             "RFC 2521";
+         }
+         enum ICMPmessagesutilizedbyexperimentalmobilityprotocolssuchasSeamoby {
+           value 41;
+           description
+             "ICMP messages utilized by experimental mobility protocols
+              such as Seamoby";
+           reference
+             "RFC 4065";
+         }
+         enum ExtendedEchoRequest {
+           value 42;
+           description
+             "Extended Echo Request";
+           reference
+             "RFC 8335";
+         }
+         enum ExtendedEchoReply {
+           value 43;
+           description
+             "Extended Echo Reply";
+           reference
+             "RFC 8335";
+         }
+       }
+       description
+         "This enumeration type defines mnemonic names and corresponding
+          numeric values of ICMP types.";
+       reference
+         "RFC 2708: IANA Allocation Guidelines For Values In the
+          Internet Protocol and Related Headers";
+     }
+
+     typedef icmp-type {
+       type union {
+         type uint8/;
+         type icmp-type-name;
+       }
+       description
+         "This type allows reference to an ICMP type using either the
+          assigned mnemonic name or numeric value.";
+     }
+   }
+   <CODE ENDS>
+
+Appendix C.  Acknowledgements
 
    Many thanks to Jon Shallow and Miguel Cros for the review and
    comments to the document, incuding priror to publishing the document.
