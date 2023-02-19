@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-02-05T01:24:40.653654+00:00",
+  "timestamp": "2023-02-19T01:24:04.742329+00:00",
   "repo": "boucadair/enhanced-acl-netmod",
   "labels": [
     {
@@ -47,6 +47,26 @@
       "name": "wontfix",
       "description": "This will not be worked on",
       "color": "ffffff"
+    },
+    {
+      "name": "revive_when_core_spec_stable",
+      "description": "Will be reassessed when the core spec is stable.",
+      "color": "bfdadc"
+    },
+    {
+      "name": "YANG",
+      "description": "",
+      "color": "BBC780"
+    },
+    {
+      "name": "I-D_Text",
+      "description": "Add text to the draft to clarify the concern",
+      "color": "916597"
+    },
+    {
+      "name": "dig_more_needed",
+      "description": "",
+      "color": "bfd4f2"
     }
   ],
   "issues": [
@@ -58,11 +78,15 @@
       "state": "OPEN",
       "author": "boucadair",
       "authorAssociation": "OWNER",
-      "assignees": [],
-      "labels": [],
+      "assignees": [
+        "boucadair"
+      ],
+      "labels": [
+        "YANG"
+      ],
       "body": "WG feedback https://github.com/ietf 115 meeting was that a standalone container could be best usable by other models.\r\n\r\n(initially created here: https://github.com/oscargdd/draft-dbb-netmod-enhanced-acl/issues/3)",
       "createdAt": "2023-01-17T07:55:42Z",
-      "updatedAt": "2023-01-18T13:46:57Z",
+      "updatedAt": "2023-02-17T16:10:38Z",
       "closedAt": null,
       "comments": [
         {
@@ -83,22 +107,25 @@
       "author": "boucadair",
       "authorAssociation": "OWNER",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "revive_when_core_spec_stable",
+        "I-D_Text"
+      ],
       "body": "> I have no objections to the WG adopting this, but I do have a question\r\n> about augmentations of the earlier ACL model. Should those\r\n> augmentations be updated if this work is approved?\r\n\r\n(initially here: https://github.com/oscargdd/draft-dbb-netmod-enhanced-acl/issues/4)",
       "createdAt": "2023-01-17T07:56:26Z",
-      "updatedAt": "2023-01-18T13:54:36Z",
+      "updatedAt": "2023-02-17T08:32:15Z",
       "closedAt": null,
       "comments": [
         {
           "author": "oscargdd",
-          "authorAssociation": "CONTRIBUTOR",
+          "authorAssociation": "COLLABORATOR",
           "body": "In the draft we need to add pointers to other extensions. Action point to collect current RFCs with ACL augmentations.",
           "createdAt": "2023-01-18T13:51:15Z",
           "updatedAt": "2023-01-18T13:51:15Z"
         },
         {
           "author": "oscargdd",
-          "authorAssociation": "CONTRIBUTOR",
+          "authorAssociation": "COLLABORATOR",
           "body": "Check https://yangcatalog.org/yang-search/impact_analysis/ietf-packet-fields@2019-03-04 to document current augments and asses the impact",
           "createdAt": "2023-01-18T13:54:36Z",
           "updatedAt": "2023-01-18T13:54:36Z"
@@ -114,15 +141,18 @@
       "author": "boucadair",
       "authorAssociation": "OWNER",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "revive_when_core_spec_stable",
+        "YANG"
+      ],
       "body": "Happy new year, Qiufang and I are working on the update of draft-ma-opsawg-ucl-acl, we haven't finished yet, but like to share the draft version(see attached).\r\nOne issue we have addressed in the latest version is to factor out calendar data from UCL YANG model, defined them as grouping,\r\n```\r\n   module: ietf-calendar\r\n     grouping period:\r\n       +-- period-of-time\r\n          +-- (forms)?\r\n             +--:(period-explicit)\r\n             |  +-- explicit-start?   yang:date-and-time\r\n             |  +-- explicit-end?     yang:date-and-time\r\n             +--:(period-start)\r\n                +-- start?            yang:date-and-time\r\n                +-- duration?         yang:time-no-zone\r\n     grouping recurrence:\r\n       +-- recurrence\r\n          +-- freq           enumeration\r\n          +-- (until-or-count)?\r\n          |  +--:(until)\r\n          |  |  +-- until?   union\r\n          |  +--:(count)\r\n          |     +-- count?   uint32\r\n          +-- interval?      uint32\r\n          +-- bysecond*      uint32\r\n          +-- byminute*      uint32\r\n          +-- byhour*        uint32\r\n          +-- byday* [weekday]\r\n          |  +-- direction?   int32\r\n          |  +-- weekday?     ical:weekday\r\n          +-- bymonthday*    int32\r\n          +-- byyearday*     int32\r\n          +-- byyearweek*    int32\r\n          +-- byyearmonth*   uint32\r\n          +-- bysetpos*      int32\r\n          +-- wkst*          ical:weekday\r\n\r\n```\r\nSo we can reuses these grouping in the following YANG snippet:\r\n```\r\n        augment \"/acl:acls/acl:acl/acl:aces/acl:ace\" {\r\n          if-feature \"match-on-time\";\r\n          description\r\n            \"Add a new parameter to the Access Control Entry (ACE).\";\r\n          container time-range {\r\n            description\r\n              \"This container defines when the access control\r\n               entry rules are in effect.\r\n               If it is not configured, the access control entry\r\n               is immediately and always in effect.\";\r\n            choice time-range-type {\r\n              description\r\n                \"Choice based on the type of the time range.\";\r\n              case periodic-range {\r\n                description\r\n                  \"A periodic range of time to take effect.\";\r\n                uses ical:recurrence;\r\n              }\r\n              case absolute-range {\r\n                description\r\n                  \"A single precise period of time to take effect.\";\r\n                uses ical:period;\r\n              }\r\n            }\r\n          }\r\n        }\r\n```\r\nI am wondering these part should be factored into draft-dbb-netmod-acl-03?\r\n",
       "createdAt": "2023-01-17T10:18:35Z",
-      "updatedAt": "2023-01-18T13:56:40Z",
+      "updatedAt": "2023-02-17T08:31:53Z",
       "closedAt": null,
       "comments": [
         {
           "author": "oscargdd",
-          "authorAssociation": "CONTRIBUTOR",
+          "authorAssociation": "COLLABORATOR",
           "body": "Wait until having an stable version of the draft",
           "createdAt": "2023-01-18T13:56:40Z",
           "updatedAt": "2023-01-18T13:56:40Z"
@@ -138,10 +168,13 @@
       "author": "sbarguil",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "YANG",
+        "dig_more_needed"
+      ],
       "body": "Hi all,\r\n\r\nFor the EVPN use case it is intering to consider additional filters such as:\r\n\r\n- Service identifiers (MAC ISID Filter Policy): \r\n\r\nProvider backbone bridging (PBB) was originally defined as IEEE 802.1ah standard, and operates in exactly the same manner as IEEE 802.1ad standard. However, instead of multiplexing VLANs, PBB duplicates the MAC layer of the customer frame and separates it from the provider domain, by encapsulating it in a 24 bit instance service identifier (I-SID). This allows for complete transparency between the customer network and the provider network.\r\n\r\nThe I-component forms the customer or access facing interface or routing instance. The I-component is responsible for mapping customer Ethernet traffic to the appropriate I-SID. In the netrowk is mandatory to configure the default service identifier (I-SID).\r\n\r\nBeign able to filter by I-Component Service identifier is a feature of the PBB configuration. \r\n\r\n```\r\nmac-filter 90 create\r\n\tdescription \"filter-wan-man\"\r\n\tscope template\r\n\ttype isid\r\n\tentry 1 create\r\n\t\tdescription \"drop-local-isids\"\r\n\t\tmatch\r\n\t\t\tisid 100 to 1000\r\n\t\texit\r\n\t\taction drop\r\n\texit\r\n\tentry 2 create\r\n\t\tdescription \"allow-wan-isids\"\r\n\t\tmatch\r\n\t\t\tisid 150\r\n\t\texit\r\n\t\taction forward\r\n\texit\r\n```\r\n\r\n",
       "createdAt": "2023-01-18T11:46:08Z",
-      "updatedAt": "2023-01-25T13:04:23Z",
+      "updatedAt": "2023-02-17T08:31:08Z",
       "closedAt": null,
       "comments": [
         {
@@ -168,11 +201,15 @@
       "state": "OPEN",
       "author": "sbarguil",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
-      "labels": [],
+      "assignees": [
+        "sbarguil"
+      ],
+      "labels": [
+        "YANG"
+      ],
       "body": "Can we complement the actions with a redirect option.\r\n\r\nThis will be highly dependant of the routers capabilities but this redirection can be to a Captive Portal for HTTP traffic, for example:\r\n\r\n```\r\n            entry 30 create\r\n                match protocol tcp\r\n                    dst-ip 10.10.10.91/24\r\n                    dst-port eq 80\r\n                exit\r\n                action http-redirect \"http://100.0.0.2/login.cgi?mac=$MAC$sap=$S\r\nAP&ip=$IP&orig_url=$URL\"\r\n```",
       "createdAt": "2023-01-18T11:48:43Z",
-      "updatedAt": "2023-01-18T11:48:53Z",
+      "updatedAt": "2023-02-17T08:30:07Z",
       "closedAt": null,
       "comments": []
     },
@@ -184,11 +221,15 @@
       "state": "OPEN",
       "author": "boucadair",
       "authorAssociation": "OWNER",
-      "assignees": [],
-      "labels": [],
-      "body": "",
+      "assignees": [
+        "boucadair"
+      ],
+      "labels": [
+        "YANG"
+      ],
+      "body": "Add a typedef for referencing purposes",
       "createdAt": "2023-01-18T13:45:59Z",
-      "updatedAt": "2023-01-18T13:45:59Z",
+      "updatedAt": "2023-02-17T08:29:46Z",
       "closedAt": null,
       "comments": []
     },
@@ -200,11 +241,15 @@
       "state": "OPEN",
       "author": "oscargdd",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
-      "labels": [],
+      "assignees": [
+        "boucadair"
+      ],
+      "labels": [
+        "YANG"
+      ],
       "body": "Currently the members of an ICMP match are numbers. For the user defining the ACL, it is more intuitive and less prone to errors to write identities. However, given that ICMP types and codes are well documented by IANA, the suggestion is to create identities. A separate IANA-maintained module would be a good candidate to host the identities. ",
       "createdAt": "2023-02-03T10:08:36Z",
-      "updatedAt": "2023-02-03T10:08:36Z",
+      "updatedAt": "2023-02-17T16:10:52Z",
       "closedAt": null,
       "comments": []
     },
@@ -217,10 +262,30 @@
       "author": "oscargdd",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "YANG"
+      ],
       "body": "Use case: match extended header of an IPv6 packet, for example routing headers ",
       "createdAt": "2023-02-03T10:12:33Z",
-      "updatedAt": "2023-02-03T10:12:33Z",
+      "updatedAt": "2023-02-17T08:31:21Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 10,
+      "id": "I_kwDOIykBHs5etELF",
+      "title": "Comments from Qin",
+      "url": "https://github.com/boucadair/enhanced-acl-netmod/issues/10",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [
+        "question"
+      ],
+      "body": "> These comments can be summarized as follows:\r\n> 1.\tWe need to clarify the relationship between draft-dbb and draft-ma-opsawg-ucl-acl\r\n> 2.\tSection 3.3 and Section 3.8 seems related, not sure whether these two section should be consolidated\r\n> 3.\tHow match element grouping in pre-defined set is different from configuration template?\r\n> Happy to discuss with you about these comments if needed.\r\n> ",
+      "createdAt": "2023-02-17T07:22:20Z",
+      "updatedAt": "2023-02-17T07:22:20Z",
       "closedAt": null,
       "comments": []
     }
@@ -252,6 +317,100 @@
         "oid": "70fa0b28d691f2c6a97628f64c05f69717ad2c1f"
       },
       "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 11,
+      "id": "PR_kwDOIykBHs5KMyHx",
+      "title": "Define reusable port set + provision references to call the sets (inc\u2026",
+      "url": "https://github.com/boucadair/enhanced-acl-netmod/pull/11",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "boucadair"
+      ],
+      "labels": [
+        "YANG"
+      ],
+      "body": "\u2026luding in other models)",
+      "createdAt": "2023-02-17T09:07:42Z",
+      "updatedAt": "2023-02-17T16:14:31Z",
+      "baseRepository": "boucadair/enhanced-acl-netmod",
+      "baseRefName": "main",
+      "baseRefOid": "1430d2c8fa91cfba08d643603a422b8058578148",
+      "headRepository": "boucadair/enhanced-acl-netmod",
+      "headRefName": "boucadair-patch-1",
+      "headRefOid": "9889a9b568767cbea530a2adb9d21569bdc2852e",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 12,
+      "id": "PR_kwDOIykBHs5KOr7w",
+      "title": "IANA Module for ICMP Types",
+      "url": "https://github.com/boucadair/enhanced-acl-netmod/pull/12",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "boucadair"
+      ],
+      "labels": [
+        "YANG"
+      ],
+      "body": "",
+      "createdAt": "2023-02-17T15:49:51Z",
+      "updatedAt": "2023-02-17T16:14:21Z",
+      "baseRepository": "boucadair/enhanced-acl-netmod",
+      "baseRefName": "main",
+      "baseRefOid": "1430d2c8fa91cfba08d643603a422b8058578148",
+      "headRepository": "boucadair/enhanced-acl-netmod",
+      "headRefName": "boucadair-patch-2",
+      "headRefOid": "1a35fb53f0b4732bb706d26b12f9fb83e4326a4c",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 13,
+      "id": "PR_kwDOIykBHs5KOwt_",
+      "title": "Add the IANA module to the draft",
+      "url": "https://github.com/boucadair/enhanced-acl-netmod/pull/13",
+      "state": "CLOSED",
+      "author": "boucadair",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-02-17T16:05:38Z",
+      "updatedAt": "2023-02-17T16:10:19Z",
+      "baseRepository": "boucadair/enhanced-acl-netmod",
+      "baseRefName": "main",
+      "baseRefOid": "1430d2c8fa91cfba08d643603a422b8058578148",
+      "headRepository": "boucadair/enhanced-acl-netmod",
+      "headRefName": "boucadair-patch-2-1",
+      "headRefOid": "56039e720d51cf3ac1a6662673c1e22d337a892a",
+      "closedAt": "2023-02-17T16:10:18Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "boucadair",
+          "authorAssociation": "OWNER",
+          "body": "[Merged with PR#2](https://github.com/boucadair/enhanced-acl-netmod/pull/12)",
+          "createdAt": "2023-02-17T16:10:18Z",
+          "updatedAt": "2023-02-17T16:10:18Z"
+        }
+      ],
       "reviews": []
     }
   ]
