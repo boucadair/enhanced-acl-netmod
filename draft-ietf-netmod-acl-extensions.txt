@@ -5,11 +5,11 @@
 netmod                                                     O. G. D. Dios
 Internet-Draft                                                S. Barguil
 Intended status: Standards Track                              Telefonica
-Expires: 21 August 2023                                     M. Boucadair
+Expires: 24 August 2023                                     M. Boucadair
                                                                   Orange
                                                                    Q. Wu
                                                                   Huawei
-                                                        17 February 2023
+                                                        20 February 2023
 
 
         Extensions to the Access Control Lists (ACLs) YANG Model
@@ -47,7 +47,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 21 August 2023.
+   This Internet-Draft will expire on 24 August 2023.
 
 Copyright Notice
 
@@ -465,44 +465,44 @@ Table of Contents
    Figure 5 shows the full enhanced ACL tree:
 
    module: ietf-acl-enh
-     augment /acl:acls:
-       +--rw defined-sets
-          +--rw ipv4-prefix-sets
-          |  +--rw prefix-set* [name]
-          |     +--rw name           string
-          |     +--rw description?   string
-          |     +--rw prefix*        inet:ipv4-prefix
-          +--rw ipv6-prefix-sets
-          |  +--rw prefix-set* [name]
-          |     +--rw name           string
-          |     +--rw description?   string
-          |     +--rw prefix*        inet:ipv6-prefix
-          +--rw port-sets
-          |  +--rw port-set* [name]
-          |     +--rw name    string
-          |     +--rw port* [id]
-          |        +--rw id                              string
-          |        +--rw (port)?
-          |           +--:(port-range-or-operator)
-          |              +--rw port-range-or-operator
-          |                 +--rw (port-range-or-operator)?
-          |                    +--:(range)
-          |                    |  +--rw lower-port    inet:port-number
-          |                    |  +--rw upper-port    inet:port-number
-          |                    +--:(operator)
-          |                       +--rw operator?     operator
-          |                       +--rw port          inet:port-number
-          +--rw protocol-sets
-          |  +--rw protocol-set* [name]
-          |     +--rw name        string
-          |     +--rw protocol*   union
-          +--rw icmp-type-sets
-             +--rw icmp-type-set* [name]
-                +--rw name     string
-                +--rw types* [type]
-                   +--rw type              uint8
-                   +--rw code?             uint8
-                   +--rw rest-of-header?   binary
+     +--rw defined-sets
+        +--rw ipv4-prefix-sets
+        |  +--rw prefix-set* [name]
+        |     +--rw name           string
+        |     +--rw description?   string
+        |     +--rw prefix*        inet:ipv4-prefix
+        +--rw ipv6-prefix-sets
+        |  +--rw prefix-set* [name]
+        |     +--rw name           string
+        |     +--rw description?   string
+        |     +--rw prefix*        inet:ipv6-prefix
+        +--rw port-sets
+        |  +--rw port-set* [name]
+        |     +--rw name    string
+        |     +--rw port* [id]
+        |        +--rw id                              string
+        |        +--rw (port)?
+        |           +--:(port-range-or-operator)
+        |              +--rw port-range-or-operator
+        |                 +--rw (port-range-or-operator)?
+        |                    +--:(range)
+        |                    |  +--rw lower-port    inet:port-number
+        |                    |  +--rw upper-port    inet:port-number
+        |                    +--:(operator)
+        |                       +--rw operator?     operator
+        |                       +--rw port          inet:port-number
+        +--rw protocol-sets
+        |  +--rw protocol-set* [name]
+        |     +--rw name        string
+        |     +--rw protocol*   union
+        +--rw icmp-type-sets
+           +--rw icmp-type-set* [name]
+              +--rw name     string
+              +--rw types* [type]
+                 +--rw type              uint8
+                 +--rw code?             uint8
+                 +--rw rest-of-header?   binary
+
      augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:matches:
        +--rw (payload)?
           +--:(prefix-pattern)
@@ -516,35 +516,31 @@ Table of Contents
        +--rw ipv4-fragment
        |  +--rw operator?   operator
        |  +--rw type?       fragment-type
-       +--rw source-ipv4-prefix-list?        leafref
-       +--rw destination-ipv4-prefix-list?   leafref
-       +--rw next-header-set?                leafref
+       +--rw source-ipv4-prefix-list?        ipv4-prefix-set-ref
+       +--rw destination-ipv4-prefix-list?   ipv4-prefix-set-ref
+       +--rw next-header-set?                protocol-set-ref
      augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:matches/acl:l3
                /acl:ipv6:
        +--rw ipv6-fragment
        |  +--rw operator?   operator
        |  +--rw type?       fragment-type
-       +--rw source-ipv6-prefix-list?        leafref
-       +--rw destination-ipv6-prefix-list?   leafref
-       +--rw protocol-set?                   leafref
+       +--rw source-ipv6-prefix-list?        ipv6-prefix-set-ref
+       +--rw destination-ipv6-prefix-list?   ipv6-prefix-set-ref
+       +--rw protocol-set?                   protocol-set-ref
      augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:matches/acl:l4
                /acl:tcp:
        +--rw flags-bitmask
        |  +--rw operator?   operator
        |  +--rw bitmask?    uint16
-       +--rw source-tcp-port-set?
-       |       -> ../../../../../defined-sets/port-sets/port-set/name
-       +--rw destination-tcp-port-set?
-               -> ../../../../../defined-sets/port-sets/port-set/name
+       +--rw source-tcp-port-set?        port-set-ref
+       +--rw destination-tcp-port-set?   port-set-ref
      augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:matches/acl:l4
                /acl:udp:
-       +--rw source-udp-port-set?
-       |       -> ../../../../../defined-sets/port-sets/port-set/name
-       +--rw destination-udp-port-set?
-               -> ../../../../../defined-sets/port-sets/port-set/name
+       +--rw source-udp-port-set?        port-set-ref
+       +--rw destination-udp-port-set?   port-set-ref
      augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:matches/acl:l4
                /acl:icmp:
-       +--rw icmp-set?   leafref
+       +--rw icmp-set?   icmp-type-set-ref
      augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:actions:
        +--rw rate-limit?   decimal64
 
@@ -784,7 +780,7 @@ Table of Contents
    module ietf-acl-enh {
      yang-version 1.1;
      namespace "urn:ietf:params:xml:ns:yang:ietf-acl-enh";
-     prefix enh-acl;
+     prefix acl-enh;
 
      import ietf-inet-types {
        prefix inet;
@@ -889,10 +885,10 @@ Table of Contents
               bitmask.  It evaluates to 'true' if any of the bits
               in the value mask are set in the data,
               i.e., '(data & value) != 0'.";
-          }
-        }
-        description
-          "Specifies how to apply the defined bitmask.
+         }
+       }
+       description
+         "Specifies how to apply the defined bitmask.
           'any' and 'match' bits must not be set simultaneously.";
      }
 
@@ -924,6 +920,51 @@ Table of Contents
          "Different fragment types to match against.";
      }
 
+     typedef ipv4-prefix-set-ref {
+       type leafref {
+         path "/acl-enh:defined-sets/acl-enh:ipv4-prefix-sets"
+            + "/acl-enh:prefix-set/acl-enh:name";
+       }
+       description
+         "Defines a reference to an IPv4 prefix set.";
+     }
+
+     typedef ipv6-prefix-set-ref {
+       type leafref {
+         path "/acl-enh:defined-sets/acl-enh:ipv6-prefix-sets"
+            + "/acl-enh:prefix-set/acl-enh:name";
+       }
+       description
+         "Defines a reference to an IPv6 prefix set.";
+     }
+
+     typedef port-set-ref {
+       type leafref {
+         path "/acl-enh:defined-sets/acl-enh:port-sets"
+            + "/acl-enh:port-set/acl-enh:name";
+       }
+       description
+         "Defines a reference to a port set.";
+     }
+
+     typedef protocol-set-ref {
+       type leafref {
+         path "/acl-enh:defined-sets/acl-enh:protocol-sets"
+            + "/acl-enh:protocol-set/acl-enh:name";
+       }
+       description
+         "Defines a reference to a protocol set.";
+     }
+
+     typedef icmp-type-set-ref {
+       type leafref {
+         path "/acl-enh:defined-sets/acl-enh:icmp-type-sets"
+            + "/acl-enh:icmp-type-set/acl-enh:name";
+       }
+       description
+         "Defines a reference to an ICMP type set.";
+     }
+
      grouping tcp-flags {
        description
          "Operations on TCP flags.";
@@ -937,9 +978,9 @@ Table of Contents
          type uint16;
          description
            "The bitmask matches the last 4 bits of byte 12
-           and byte 13 of the TCP header.  For clarity, the 4 bits
-           of byte 12 corresponding to the TCP data offset field
-           are not included in any matching.";
+            and byte 13 of the TCP header.  For clarity, the 4 bits
+            of byte 12 corresponding to the TCP data offset field
+            are not included in any matching.";
        }
      }
 
@@ -988,154 +1029,6 @@ Table of Contents
        }
      }
 
-     augment "/acl:acls" {
-       description
-         "add a new container to store sets (prefix
-          sets, port sets, etc";
-       container defined-sets {
-         description
-           "Predefined sets of attributes used in policy match
-            statements.";
-         container ipv4-prefix-sets {
-           description
-             "Data definitions for a list of IPv4 or IPv6
-              prefixes which are matched as part of a policy.";
-           list prefix-set {
-             key "name";
-             description
-               "List of the defined prefix sets.";
-             leaf name {
-               type string;
-               description
-                 "Name of the prefix set -- this is used as a label to
-                  reference the set in match conditions.";
-             }
-             leaf description {
-               type string;
-               description
-                 "Defined Set description.";
-             }
-             leaf-list prefix {
-               type inet:ipv4-prefix;
-               description
-                 "List of IPv4 prefixes to be used in match
-                  conditions.";
-             }
-           }
-         }
-         container ipv6-prefix-sets {
-           description
-             "Data definitions for a list of IPv6 prefixes
-              which are matched as part of a policy.";
-           list prefix-set {
-             key "name";
-             description
-               "List of the defined prefix sets.";
-             leaf name {
-               type string;
-               description
-                 "Name of the prefix set -- this is used as a label to
-                  reference the set in match conditions.";
-             }
-             leaf description {
-               type string;
-               description
-                 "A textual description of the prefix list.";
-             }
-             leaf-list prefix {
-               type inet:ipv6-prefix;
-               description
-                 "List of IPv6 prefixes to be used in match
-                  conditions.";
-             }
-           }
-         }
-         container port-sets {
-           description
-             "Data definitions for a list of ports which can
-              be matched in policies.";
-           list port-set {
-             key "name";
-             description
-               "List of port set definitions.";
-             leaf name {
-               type string;
-               description
-                 "Name of the port set -- this is used as a label to
-                  reference the set in match conditions.";
-             }
-             list port {
-               key "id";
-               description
-                 "Port numbers along with the operator on which to
-                  match.";
-               leaf id {
-                 type string;
-                 description
-                   "Identifier of the list of port numbers.";
-               }
-               choice port {
-                 description
-                   "Choice of specifying the port number or referring
-                    to a group of port numbers.";
-                 container port-range-or-operator {
-                   description
-                     "Indicates a set of ports.";
-                   uses packet-fields:port-range-or-operator;
-                 }
-               }
-             }
-           }
-         }
-         container protocol-sets {
-           description
-             "Data definitions for a list of protocols which can
-              be matched in policies.";
-           list protocol-set {
-             key "name";
-             description
-               "List of protocol set definitions.";
-             leaf name {
-               type string;
-               description
-                 "Name of the protocols set -- this is used as a label to
-                  reference the set in match conditions.";
-             }
-             leaf-list protocol {
-               type union {
-                 type uint8;
-                 type string; //Check if we can reuse an IANA-maintained module
-               }
-               description
-                 "Value of the protocl set.";
-             }
-           }
-         }
-         container icmp-type-sets {
-           description
-             "Data definitions for a list of ICMP types which can
-              be matched in policies.";
-           list icmp-type-set {
-             key "name";
-             description
-               "List of ICMP type set definitions.";
-             leaf name {
-               type string;
-               description
-                 "Name of the ICMP type set -- this is used as a label to
-                  reference the set in match conditions.";
-             }
-             list types {
-               key "type";
-               description
-                 "Includes a list of ICMP types.";
-               uses packet-fields:acl-icmp-header-fields;
-             }
-           }
-         }
-       }
-     }
-
      augment "/acl:acls/acl:acl/acl:aces/acl:ace"
            + "/acl:matches" {
        description
@@ -1162,23 +1055,17 @@ Table of Contents
          uses fragment-fields;
        }
        leaf source-ipv4-prefix-list {
-         type leafref {
-           path "../../../../../defined-sets/ipv4-prefix-sets/prefix-set/name";
-         }
+         type ipv4-prefix-set-ref;
          description
-           "A reference to a prefix list to match the source address.";
+           "A reference to an IPv4 prefix list to match the source address.";
        }
        leaf destination-ipv4-prefix-list {
-         type leafref {
-           path "../../../../../defined-sets/ipv4-prefix-sets/prefix-set/name";
-         }
+         type ipv4-prefix-set-ref;
          description
            "A reference to a prefix list to match the destination address.";
        }
        leaf next-header-set {
-         type leafref {
-           path "../../../../../defined-sets/protocol-sets/protocol-set/name";
-         }
+         type protocol-set-ref;
          description
            "A reference to a protocol set to match the next-header field.";
        }
@@ -1194,23 +1081,17 @@ Table of Contents
          uses fragment-fields;
        }
        leaf source-ipv6-prefix-list {
-         type leafref {
-           path "../../../../../defined-sets/ipv6-prefix-sets/prefix-set/name";
-         }
+         type ipv6-prefix-set-ref;
          description
            "A reference to a prefix list to match the source address.";
        }
        leaf destination-ipv6-prefix-list {
-         type leafref {
-           path "../../../../../defined-sets/ipv6-prefix-sets/prefix-set/name";
-         }
+         type ipv6-prefix-set-ref;
          description
            "A reference to a prefix list to match the destination address.";
        }
        leaf protocol-set {
-         type leafref {
-           path "../../../../../defined-sets/protocol-sets/protocol-set/name";
-         }
+         type protocol-set-ref;
          description
            "A reference to a protocol set to match the protocol field.";
        }
@@ -1226,16 +1107,12 @@ Table of Contents
          uses tcp-flags;
        }
        leaf source-tcp-port-set {
-         type leafref {
-           path "../../../../../defined-sets/port-sets/port-set/name";
-         }
+         type port-set-ref;
          description
            "A reference to a port set to match the source port.";
        }
        leaf destination-tcp-port-set {
-         type leafref {
-           path "../../../../../defined-sets/port-sets/port-set/name";
-         }
+         type port-set-ref;
          description
            "A reference to a port set to match the destination port.";
        }
@@ -1246,16 +1123,12 @@ Table of Contents
        description
          "Handle UDP port sets.";
        leaf source-udp-port-set {
-         type leafref {
-           path "../../../../../defined-sets/port-sets/port-set/name";
-         }
+         type port-set-ref;
          description
            "A reference to a port set to match the source port.";
        }
        leaf destination-udp-port-set {
-         type leafref {
-           path "../../../../../defined-sets/port-sets/port-set/name";
-         }
+         type port-set-ref;
          description
            "A reference to a port set to match the destination port.";
        }
@@ -1266,9 +1139,7 @@ Table of Contents
        description
          "Handle ICMP type sets.";
        leaf icmp-set {
-         type leafref {
-           path "../../../../../defined-sets/icmp-type-sets/icmp-type-set/name";
-         }
+         type icmp-type-set-ref;
          description
            "A reference to an ICMP type set to match the ICMP type field.";
        }
@@ -1289,6 +1160,149 @@ Table of Contents
          units "bytes per second";
          description
            "Indicates a rate-limit for the matched traffic.";
+       }
+     }
+
+     container defined-sets {
+       description
+         "Predefined sets of attributes used in policy match
+          statements.";
+       container ipv4-prefix-sets {
+         description
+           "Data definitions for a list of IPv4 or IPv6
+            prefixes which are matched as part of a policy.";
+         list prefix-set {
+           key "name";
+           description
+             "List of the defined prefix sets.";
+           leaf name {
+             type string;
+             description
+               "Name of the prefix set -- this is used as a label to
+                reference the set in match conditions.";
+           }
+           leaf description {
+             type string;
+             description
+               "Defined Set description.";
+           }
+           leaf-list prefix {
+             type inet:ipv4-prefix;
+             description
+               "List of IPv4 prefixes to be used in match
+                conditions.";
+           }
+         }
+       }
+       container ipv6-prefix-sets {
+         description
+           "Data definitions for a list of IPv6 prefixes
+            which are matched as part of a policy.";
+         list prefix-set {
+           key "name";
+           description
+             "List of the defined prefix sets.";
+           leaf name {
+             type string;
+             description
+               "Name of the prefix set -- this is used as a label to
+                reference the set in match conditions.";
+           }
+           leaf description {
+             type string;
+             description
+               "A textual description of the prefix list.";
+           }
+           leaf-list prefix {
+             type inet:ipv6-prefix;
+             description
+               "List of IPv6 prefixes to be used in match
+                conditions.";
+           }
+         }
+       }
+       container port-sets {
+         description
+           "Data definitions for a list of ports which can
+            be matched in policies.";
+         list port-set {
+           key "name";
+           description
+             "List of port set definitions.";
+           leaf name {
+             type string;
+             description
+               "Name of the port set -- this is used as a label to
+                reference the set in match conditions.";
+           }
+           list port {
+             key "id";
+             description
+               "Port numbers along with the operator on which to
+                match.";
+             leaf id {
+               type string;
+               description
+                 "Identifier of the list of port numbers.";
+             }
+             choice port {
+               description
+                 "Choice of specifying the port number or referring
+                  to a group of port numbers.";
+               container port-range-or-operator {
+                 description
+                   "Indicates a set of ports.";
+                 uses packet-fields:port-range-or-operator;
+               }
+             }
+           }
+         }
+       }
+       container protocol-sets {
+         description
+           "Data definitions for a list of protocols which can
+            be matched in policies.";
+         list protocol-set {
+           key "name";
+           description
+             "List of protocol set definitions.";
+           leaf name {
+             type string;
+             description
+               "Name of the protocols set -- this is used as a label to
+                reference the set in match conditions.";
+           }
+           leaf-list protocol {
+             type union {
+               type uint8;
+               type string; //Check if we can reuse an IANA-maintained module
+             }
+             description
+               "Value of the protocl set.";
+           }
+         }
+       }
+       container icmp-type-sets {
+         description
+           "Data definitions for a list of ICMP types which can
+            be matched in policies.";
+         list icmp-type-set {
+           key "name";
+           description
+             "List of ICMP type set definitions.";
+           leaf name {
+             type string;
+             description
+               "Name of the ICMP type set -- this is used as a label to
+                reference the set in match conditions.";
+           }
+           list types {
+             key "type";
+             description
+               "Includes a list of ICMP types.";
+             uses packet-fields:acl-icmp-header-fields;
+           }
+         }
        }
      }
    }
