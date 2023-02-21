@@ -13,6 +13,7 @@
        RFC 8519 defines a YANG data model for Access Control Lists
 (ACLs). This document discusses a set of extensions that fix many of
 the limitations of the ACL model as initially defined in RFC 8519. 
+       The document also defines an IANA-maintained module for ICMP types. 
     " name="description">
 <meta content="xml2rfc 3.16.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
@@ -1102,6 +1103,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <p id="section-abstract-1">RFC 8519 defines a YANG data model for Access Control Lists
 (ACLs). This document discusses a set of extensions that fix many of
 the limitations of the ACL model as initially defined in RFC 8519.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-2">The document also defines an IANA-maintained module for ICMP types.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-discussion-venues">
@@ -1251,10 +1253,16 @@ the limitations of the ACL model as initially defined in RFC 8519.<a href="#sect
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
-            <p id="section-toc.1-1.9.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-acknowledgements" class="internal xref">Acknowledgements</a></p>
+            <p id="section-toc.1-1.9.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-xlts-template-to-generate-t" class="internal xref">XLTS Template to Generate The ICMP Type IANA-Maintained Module</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
-            <p id="section-toc.1-1.10.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
+            <p id="section-toc.1-1.10.1"><a href="#appendix-B" class="auto internal xref">Appendix B</a>.  <a href="#name-initial-version-of-the-the-" class="internal xref">Initial Version of the The ICMP Type IANA-Maintained Module</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
+            <p id="section-toc.1-1.11.1"><a href="#appendix-C" class="auto internal xref">Appendix C</a>.  <a href="#name-acknowledgements" class="internal xref">Acknowledgements</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
+            <p id="section-toc.1-1.12.1"><a href="#appendix-D" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
 </li>
         </ul>
 </nav>
@@ -1300,6 +1308,9 @@ e.g., deny-lists or accept-lists that are associated with those provided by a
 tools such as DDoS mitigation <span>[<a href="#RFC9132" class="cite xref">RFC9132</a>]</span> or BGP Flow Spec <span>[<a href="#RFC8955" class="cite xref">RFC8955</a>]</span>
         <span>[<a href="#RFC8956" class="cite xref">RFC8956</a>]</span>. Therefore, supporting means to easily map to the filtering rules conveyed in
 messages triggered by  these tools is valuable from a network operation standpoint.<a href="#section-1-7" class="pilcrow">¶</a></p>
+<p id="section-1-8">The document also defines an IANA-maintained module for ICMP types. The design of the module adheres with the recommendations
+in <span>[<a href="#I-D.boucadair-netmod-iana-registries" class="cite xref">I-D.boucadair-netmod-iana-registries</a>]</span>. A template to generate the module is available at <a href="#template" class="auto internal xref">Appendix A</a>. Readers should refer to the IANA
+website [REF_TBC] to retrieve the latest version of the module. The module is provided in <a href="#iana-icmp" class="auto internal xref">Appendix B</a> for the users convenience, but that appendix will be removed from the final RFC.<a href="#section-1-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="terminology">
@@ -1668,44 +1679,44 @@ logical infrastructure.<a href="#section-3.8-3.4" class="pilcrow">¶</a>
           <div class="alignLeft art-ascii-art art-text artwork" id="section-4.1-2.1">
 <pre>
 module: ietf-acl-enh
-  augment /acl:acls:
-    +--rw defined-sets
-       +--rw ipv4-prefix-sets
-       |  +--rw prefix-set* [name]
-       |     +--rw name           string
-       |     +--rw description?   string
-       |     +--rw prefix*        inet:ipv4-prefix
-       +--rw ipv6-prefix-sets
-       |  +--rw prefix-set* [name]
-       |     +--rw name           string
-       |     +--rw description?   string
-       |     +--rw prefix*        inet:ipv6-prefix
-       +--rw port-sets
-       |  +--rw port-set* [name]
-       |     +--rw name    string
-       |     +--rw port* [id]
-       |        +--rw id                              string
-       |        +--rw (port)?
-       |           +--:(port-range-or-operator)
-       |              +--rw port-range-or-operator
-       |                 +--rw (port-range-or-operator)?
-       |                    +--:(range)
-       |                    |  +--rw lower-port    inet:port-number
-       |                    |  +--rw upper-port    inet:port-number
-       |                    +--:(operator)
-       |                       +--rw operator?     operator
-       |                       +--rw port          inet:port-number
-       +--rw protocol-sets
-       |  +--rw protocol-set* [name]
-       |     +--rw name        string
-       |     +--rw protocol*   union
-       +--rw icmp-type-sets
-          +--rw icmp-type-set* [name]
-             +--rw name     string
-             +--rw types* [type]
-                +--rw type              uint8
-                +--rw code?             uint8
-                +--rw rest-of-header?   binary
+  +--rw defined-sets
+     +--rw ipv4-prefix-sets
+     |  +--rw prefix-set* [name]
+     |     +--rw name           string
+     |     +--rw description?   string
+     |     +--rw prefix*        inet:ipv4-prefix
+     +--rw ipv6-prefix-sets
+     |  +--rw prefix-set* [name]
+     |     +--rw name           string
+     |     +--rw description?   string
+     |     +--rw prefix*        inet:ipv6-prefix
+     +--rw port-sets
+     |  +--rw port-set* [name]
+     |     +--rw name    string
+     |     +--rw port* [id]
+     |        +--rw id                              string
+     |        +--rw (port)?
+     |           +--:(port-range-or-operator)
+     |              +--rw port-range-or-operator
+     |                 +--rw (port-range-or-operator)?
+     |                    +--:(range)
+     |                    |  +--rw lower-port    inet:port-number
+     |                    |  +--rw upper-port    inet:port-number
+     |                    +--:(operator)
+     |                       +--rw operator?     operator
+     |                       +--rw port          inet:port-number
+     +--rw protocol-sets
+     |  +--rw protocol-set* [name]
+     |     +--rw name        string
+     |     +--rw protocol*   union
+     +--rw icmp-type-sets
+        +--rw icmp-type-set* [name]
+           +--rw name     string
+           +--rw types* [type]
+              +--rw type              uint8
+              +--rw code?             uint8
+              +--rw rest-of-header?   binary
+
   augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:matches:
     +--rw (payload)?
        +--:(prefix-pattern)
@@ -1719,35 +1730,31 @@ module: ietf-acl-enh
     +--rw ipv4-fragment
     |  +--rw operator?   operator
     |  +--rw type?       fragment-type
-    +--rw source-ipv4-prefix-list?        leafref
-    +--rw destination-ipv4-prefix-list?   leafref
-    +--rw next-header-set?                leafref
+    +--rw source-ipv4-prefix-list?        ipv4-prefix-set-ref
+    +--rw destination-ipv4-prefix-list?   ipv4-prefix-set-ref
+    +--rw next-header-set?                protocol-set-ref
   augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:matches/acl:l3
             /acl:ipv6:
     +--rw ipv6-fragment
     |  +--rw operator?   operator
     |  +--rw type?       fragment-type
-    +--rw source-ipv6-prefix-list?        leafref
-    +--rw destination-ipv6-prefix-list?   leafref
-    +--rw protocol-set?                   leafref
+    +--rw source-ipv6-prefix-list?        ipv6-prefix-set-ref
+    +--rw destination-ipv6-prefix-list?   ipv6-prefix-set-ref
+    +--rw protocol-set?                   protocol-set-ref
   augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:matches/acl:l4
             /acl:tcp:
     +--rw flags-bitmask
     |  +--rw operator?   operator
     |  +--rw bitmask?    uint16
-    +--rw source-tcp-port-set?
-    |       -&gt; ../../../../../defined-sets/port-sets/port-set/name
-    +--rw destination-tcp-port-set?
-            -&gt; ../../../../../defined-sets/port-sets/port-set/name
+    +--rw source-tcp-port-set?        port-set-ref
+    +--rw destination-tcp-port-set?   port-set-ref
   augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:matches/acl:l4
             /acl:udp:
-    +--rw source-udp-port-set?
-    |       -&gt; ../../../../../defined-sets/port-sets/port-set/name
-    +--rw destination-udp-port-set?
-            -&gt; ../../../../../defined-sets/port-sets/port-set/name
+    +--rw source-udp-port-set?        port-set-ref
+    +--rw destination-udp-port-set?   port-set-ref
   augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:matches/acl:l4
             /acl:icmp:
-    +--rw icmp-set?   leafref
+    +--rw icmp-set?   icmp-type-set-ref
   augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:actions:
     +--rw rate-limit?   decimal64
 </pre>
@@ -2017,7 +2024,7 @@ packets.  The following ACEs are defined (in this order):<a href="#section-4.4-3
 module ietf-acl-enh {
   yang-version 1.1;
   namespace "urn:ietf:params:xml:ns:yang:ietf-acl-enh";
-  prefix enh-acl;
+  prefix acl-enh;
 
   import ietf-inet-types {
     prefix inet;
@@ -2102,7 +2109,7 @@ module ietf-acl-enh {
        of the TCP data right after any TCP options.";
   }
 
-  identity tcp-flag {
+   identity tcp-flag {
     description
       "Base Identity for the TCP Flags.";
   }
@@ -2214,10 +2221,10 @@ module ietf-acl-enh {
            bitmask.  It evaluates to 'true' if any of the bits
            in the value mask are set in the data,
            i.e., '(data &amp; value) != 0'.";
-       }
-     }
-     description
-       "Specifies how to apply the defined bitmask.
+      }
+    }
+    description
+      "Specifies how to apply the defined bitmask.
        'any' and 'match' bits must not be set simultaneously.";
   }
 
@@ -2247,6 +2254,51 @@ module ietf-acl-enh {
     }
     description
       "Different fragment types to match against.";
+  }
+
+  typedef ipv4-prefix-set-ref {
+    type leafref {
+      path "/acl-enh:defined-sets/acl-enh:ipv4-prefix-sets"
+         + "/acl-enh:prefix-set/acl-enh:name";
+    }
+    description
+      "Defines a reference to an IPv4 prefix set.";
+  }
+
+  typedef ipv6-prefix-set-ref {
+    type leafref {
+      path "/acl-enh:defined-sets/acl-enh:ipv6-prefix-sets"
+         + "/acl-enh:prefix-set/acl-enh:name";
+    }
+    description
+      "Defines a reference to an IPv6 prefix set.";
+  }
+
+  typedef port-set-ref {
+    type leafref {
+      path "/acl-enh:defined-sets/acl-enh:port-sets"
+         + "/acl-enh:port-set/acl-enh:name";
+    }
+    description
+      "Defines a reference to a port set.";
+  }
+
+  typedef protocol-set-ref {
+    type leafref {
+      path "/acl-enh:defined-sets/acl-enh:protocol-sets"
+         + "/acl-enh:protocol-set/acl-enh:name";
+    }
+    description
+      "Defines a reference to a protocol set.";
+  }
+
+  typedef icmp-type-set-ref {
+    type leafref {
+      path "/acl-enh:defined-sets/acl-enh:icmp-type-sets"
+         + "/acl-enh:icmp-type-set/acl-enh:name";
+    }
+    description
+      "Defines a reference to an ICMP type set.";
   }
 
   grouping tcp-flags {
@@ -2326,154 +2378,6 @@ module ietf-acl-enh {
     }
   }
 
-  augment "/acl:acls" {
-    description
-      "add a new container to store sets (prefix
-       sets, port sets, etc";
-    container defined-sets {
-      description
-        "Predefined sets of attributes used in policy match
-         statements.";
-      container ipv4-prefix-sets {
-        description
-          "Data definitions for a list of IPv4 or IPv6
-           prefixes which are matched as part of a policy.";
-        list prefix-set {
-          key "name";
-          description
-            "List of the defined prefix sets.";
-          leaf name {
-            type string;
-            description
-              "Name of the prefix set -- this is used as a label to
-               reference the set in match conditions.";
-          }
-          leaf description {
-            type string;
-            description
-              "Defined Set description.";
-          }
-          leaf-list prefix {
-            type inet:ipv4-prefix;
-            description
-              "List of IPv4 prefixes to be used in match
-               conditions.";
-          }
-        }
-      }
-      container ipv6-prefix-sets {
-        description
-          "Data definitions for a list of IPv6 prefixes
-           which are matched as part of a policy.";
-        list prefix-set {
-          key "name";
-          description
-            "List of the defined prefix sets.";
-          leaf name {
-            type string;
-            description
-              "Name of the prefix set -- this is used as a label to
-               reference the set in match conditions.";
-          }
-          leaf description {
-            type string;
-            description
-              "A textual description of the prefix list.";
-          }
-          leaf-list prefix {
-            type inet:ipv6-prefix;
-            description
-              "List of IPv6 prefixes to be used in match
-               conditions.";
-          }
-        }
-      }
-      container port-sets {
-        description
-          "Data definitions for a list of ports which can
-           be matched in policies.";
-        list port-set {
-          key "name";
-          description
-            "List of port set definitions.";
-          leaf name {
-            type string;
-            description
-              "Name of the port set -- this is used as a label to
-               reference the set in match conditions.";
-          }
-          list port {
-            key "id";
-            description
-              "Port numbers along with the operator on which to
-               match.";
-            leaf id {
-              type string;
-              description
-                "Identifier of the list of port numbers.";
-            }
-            choice port {
-              description
-                "Choice of specifying the port number or referring
-                 to a group of port numbers.";
-              container port-range-or-operator {
-                description
-                  "Indicates a set of ports.";
-                uses packet-fields:port-range-or-operator;
-              }
-            }
-          }
-        }
-      }
-      container protocol-sets {
-        description
-          "Data definitions for a list of protocols which can
-           be matched in policies.";
-        list protocol-set {
-          key "name";
-          description
-            "List of protocol set definitions.";
-          leaf name {
-            type string;
-            description
-              "Name of the protocols set -- this is used as a label to
-               reference the set in match conditions.";
-          }
-          leaf-list protocol {
-            type union {
-              type uint8;
-              type string; //Check if we can reuse an IANA-maintained module
-            }
-            description
-              "Value of the protocl set.";
-          }
-        }
-      }
-      container icmp-type-sets {
-        description
-          "Data definitions for a list of ICMP types which can
-           be matched in policies.";
-        list icmp-type-set {
-          key "name";
-          description
-            "List of ICMP type set definitions.";
-          leaf name {
-            type string;
-            description
-              "Name of the ICMP type set -- this is used as a label to
-               reference the set in match conditions.";
-          }
-          list types {
-            key "type";
-            description
-              "Includes a list of ICMP types.";
-            uses packet-fields:acl-icmp-header-fields;
-          }
-        }
-      }
-    }
-  }
-
   augment "/acl:acls/acl:acl/acl:aces/acl:ace"
         + "/acl:matches" {
     description
@@ -2500,23 +2404,17 @@ module ietf-acl-enh {
       uses fragment-fields;
     }
     leaf source-ipv4-prefix-list {
-      type leafref {
-        path "../../../../../defined-sets/ipv4-prefix-sets/prefix-set/name";
-      }
+      type ipv4-prefix-set-ref;
       description
-        "A reference to a prefix list to match the source address.";
+        "A reference to an IPv4 prefix list to match the source address.";
     }
     leaf destination-ipv4-prefix-list {
-      type leafref {
-        path "../../../../../defined-sets/ipv4-prefix-sets/prefix-set/name";
-      }
+      type ipv4-prefix-set-ref;
       description
         "A reference to a prefix list to match the destination address.";
     }
     leaf next-header-set {
-      type leafref {
-        path "../../../../../defined-sets/protocol-sets/protocol-set/name";
-      }
+      type protocol-set-ref;
       description
         "A reference to a protocol set to match the next-header field.";
     }
@@ -2532,23 +2430,17 @@ module ietf-acl-enh {
       uses fragment-fields;
     }
     leaf source-ipv6-prefix-list {
-      type leafref {
-        path "../../../../../defined-sets/ipv6-prefix-sets/prefix-set/name";
-      }
+      type ipv6-prefix-set-ref;
       description
         "A reference to a prefix list to match the source address.";
     }
     leaf destination-ipv6-prefix-list {
-      type leafref {
-        path "../../../../../defined-sets/ipv6-prefix-sets/prefix-set/name";
-      }
+      type ipv6-prefix-set-ref;
       description
         "A reference to a prefix list to match the destination address.";
     }
     leaf protocol-set {
-      type leafref {
-        path "../../../../../defined-sets/protocol-sets/protocol-set/name";
-      }
+      type protocol-set-ref;
       description
         "A reference to a protocol set to match the protocol field.";
     }
@@ -2564,16 +2456,12 @@ module ietf-acl-enh {
       uses tcp-flags;
     }
     leaf source-tcp-port-set {
-      type leafref {
-        path "../../../../../defined-sets/port-sets/port-set/name";
-      }
+      type port-set-ref;
       description
         "A reference to a port set to match the source port.";
     }
     leaf destination-tcp-port-set {
-      type leafref {
-        path "../../../../../defined-sets/port-sets/port-set/name";
-      }
+      type port-set-ref;
       description
         "A reference to a port set to match the destination port.";
     }
@@ -2584,16 +2472,12 @@ module ietf-acl-enh {
     description
       "Handle UDP port sets.";
     leaf source-udp-port-set {
-      type leafref {
-        path "../../../../../defined-sets/port-sets/port-set/name";
-      }
+      type port-set-ref;
       description
         "A reference to a port set to match the source port.";
     }
     leaf destination-udp-port-set {
-      type leafref {
-        path "../../../../../defined-sets/port-sets/port-set/name";
-      }
+      type port-set-ref;
       description
         "A reference to a port set to match the destination port.";
     }
@@ -2604,9 +2488,7 @@ module ietf-acl-enh {
     description
       "Handle ICMP type sets.";
     leaf icmp-set {
-      type leafref {
-        path "../../../../../defined-sets/icmp-type-sets/icmp-type-set/name";
-      }
+      type icmp-type-set-ref;
       description
         "A reference to an ICMP type set to match the ICMP type field.";
     }
@@ -2627,6 +2509,149 @@ module ietf-acl-enh {
       units "bytes per second";
       description
         "Indicates a rate-limit for the matched traffic.";
+    }
+  }
+
+  container defined-sets {
+    description
+      "Predefined sets of attributes used in policy match
+       statements.";
+    container ipv4-prefix-sets {
+      description
+        "Data definitions for a list of IPv4 or IPv6
+         prefixes which are matched as part of a policy.";
+      list prefix-set {
+        key "name";
+        description
+          "List of the defined prefix sets.";
+        leaf name {
+          type string;
+          description
+            "Name of the prefix set -- this is used as a label to
+             reference the set in match conditions.";
+        }
+        leaf description {
+          type string;
+          description
+            "Defined Set description.";
+        }
+        leaf-list prefix {
+          type inet:ipv4-prefix;
+          description
+            "List of IPv4 prefixes to be used in match
+             conditions.";
+        }
+      }
+    }
+    container ipv6-prefix-sets {
+      description
+        "Data definitions for a list of IPv6 prefixes
+         which are matched as part of a policy.";
+      list prefix-set {
+        key "name";
+        description
+          "List of the defined prefix sets.";
+        leaf name {
+          type string;
+          description
+            "Name of the prefix set -- this is used as a label to
+             reference the set in match conditions.";
+        }
+        leaf description {
+          type string;
+          description
+            "A textual description of the prefix list.";
+        }
+        leaf-list prefix {
+          type inet:ipv6-prefix;
+          description
+            "List of IPv6 prefixes to be used in match
+             conditions.";
+        }
+      }
+    }
+    container port-sets {
+      description
+        "Data definitions for a list of ports which can
+         be matched in policies.";
+      list port-set {
+        key "name";
+        description
+          "List of port set definitions.";
+        leaf name {
+          type string;
+          description
+            "Name of the port set -- this is used as a label to
+             reference the set in match conditions.";
+        }
+        list port {
+          key "id";
+          description
+            "Port numbers along with the operator on which to
+             match.";
+          leaf id {
+            type string;
+            description
+              "Identifier of the list of port numbers.";
+          }
+          choice port {
+            description
+              "Choice of specifying the port number or referring
+               to a group of port numbers.";
+            container port-range-or-operator {
+              description
+                "Indicates a set of ports.";
+              uses packet-fields:port-range-or-operator;
+            }
+          }
+        }
+      }
+    }
+    container protocol-sets {
+      description
+        "Data definitions for a list of protocols which can
+         be matched in policies.";
+      list protocol-set {
+        key "name";
+        description
+          "List of protocol set definitions.";
+        leaf name {
+          type string;
+          description
+            "Name of the protocols set -- this is used as a label to
+             reference the set in match conditions.";
+        }
+        leaf-list protocol {
+          type union {
+            type uint8;
+            type string; //Check if we can reuse an IANA-maintained module
+          }
+          description
+            "Value of the protocl set.";
+        }
+      }
+    }
+    container icmp-type-sets {
+      description
+        "Data definitions for a list of ICMP types which can
+         be matched in policies.";
+      list icmp-type-set {
+        key "name";
+        description
+          "List of ICMP type set definitions.";
+        leaf name {
+          type string;
+          description
+            "Name of the ICMP type set -- this is used as a label to
+             reference the set in match conditions.";
+        }
+        list types {
+          key "type";
+          description
+            "Includes a list of ICMP types.";
+          uses packet-fields:acl-icmp-header-fields;
+        }
+      }
     }
   }
 }
@@ -2672,11 +2697,15 @@ module ietf-acl-enh {
         <h3 id="name-uri-registration">
 <a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-uri-registration" class="section-name selfRef">URI Registration</a>
         </h3>
-<p id="section-7.1-1">This document requests IANA to register the following URI in the "ns"
+<p id="section-7.1-1">This document requests IANA to register the following URIs in the "ns"
    subregistry within the "IETF XML Registry" <span>[<a href="#RFC3688" class="cite xref">RFC3688</a>]</span>:<a href="#section-7.1-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-ascii-art art-text artwork" id="section-7.1-2">
 <pre>
          URI: urn:ietf:params:xml:ns:yang:ietf-acl-enh
+         Registrant Contact: The IESG.
+         XML: N/A; the requested URI is an XML namespace.
+
+         URI: urn:ietf:params:xml:ns:yang:iana-icmp-types
          Registrant Contact: The IESG.
          XML: N/A; the requested URI is an XML namespace.
 </pre><a href="#section-7.1-2" class="pilcrow">¶</a>
@@ -2688,15 +2717,21 @@ module ietf-acl-enh {
         <h3 id="name-yang-module-name-registrati">
 <a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-yang-module-name-registrati" class="section-name selfRef">YANG Module Name Registration</a>
         </h3>
-<p id="section-7.2-1">This document requests IANA to register the following YANG module in
+<p id="section-7.2-1">This document requests IANA to register the following YANG modules in
    the "YANG Module Names" subregistry <span>[<a href="#RFC6020" class="cite xref">RFC6020</a>]</span> within the "YANG
    Parameters" registry.<a href="#section-7.2-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-ascii-art art-text artwork" id="section-7.2-2">
 <pre>
          name: ietf-acl-enh
-         namespace: urn:ietf:params:xml:ns:yang:ietf-ietf-acl-enh
+         namespace: urn:ietf:params:xml:ns:yang:ietf-acl-enh
          maintained by IANA: N
          prefix: acl-enh
+         reference: RFC XXXX
+
+         name: ietf-icmp-types
+         namespace: urn:ietf:params:xml:ns:yang:iana-icmp-types
+         maintained by IANA: Y
+         prefix: iana-icmp-types
          reference: RFC XXXX
 </pre><a href="#section-7.2-2" class="pilcrow">¶</a>
 </div>
@@ -2768,6 +2803,10 @@ module ietf-acl-enh {
 <a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
+<dt id="I-D.boucadair-netmod-iana-registries">[I-D.boucadair-netmod-iana-registries]</dt>
+        <dd>
+<span class="refAuthor">Boucadair, M.</span>, <span class="refTitle">"Recommendations for Creating IANA-Maintained YANG Modules"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-boucadair-netmod-iana-registries-07</span>, <time datetime="2023-01-20" class="refDate">20 January 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-boucadair-netmod-iana-registries-07">https://datatracker.ietf.org/doc/html/draft-boucadair-netmod-iana-registries-07</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC8340">[RFC8340]</dt>
         <dd>
 <span class="refAuthor">Bjorklund, M.</span> and <span class="refAuthor">L. Berger, Ed.</span>, <span class="refTitle">"YANG Tree Diagrams"</span>, <span class="seriesInfo">BCP 215</span>, <span class="seriesInfo">RFC 8340</span>, <span class="seriesInfo">DOI 10.17487/RFC8340</span>, <time datetime="2018-03" class="refDate">March 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8340">https://www.rfc-editor.org/rfc/rfc8340</a>&gt;</span>. </dd>
@@ -2783,19 +2822,437 @@ module ietf-acl-enh {
 </dl>
 </section>
 </section>
-<div id="acknowledgements">
+<div id="template">
 <section id="appendix-A">
-      <h2 id="name-acknowledgements">
-<a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-acknowledgements" class="section-name selfRef">Acknowledgements</a>
+      <h2 id="name-xlts-template-to-generate-t">
+<a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-xlts-template-to-generate-t" class="section-name selfRef">XLTS Template to Generate The ICMP Type IANA-Maintained Module</a>
       </h2>
-<p id="appendix-A-1">Many thanks to Jon Shallow and Miguel Cros for the review and comments to the document, incuding priror to publishing the document.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
-<p id="appendix-A-2">Thanks to Qiufang Ma for the comments and suggestions.<a href="#appendix-A-2" class="pilcrow">¶</a></p>
-<p id="appendix-A-3">This work is partially supported by the European Commission under   Horizon 2020 Secured autonomic traffic management for a Tera of SDN
- flows (Teraflow) project (grant agreement number 101015857).<a href="#appendix-A-3" class="pilcrow">¶</a></p>
+<div class="breakable sourcecode" id="appendix-A-1">
+<pre>&lt;CODE BEGINS&gt;
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;stylesheet
+    xmlns="http://www.w3.org/1999/XSL/Transform"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:iana="http://www.iana.org/assignments"
+    xmlns:yin="urn:ietf:params:xml:ns:yang:yin:1"
+    version="1.0"&gt;
+  &lt;import href="../../../xslt/iana-yinx.xsl"/&gt;
+  &lt;output method="xml" encoding="utf-8"/&gt;
+  &lt;strip-space elements="*"/&gt;
+
+  &lt;template match="iana:registry[@id='icmp-parameters-types']"&gt;
+    &lt;element name="yin:typedef"&gt;
+      &lt;attribute name="name"&gt;icmp-type-name&lt;/attribute&gt;
+      &lt;element name="yin:type"&gt;
+        &lt;attribute name="name"&gt;enumeration&lt;/attribute&gt;
+        &lt;apply-templates
+            select="iana:record[not(iana:description = 'Unassigned' or
+                    starts-with(iana:description, 'Reserved') or
+                    starts-with(iana:description, 'RFC3692')) or
+                    contains(iana:description, 'experimental')]"/&gt;
+      &lt;/element&gt;
+      &lt;element name="yin:description"&gt;
+        &lt;element name="yin:text"&gt;
+          This enumeration type defines mnemonic names and
+          corresponding numeric values of ICMP types.
+        &lt;/element&gt;
+      &lt;/element&gt;
+      &lt;element name="yin:reference"&gt;
+        &lt;element name="yin:text"&gt;
+          RFC 2708: IANA Allocation Guidelines For Values In
+                    the Internet Protocol and Related Headers
+        &lt;/element&gt;
+      &lt;/element&gt;
+    &lt;/element&gt;
+    &lt;element name="yin:typedef"&gt;
+      &lt;attribute name="name"&gt;icmp-type&lt;/attribute&gt;
+      &lt;element name="yin:type"&gt;
+        &lt;attribute name="name"&gt;union&lt;/attribute&gt;
+        &lt;element name="yin:type"&gt;
+          &lt;attribute name="name"&gt;uint8/&lt;/attribute&gt;
+        &lt;/element&gt;
+        &lt;element name="yin:type"&gt;
+          &lt;attribute name="name"&gt;icmp-type-name&lt;/attribute&gt;
+        &lt;/element&gt;
+      &lt;/element&gt;
+      &lt;element name="yin:description"&gt;
+        &lt;element name="yin:text"&gt;
+          This type allows reference to an ICMP type using either
+          the assigned mnemonic name or numeric value.
+        &lt;/element&gt;
+      &lt;/element&gt;
+    &lt;/element&gt;
+  &lt;/template&gt;
+
+  &lt;template match="iana:record"&gt;
+    &lt;call-template name="enum"&gt;
+      &lt;with-param name="id"&gt;
+        &lt;choose&gt;
+          &lt;when test="contains(iana:description, '(Deprecated)')"&gt;
+            &lt;value-of select="translate(normalize-space(substring-before(iana:description,
+                  '(Deprecated)')),' ','')"/&gt;
+          &lt;/when&gt;
+          &lt;otherwise&gt;
+            &lt;value-of select="translate(normalize-space(iana:description),' ','')"/&gt;
+          &lt;/otherwise&gt;
+        &lt;/choose&gt;
+      &lt;/with-param&gt;
+      &lt;with-param name="deprecated"
+                  select="contains(iana:description, '(Deprecated)')"/&gt;
+    &lt;/call-template&gt;
+  &lt;/template&gt;
+
+&lt;/stylesheet&gt;
+
+
+&lt;CODE ENDS&gt;</pre><a href="#appendix-A-1" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="iana-icmp">
+<section id="appendix-B">
+      <h2 id="name-initial-version-of-the-the-">
+<a href="#appendix-B" class="section-number selfRef">Appendix B. </a><a href="#name-initial-version-of-the-the-" class="section-name selfRef">Initial Version of the The ICMP Type IANA-Maintained Module</a>
+      </h2>
+<div class="breakable sourcecode" id="appendix-B-1">
+<pre>&lt;CODE BEGINS&gt; file "iana-icmp-types@2020-09-25.yang"
+
+
+module iana-icmp-types {
+  yang-version 1.1;
+  namespace "urn:ietf:params:xml:ns:yang:iana-icmp-types";
+  prefix iana-icmp-types;
+
+  organization
+    "Internet Assigned Numbers Authority (IANA)";
+
+  contact
+    "Internet Assigned Numbers Authority
+
+     ICANN
+     12025 Waterfront Drive, Suite 300
+     Los Angeles, CA 90094
+
+
+     Tel: +1 424 254 5300
+
+     &lt;mailto:iana@iana.org&gt;";
+
+  description
+    "This YANG module translates IANA registry 'ICMP Type Numbers' to
+     YANG derived types.
+
+     Copyright (c) 2020 IETF Trust and the persons identified as
+     authors of the code. All rights reserved.
+
+     Redistribution and use in source and binary forms, with or
+     without modification, is permitted pursuant to, and subject to
+     the license terms contained in, the Revised BSD License set
+     forth in Section 4.c of the IETF Trust's Legal Provisions
+     Relating to IETF Documents
+     (https://trustee.ietf.org/license-info).
+
+     This version of this YANG module was generated from the
+     corresponding IANA registry using an XSLT stylesheet from the
+     'iana-yang' project (https://github.com/llhotka/iana-yang).";
+
+  reference
+    "Internet Control Message Protocol (ICMP) Parameters
+     (https://www.iana.org/assignments/icmp-parameters/)";
+
+  revision 2020-09-25 {
+    description
+      "Current revision as of the revision date specified in the XML
+       representation of the registry page.";
+    reference
+      "https://www.iana.org/assignments/icmp-parameters/icmp-parameters.xml";
+  }
+
+  /* Typedefs */
+
+  typedef icmp-type-name {
+    type enumeration {
+      enum EchoReply {
+        value 0;
+        description
+          "Echo Reply";
+        reference
+          "RFC 792";
+      }
+      enum DestinationUnreachable {
+        value 3;
+        description
+          "Destination Unreachable";
+        reference
+          "RFC 792";
+      }
+      enum SourceQuench {
+        value 4;
+        status deprecated;
+        description
+          "Source Quench (Deprecated)";
+        reference
+          "- RFC 792
+           - RFC 6633";
+      }
+      enum Redirect {
+        value 5;
+        description
+          "Redirect";
+        reference
+          "RFC 792";
+      }
+      enum AlternateHostAddress {
+        value 6;
+        status deprecated;
+        description
+          "Alternate Host Address (Deprecated)";
+        reference
+          "RFC 6918";
+      }
+      enum Echo {
+        value 8;
+        description
+          "Echo";
+        reference
+          "RFC 792";
+      }
+      enum RouterAdvertisement {
+        value 9;
+        description
+          "Router Advertisement";
+        reference
+          "RFC 1256";
+      }
+      enum RouterSolicitation {
+        value 10;
+        description
+          "Router Solicitation";
+        reference
+          "RFC 1256";
+      }
+      enum TimeExceeded {
+        value 11;
+        description
+          "Time Exceeded";
+        reference
+          "RFC 792";
+      }
+      enum ParameterProblem {
+        value 12;
+        description
+          "Parameter Problem";
+        reference
+          "RFC 792";
+      }
+      enum Timestamp {
+        value 13;
+        description
+          "Timestamp";
+        reference
+          "RFC 792";
+      }
+      enum TimestampReply {
+        value 14;
+        description
+          "Timestamp Reply";
+        reference
+          "RFC 792";
+      }
+      enum InformationRequest {
+        value 15;
+        status deprecated;
+        description
+          "Information Request (Deprecated)";
+        reference
+          "- RFC 792
+           - RFC 6918";
+      }
+      enum InformationReply {
+        value 16;
+        status deprecated;
+        description
+          "Information Reply (Deprecated)";
+        reference
+          "- RFC 792
+           - RFC 6918";
+      }
+      enum AddressMaskRequest {
+        value 17;
+        status deprecated;
+        description
+          "Address Mask Request (Deprecated)";
+        reference
+          "- RFC 950
+           - RFC 6918";
+      }
+      enum AddressMaskReply {
+        value 18;
+        status deprecated;
+        description
+          "Address Mask Reply (Deprecated)";
+        reference
+          "- RFC 950
+           - RFC 6918";
+      }
+      enum Traceroute {
+        value 30;
+        status deprecated;
+        description
+          "Traceroute (Deprecated)";
+        reference
+          "- RFC 1393
+           - RFC 6918";
+      }
+      enum DatagramConversionError {
+        value 31;
+        status deprecated;
+        description
+          "Datagram Conversion Error (Deprecated)";
+        reference
+          "- RFC 1475
+           - RFC 6918";
+      }
+      enum MobileHostRedirect {
+        value 32;
+        status deprecated;
+        description
+          "Mobile Host Redirect (Deprecated)";
+        reference
+          "- David Johnson &lt;&gt;
+           - RFC 6918";
+      }
+      enum IPv6Where-Are-You {
+        value 33;
+        status deprecated;
+        description
+          "IPv6 Where-Are-You (Deprecated)";
+        reference
+          "- Bill Simpson &lt;mailto:Bill.Simpson&amp;um.cc.umich.edu&gt;
+           - RFC 6918";
+      }
+      enum IPv6I-Am-Here {
+        value 34;
+        status deprecated;
+        description
+          "IPv6 I-Am-Here (Deprecated)";
+        reference
+          "- Bill Simpson &lt;mailto:Bill.Simpson&amp;um.cc.umich.edu&gt;
+           - RFC 6918";
+      }
+      enum MobileRegistrationRequest {
+        value 35;
+        status deprecated;
+        description
+          "Mobile Registration Request (Deprecated)";
+        reference
+          "- Bill Simpson &lt;mailto:Bill.Simpson&amp;um.cc.umich.edu&gt;
+           - RFC 6918";
+      }
+      enum MobileRegistrationReply {
+        value 36;
+        status deprecated;
+        description
+          "Mobile Registration Reply (Deprecated)";
+        reference
+          "- Bill Simpson &lt;mailto:Bill.Simpson&amp;um.cc.umich.edu&gt;
+           - RFC 6918";
+      }
+      enum DomainNameRequest {
+        value 37;
+        status deprecated;
+        description
+          "Domain Name Request (Deprecated)";
+        reference
+          "- RFC 1788
+           - RFC 6918";
+      }
+      enum DomainNameReply {
+        value 38;
+        status deprecated;
+        description
+          "Domain Name Reply (Deprecated)";
+        reference
+          "- RFC 1788
+           - RFC 6918";
+      }
+      enum SKIP {
+        value 39;
+        status deprecated;
+        description
+          "SKIP (Deprecated)";
+        reference
+          "- Tom Markson &lt;mailto:markson&amp;osmosys.incog.com&gt;
+           - RFC 6918";
+      }
+      enum Photuris {
+        value 40;
+        description
+          "Photuris";
+        reference
+          "RFC 2521";
+      }
+      enum ICMPmessagesutilizedbyexperimentalmobilityprotocolssuchasSeamoby {
+        value 41;
+        description
+          "ICMP messages utilized by experimental mobility protocols
+           such as Seamoby";
+        reference
+          "RFC 4065";
+      }
+      enum ExtendedEchoRequest {
+        value 42;
+        description
+          "Extended Echo Request";
+        reference
+          "RFC 8335";
+      }
+      enum ExtendedEchoReply {
+        value 43;
+        description
+          "Extended Echo Reply";
+        reference
+          "RFC 8335";
+      }
+    }
+    description
+      "This enumeration type defines mnemonic names and corresponding
+       numeric values of ICMP types.";
+    reference
+      "RFC 2708: IANA Allocation Guidelines For Values In the
+       Internet Protocol and Related Headers";
+  }
+
+  typedef icmp-type {
+    type union {
+      type uint8/;
+      type icmp-type-name;
+    }
+    description
+      "This type allows reference to an ICMP type using either the
+       assigned mnemonic name or numeric value.";
+  }
+}
+
+
+&lt;CODE ENDS&gt;</pre><a href="#appendix-B-1" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="acknowledgements">
+<section id="appendix-C">
+      <h2 id="name-acknowledgements">
+<a href="#appendix-C" class="section-number selfRef">Appendix C. </a><a href="#name-acknowledgements" class="section-name selfRef">Acknowledgements</a>
+      </h2>
+<p id="appendix-C-1">Many thanks to Jon Shallow and Miguel Cros for the review and comments to the document, incuding priror to publishing the document.<a href="#appendix-C-1" class="pilcrow">¶</a></p>
+<p id="appendix-C-2">Thanks to Qiufang Ma for the comments and suggestions.<a href="#appendix-C-2" class="pilcrow">¶</a></p>
+<p id="appendix-C-3">This work is partially supported by the European Commission under   Horizon 2020 Secured autonomic traffic management for a Tera of SDN
+ flows (Teraflow) project (grant agreement number 101015857).<a href="#appendix-C-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authors-addresses">
-<section id="appendix-B">
+<section id="appendix-D">
       <h2 id="name-authors-addresses">
 <a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
       </h2>
