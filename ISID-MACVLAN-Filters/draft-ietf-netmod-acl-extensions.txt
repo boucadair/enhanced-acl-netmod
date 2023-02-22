@@ -824,7 +824,7 @@ Table of Contents
        }
       }
 
-                   Figure 10: Example ISID Filter FILTER
+                       Figure 10: Example ISID Filter
 
 4.7.  VLAN Filter
 
@@ -860,7 +860,7 @@ Table of Contents
        }
       }
 
-                   Figure 11: Example VLAN Filter FILTER
+                       Figure 11: Example VLAN Filter
 
 5.  YANG Modules
 
