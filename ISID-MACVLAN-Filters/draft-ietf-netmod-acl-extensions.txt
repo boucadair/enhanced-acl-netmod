@@ -85,6 +85,8 @@ Table of Contents
      4.3.  TCP Flags Handling
      4.4.  Fragments Handling
      4.5.  Rate-Limit Traffic
+     4.6.  ISID Filter
+     4.7.  VLAN Filter
    5.  YANG Modules
      5.1.  Enhanced ACL
    6.  Security Considerations
@@ -785,6 +787,80 @@ Table of Contents
       }
 
                Figure 9: Example Rate-Limit Incoming TCP SYNs
+
+4.6.  ISID Filter
+
+   In order to support rate-limiting (see Section 3.6), a new action
+   called "rate-limit" is defined.
+
+   Figure 10 shows an ACL example to rate-limit incoming SYNs during a
+   SYN flood attack.
+
+     {
+       "ietf-acces-control-list:acls": {
+             "acl": [
+               {
+                 "name": "test",
+                 "aces": {
+                   "ace": [
+                     {
+                       "name": "1",
+                       "matches": {
+                         "ietf-acl-enh:isid-filter": {
+                           "lower-isid": 100,
+                           "upper-isid": 200
+                         }
+                       },
+                       "actions": {
+                         "forwarding": "ietf-acces-control-list:accept"
+                       }
+                     }
+                   ]
+                 }
+               }
+             ]
+           }
+         }
+       }
+      }
+
+                   Figure 10: Example ISID Filter FILTER
+
+4.7.  VLAN Filter
+
+   In order to support rate-limiting (see Section 3.6), a new action
+   called "rate-limit" is defined.
+
+   Figure 11 shows an ACL example to rate-limit incoming SYNs during a
+   SYN flood attack.
+
+     {
+       "ietf-acces-control-list:acls": {
+         "acl": [
+           {
+             "name": "VLAN_FILTER",
+             "aces": {
+               "ace": [
+                 {
+                   "name": "1",
+                   "matches": {
+                     "ietf-acl-enh:vlan-filter": {
+                       "lower-vlan": 10,
+                       "upper-vlan": 20
+                     }
+                   },
+                   "actions": {
+                     "forwarding": "ietf-acces-control-list:accept"
+                   }
+                 }
+               ]
+             }
+           }
+         ]
+       }
+      }
+
+                   Figure 11: Example VLAN Filter FILTER
 
 5.  YANG Modules
 
