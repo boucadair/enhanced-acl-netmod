@@ -1057,7 +1057,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Dios, et al.</td>
-<td class="center">Expires 25 August 2023</td>
+<td class="center">Expires 26 August 2023</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1070,12 +1070,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-netmod-acl-extensions-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-02-21" class="published">21 February 2023</time>
+<time datetime="2023-02-22" class="published">22 February 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-08-25">25 August 2023</time></dd>
+<dd class="expires"><time datetime="2023-08-26">26 August 2023</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1135,7 +1135,7 @@ the limitations of the ACL model as initially defined in RFC 8519.<a href="#sect
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 25 August 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 26 August 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -2302,7 +2302,7 @@ module ietf-acl-enh {
           "Entering the frame type allows the
           filter to match a specific type of frame format";
       }
-      choice vlans {
+      choice vlan-type {
         case range {
           leaf lower-vlan {
             type uint16;
@@ -2347,12 +2347,12 @@ module ietf-acl-enh {
         + "/acl:ace/acl:matches/acl:l2" {
     description
       "Handle the augmentation of ISID Filter.";
-    container vlan-filter {
+    container isid-filter {
       description
         "Indicates how to handle ISID filters.
         The I-component is responsible for mapping customer
         Ethernet traffic to the appropriate ISID.";
-      choice isid {
+      choice isid-type {
         case range {
           leaf lower-isid {
             type uint16;
