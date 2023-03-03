@@ -1860,7 +1860,7 @@ Appendix B.  Initial Version of the The ICMP Type IANA-Maintained Module
 
      typedef icmp-type {
        type union {
-         type uint8/;
+         type uint8;
          type icmp-type-name;
        }
        description
