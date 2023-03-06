@@ -5,11 +5,11 @@
 netmod                                                     O. G. D. Dios
 Internet-Draft                                                S. Barguil
 Intended status: Standards Track                              Telefonica
-Expires: 26 August 2023                                     M. Boucadair
+Expires: 7 September 2023                                   M. Boucadair
                                                                   Orange
                                                                    Q. Wu
                                                                   Huawei
-                                                        22 February 2023
+                                                            6 March 2023
 
 
         Extensions to the Access Control Lists (ACLs) YANG Model
@@ -49,7 +49,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 August 2023.
+   This Internet-Draft will expire on 7 September 2023.
 
 Copyright Notice
 
@@ -951,20 +951,25 @@ Table of Contents
      identity layer3 {
        base offset-type;
        description
-         "IP header.";
+         "The offset starts at the beginning of the IP header.";
      }
 
      identity layer4 {
        base offset-type;
        description
-         "Transport header (e.g., TCP or UDP).";
+         "The offset start right after the IP header. This can be
+          typically the beginning of transport header (e.g., TCP
+          or UDP).";
      }
 
      identity payload {
        base offset-type;
        description
-         "Transport payload. For example, this represents the beginning
-          of the TCP data right after any TCP options.";
+         "The offset start right after the end of the transport
+          payload. For example, this represents the beginning
+          of the TCP data right after any TCP options or the
+          beginning of the UDP payload righte after the UDP
+          header.";
      }
 
      typedef operator {
@@ -1103,6 +1108,7 @@ Table of Contents
      }
 
      grouping payload {
+      if-feature "match-on-payload";
        description
          "Operations on payload match.";
        leaf offset {
@@ -1110,13 +1116,16 @@ Table of Contents
            base offset-type;
          }
          description
-           "Indicates the payload offset.";
+           "Indicates the payload offset. This will indicate
+            the position of the data in packet to use
+            for the match.";
        }
        leaf offset-end {
          type uint64;
+         units "bytes";
          description
-           "Indicates the number of bytes to cover when
-            performing the prefix match.";
+           "Indicates the number of bytes, starting from the offset
+            to cover when performing the prefix match.";
        }
        leaf operator {
          type operator;
@@ -1127,7 +1136,7 @@ Table of Contents
        leaf prefix {
          type binary;
          description
-           "The pattern to match against.";
+           "The binary pattern to match against.";
        }
      }
 
@@ -1139,7 +1148,6 @@ Table of Contents
          description
            "Match a prefix pattern.";
          container prefix-pattern {
-           if-feature "match-on-payload";
            description
              "Rule to perform payload-based match.";
            uses payload;
@@ -2051,7 +2059,7 @@ Appendix B.  Initial Version of the The ICMP Type IANA-Maintained Module
 
      typedef icmp-type {
        type union {
-         type uint8/;
+         type uint8;
          type icmp-type-name;
        }
        description
