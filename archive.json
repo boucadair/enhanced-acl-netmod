@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-03-05T01:41:20.354439+00:00",
+  "timestamp": "2023-03-07T01:36:19.165914+00:00",
   "repo": "boucadair/enhanced-acl-netmod",
   "labels": [
     {
@@ -498,7 +498,7 @@
       "id": "PR_kwDOIykBHs5KUyli",
       "title": "TCP Flags Clarification",
       "url": "https://github.com/boucadair/enhanced-acl-netmod/pull/14",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "sbarguil",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -507,14 +507,14 @@
       ],
       "body": "tcp flags match is very difficult to understand,",
       "createdAt": "2023-02-20T09:26:11Z",
-      "updatedAt": "2023-03-03T10:47:46Z",
+      "updatedAt": "2023-03-06T13:56:58Z",
       "baseRepository": "boucadair/enhanced-acl-netmod",
       "baseRefName": "main",
-      "baseRefOid": "c3e0f7837634b628de0b54890c1b8b4199fed726",
+      "baseRefOid": "2d4d1036c0441c8dae66b2edca7b30715689df1c",
       "headRepository": "boucadair/enhanced-acl-netmod",
       "headRefName": "TCP-Flags-Simplification",
-      "headRefOid": "3d3f71e216311e33f9e765848c6a01b2a6408870",
-      "closedAt": null,
+      "headRefOid": "c128908607e980b81e23f024bfda4b05de58ddc2",
+      "closedAt": "2023-03-06T13:56:58Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
@@ -532,6 +532,13 @@
           "body": "> The design in the draft is aligned with the practices, e.g., in https://www.rfc-editor.org/rfc/rfc5575.\r\n> \r\n> I have a concern with the proposed changes as they cannot allow to enforce policies on the flags that are not currently assigned by IANA. This is problematic.\r\n\r\nThe current implementations are highly alligned with the identity kind of behavior, and can clarify its usability.\r\n\r\nJuniper [ref](https://www.juniper.net/documentation/us/en/software/junos/idp-policy/topics/ref/statement/security-edit-tcp-flags.html):\r\n```\r\ntcp-flags {\r\n    (ack | no-ack);\r\n    (fin | no-fin);\r\n    (psh | no-psh);\r\n    (r1 | no-r1);\r\n    (r2 | no-r2);\r\n    (rst | no-rst);\r\n    (syn | no-syn);\r\n    (urg | no-urg);\r\n} \r\n```\r\n\r\nNokia [ref](https://infocenter.nokia.com/public/7750SR215R1A/index.jsp?topic=%2Fcom.sr.mdcli%2Fhtml%2Ffilter-filter_0.html):\r\n\r\n![image](https://user-images.githubusercontent.com/13772485/220093695-fe9804db-8150-4256-8708-b819a05cf3aa.png)\r\n\r\nCisco [ref](https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/sec_data_acl/configuration/xe-3se/3650/sec-data-acl-xe-3se-3650-book/sec-create-filter-tcp.html)\r\n\r\n![image](https://user-images.githubusercontent.com/13772485/220095030-8e27afe8-3efe-4a8c-b7c8-8e657d539ed0.png)\r\n\r\n\r\n\r\n\r\n\r\n\r\n",
           "createdAt": "2023-02-20T11:28:17Z",
           "updatedAt": "2023-02-20T11:33:51Z"
+        },
+        {
+          "author": "sbarguil",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@sbarguil check descriptions and allign. ",
+          "createdAt": "2023-03-06T13:10:40Z",
+          "updatedAt": "2023-03-06T13:10:40Z"
         }
       ],
       "reviews": [
@@ -570,6 +577,26 @@
               "body": "We need to indicate that this one is inferior to the full bitmask as checks only on known flags may let pass some packets while they carry \"weird\" flags (e.g.. SYN set but bit position 6 is also set.)",
               "createdAt": "2023-03-03T10:46:40Z",
               "updatedAt": "2023-03-03T10:47:46Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOIykBHs5PDS1-",
+          "commit": {
+            "abbreviatedOid": "3d3f71e"
+          },
+          "author": "sbarguil",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-03-06T13:37:52Z",
+          "updatedAt": "2023-03-06T13:37:52Z",
+          "comments": [
+            {
+              "originalPosition": 684,
+              "body": "https://www.rfc-editor.org/rfc/rfc9293.html#name-tcp-connection-failures: There are two thresholds R1 and R2 measuring the amount of retransmission that has occurred for the same segment. R1 and R2 might be measured in time units or as a count of retransmissions (with the current RTO and corresponding backoffs as a conversion factor, if needed).",
+              "createdAt": "2023-03-06T13:37:52Z",
+              "updatedAt": "2023-03-06T13:37:52Z"
             }
           ]
         }
@@ -623,18 +650,26 @@
       "labels": [],
       "body": "Innitial Commit #4 ",
       "createdAt": "2023-02-21T08:55:01Z",
-      "updatedAt": "2023-02-22T15:10:26Z",
+      "updatedAt": "2023-03-06T13:24:52Z",
       "baseRepository": "boucadair/enhanced-acl-netmod",
       "baseRefName": "main",
-      "baseRefOid": "c3e0f7837634b628de0b54890c1b8b4199fed726",
+      "baseRefOid": "2d4d1036c0441c8dae66b2edca7b30715689df1c",
       "headRepository": "boucadair/enhanced-acl-netmod",
       "headRefName": "ISID-MACVLAN-Filters",
-      "headRefOid": "352dbee32f85b11946294b9a9700bed6e37c6af1",
+      "headRefOid": "7de6950c748c6373996091e6809c10cf4bda88ab",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "sbarguil",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@sbarguil To include Features in the YANG for both filtering options. ",
+          "createdAt": "2023-03-06T13:08:14Z",
+          "updatedAt": "2023-03-06T13:08:24Z"
+        }
+      ],
       "reviews": []
     },
     {
@@ -642,7 +677,7 @@
       "id": "PR_kwDOIykBHs5LOvoa",
       "title": "clarify the pattern-macth",
       "url": "https://github.com/boucadair/enhanced-acl-netmod/pull/18",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "boucadair",
       "authorAssociation": "OWNER",
       "assignees": [
@@ -653,13 +688,55 @@
       ],
       "body": "",
       "createdAt": "2023-03-03T14:10:15Z",
-      "updatedAt": "2023-03-03T14:10:15Z",
+      "updatedAt": "2023-03-06T13:11:52Z",
       "baseRepository": "boucadair/enhanced-acl-netmod",
       "baseRefName": "main",
       "baseRefOid": "55fe08f99f236e5888dda80840e58a1282979b16",
       "headRepository": "boucadair/enhanced-acl-netmod",
       "headRefName": "patter-match-clarification",
       "headRefOid": "64ca29fb73ce932739962047eaa9854abe9088a2",
+      "closedAt": "2023-03-06T13:11:51Z",
+      "mergedAt": "2023-03-06T13:11:51Z",
+      "mergedBy": "sbarguil",
+      "mergeCommit": {
+        "oid": "2d4d1036c0441c8dae66b2edca7b30715689df1c"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOIykBHs5PDDhr",
+          "commit": {
+            "abbreviatedOid": "64ca29f"
+          },
+          "author": "sbarguil",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-03-06T13:11:44Z",
+          "updatedAt": "2023-03-06T13:11:44Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 20,
+      "id": "PR_kwDOIykBHs5LXz5w",
+      "title": "TCP flags new branch",
+      "url": "https://github.com/boucadair/enhanced-acl-netmod/pull/20",
+      "state": "OPEN",
+      "author": "sbarguil",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "To track previous comments follow #14 ",
+      "createdAt": "2023-03-06T13:56:46Z",
+      "updatedAt": "2023-03-06T13:56:46Z",
+      "baseRepository": "boucadair/enhanced-acl-netmod",
+      "baseRefName": "main",
+      "baseRefOid": "2d4d1036c0441c8dae66b2edca7b30715689df1c",
+      "headRepository": "boucadair/enhanced-acl-netmod",
+      "headRefName": "tcp-flags",
+      "headRefOid": "c20e4ed2d18381cb1608c6544a8b59d51af9da77",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
