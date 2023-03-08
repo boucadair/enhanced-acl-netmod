@@ -929,7 +929,8 @@ Table of Contents
          The receiver will be notified when all known urgent
          data has been received.";
        reference
-        "RFC 9293";
+        "RFC 9293: Transmission Control Protocol (TCP), Section 3.1";
+
      }
 
      identity PSH {
@@ -940,7 +941,8 @@ Table of Contents
          instead of buffering them. ";
      }
 
-     identity RST {
+     identity rst {
+
        base tcp-flag;
        description
          "The Reset the connection flag gets sent from the receiver to the sender
