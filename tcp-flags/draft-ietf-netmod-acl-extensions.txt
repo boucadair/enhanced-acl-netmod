@@ -911,7 +911,8 @@ Table of Contents
          illustrates a three-way handshake process.";
      }
 
-     identity FIN {
+     identity fin {
+
        base tcp-flag;
        description
          "The finished flag means there is no more data from the sender.
