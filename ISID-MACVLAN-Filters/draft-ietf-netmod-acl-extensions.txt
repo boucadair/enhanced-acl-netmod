@@ -1170,7 +1170,8 @@ Table of Contents
        description
          "Handle the augmentation of MAC VLAN Filter.";
        container vlan-filter {
-         if-feature "match-on-vlan-flter";
+         if-feature "match-on-vlan-filter";
+
          description
            "Indicates how to handle MAC VLAN.";
          leaf frame-type {
