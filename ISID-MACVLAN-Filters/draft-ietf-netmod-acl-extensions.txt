@@ -5,11 +5,11 @@
 netmod                                                     O. G. D. Dios
 Internet-Draft                                                S. Barguil
 Intended status: Standards Track                              Telefonica
-Expires: 7 September 2023                                   M. Boucadair
+Expires: 9 September 2023                                   M. Boucadair
                                                                   Orange
                                                                    Q. Wu
                                                                   Huawei
-                                                            6 March 2023
+                                                            8 March 2023
 
 
         Extensions to the Access Control Lists (ACLs) YANG Model
@@ -49,7 +49,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 7 September 2023.
+   This Internet-Draft will expire on 9 September 2023.
 
 Copyright Notice
 
@@ -942,7 +942,8 @@ Table of Contents
          "Match based on a pattern is supported.";
      }
 
-     feature match-on-vlan-flter {
+     feature match-on-vlan-filter {
+
        description
          "Match based on a VLAN range of vlan list is supported.";
      }
