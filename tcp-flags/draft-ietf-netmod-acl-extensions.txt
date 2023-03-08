@@ -941,7 +941,8 @@ Table of Contents
          instead of buffering them. ";
      }
 
-     identity RST {
+     identity rst {
+
        base tcp-flag;
        description
          "The Reset the connection flag gets sent from the receiver to the sender
@@ -973,7 +974,8 @@ Table of Contents
         "RFC 3168";
      }
 
-     identity CWR {
+     identity cwr {
+
        base tcp-flag;
        description
          "The congestion window reduced flag is used by the sending

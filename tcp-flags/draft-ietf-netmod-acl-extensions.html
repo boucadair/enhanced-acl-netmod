@@ -2171,7 +2171,8 @@ module ietf-acl-enh {
       instead of buffering them. ";
   }
 
-  identity RST {
+  identity rst {
+
     base tcp-flag;
     description
       "The Reset the connection flag gets sent from the receiver to the sender
@@ -2203,7 +2204,8 @@ module ietf-acl-enh {
      "RFC 3168";
   }
 
-  identity CWR {
+  identity cwr {
+
     base tcp-flag;
     description
       "The congestion window reduced flag is used by the sending
