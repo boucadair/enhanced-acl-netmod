@@ -920,7 +920,8 @@ Table of Contents
          It frees the reserved resources and gracefully terminates the connection";
      }
 
-     identity URG {
+     identity urg {
+
        base tcp-flag;
        description
          "he Urgent pointer field is significant flag is used to notify the
