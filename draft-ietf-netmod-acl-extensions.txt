@@ -390,9 +390,6 @@ Table of Contents
            |  |     +--rw protocol*     uint8
            |  |     +--rw fqdn*         inet:domain-name
            |  |     +--rw uri*          inet:uri
-           |  +--rw acls
-           |     ...
-           |           +--rw rest-of-header?   binary
 
                        Figure 4: Examples of Aliases.
 
@@ -544,8 +541,12 @@ Table of Contents
      augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:matches/acl:l4
                /acl:tcp:
        +--rw flags-bitmask
-       |  +--rw operator?   operator
-       |  +--rw bitmask?    uint16
+       |  +--rw (mode)?
+       |     +--:(explicit)
+       |     |  +--rw operator?            operator
+       |     |  +--rw explicit-tcp-flag*   identityref
+       |     +--:(builtin)
+       |        +--rw bitmask?             uint16
        +--rw source-tcp-port-set?        port-set-ref
        +--rw destination-tcp-port-set?   port-set-ref
      augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:matches/acl:l4
@@ -878,10 +879,9 @@ Table of Contents
        base offset-type;
        description
          "The offset start right after the end of the transport
-          payload. For example, this represents the beginning
-          of the TCP data right after any TCP options or the
-          beginning of the UDP payload righte after the UDP
-          header.";
+          payload. For example, this represents the beginning of the
+          TCP data right after any TCP options or the beginning of
+          the UDP payload righte after the UDP header.";
      }
 
      identity tcp-flag {
@@ -894,7 +894,7 @@ Table of Contents
      identity ack {
        base tcp-flag;
        description
-         "TCP flag is used to mark the Acknowledgment field is significant";
+         "Acknowledgment TCP flag bit.";
        reference
          "RFC 9293: Transmission Control Protocol (TCP), Section 3.1";
      }
@@ -910,9 +910,7 @@ Table of Contents
      identity fin {
        base tcp-flag;
        description
-         "The finished flag means there is no more data from the sender.
-         Therefore, it is used in the last packet sent from the sender.
-         It frees the reserved resources and gracefully terminates the connection";
+         "No more data from the sender.";
        reference
          "RFC 9293: Transmission Control Protocol (TCP), Section 3.1";
      }
@@ -920,21 +918,17 @@ Table of Contents
      identity urg {
        base tcp-flag;
        description
-         "he Urgent pointer field is significant flag is used to notify the
-         receiver to process the urgent packets before processing all other packets.
-         The receiver will be notified when all known urgent
-         data has been received.";
+         "Urgent pointer TCP flag bit.";
        reference
-        "RFC 9293: Transmission Control Protocol (TCP), Section 3.1";
-
+         "RFC 9293: Transmission Control Protocol (TCP), Section 3.1";
      }
 
      identity psh {
        base tcp-flag;
        description
          "The Push function flag is similar to the URG flag and tells the
-         receiver to process these packets as they are received
-         instead of buffering them.";
+          receiver to process these packets as they are received
+          instead of buffering them.";
        reference
          "RFC 9293: Transmission Control Protocol (TCP), Section 3.1";
      }
@@ -942,8 +936,7 @@ Table of Contents
      identity rst {
        base tcp-flag;
        description
-         "The Reset the connection flag gets sent from the receiver to the sender
-         when a packet is sent to a particular host that was not expecting it.";
+         "Reset TCP flag bit.";
        reference
          "RFC 9293: Transmission Control Protocol (TCP), Section 3.1";
      }
@@ -951,19 +944,17 @@ Table of Contents
      identity ece {
        base tcp-flag;
        description
-         "This flag is responsible for indicating if the TCP peer is
-         Explicit Congestion Notification capable.";
+         "ECN-Echo TCP flag bit.";
        reference
-        "RFC 3168: The Addition of Explicit Congestion Notification (ECN) to IP";
+         "RFC 9293: Transmission Control Protocol (TCP), Section 3.1";
      }
 
      identity cwr {
        base tcp-flag;
        description
-         "The congestion window reduced flag is used by the sending
-         host to indicate it received a packet with the ECE flag set.";
+         "Congestion Window Reduced flag bit";
        reference
-        "RFC 3168: The Addition of Explicit Congestion Notification (ECN) to IP";
+         "RFC 9293: Transmission Control Protocol (TCP), Section 3.1";
      }
 
      typedef operator {
@@ -976,16 +967,15 @@ Table of Contents
          bit match {
            position 1;
            description
-             "Match bit.  This is a bitwise match operation
-              defined as '(data & value) == value'.";
+             "Match bit.  This is a bitwise match operation defined as
+              '(data & value) == value'.";
          }
          bit any {
            position 2;
            description
-             "Any bit.  This is a match on any of the bits in
-              bitmask.  It evaluates to 'true' if any of the bits
-              in the value mask are set in the data,
-              i.e., '(data & value) != 0'.";
+             "Any bit.  This is a match on any of the bits in  bitmask.
+              It evaluates to 'true' if any of the bits in the value mask
+              are set in the data,  i.e., '(data & value) != 0'.";
          }
        }
        description
@@ -1066,10 +1056,12 @@ Table of Contents
          "Defines a reference to an ICMP type set.";
      }
 
-   grouping tcp-flags {
+     grouping tcp-flags {
        description
          "Operations on TCP flags.";
-       choice mode  {
+       choice mode {
+         description
+           "Choice of how flags are indicated.";
          case explicit {
            leaf operator {
              type operator;
@@ -1082,17 +1074,18 @@ Table of Contents
                base tcp-flag;
              }
              description
-               "An explicit list of the TCP flags that are to be matched. .";
+               "An explicit list of the TCP flags that are to be
+                matched.";
            }
          }
          case builtin {
            leaf bitmask {
              type uint16;
              description
-               "The bitmask matches the last 4 bits of byte 12
-               and byte 13 of the TCP header.  For clarity, the 4 bits
-               of byte 12 corresponding to the TCP data offset field
-               are not included in any matching.";
+               "The bitmask matches the last 4 bits of byte 12 and 13 of
+                the TCP header.  For clarity, the 4 bits of byte 12
+                corresponding to the TCP data offset field are not
+                included in any matching.";
            }
          }
        }
@@ -1115,7 +1108,6 @@ Table of Contents
      }
 
      grouping payload {
-      if-feature "match-on-payload";
        description
          "Operations on payload match.";
        leaf offset {
@@ -1123,16 +1115,15 @@ Table of Contents
            base offset-type;
          }
          description
-           "Indicates the payload offset. This will indicate
-            the position of the data in packet to use
-            for the match.";
+           "Indicates the payload offset. This will indicate the position
+            of the data in packet to use for the match.";
        }
        leaf offset-end {
          type uint64;
          units "bytes";
          description
-           "Indicates the number of bytes, starting from the offset
-            to cover when performing the prefix match.";
+           "Indicates the number of bytes, starting from the offset to
+            cover when performing the prefix match.";
        }
        leaf operator {
          type operator;
@@ -1155,6 +1146,7 @@ Table of Contents
          description
            "Match a prefix pattern.";
          container prefix-pattern {
+           if-feature "match-on-payload";
            description
              "Rule to perform payload-based match.";
            uses payload;
@@ -1174,17 +1166,20 @@ Table of Contents
        leaf source-ipv4-prefix-list {
          type ipv4-prefix-set-ref;
          description
-           "A reference to an IPv4 prefix list to match the source address.";
+           "A reference to an IPv4 prefix list to match the source
+            address.";
        }
        leaf destination-ipv4-prefix-list {
          type ipv4-prefix-set-ref;
          description
-           "A reference to a prefix list to match the destination address.";
+           "A reference to a prefix list to match the destination
+            address.";
        }
        leaf next-header-set {
          type protocol-set-ref;
          description
-           "A reference to a protocol set to match the next-header field.";
+           "A reference to a protocol set to match the next-header
+            field.";
        }
      }
 
@@ -1205,7 +1200,8 @@ Table of Contents
        leaf destination-ipv6-prefix-list {
          type ipv6-prefix-set-ref;
          description
-           "A reference to a prefix list to match the destination address.";
+           "A reference to a prefix list to match the destination
+            address.";
        }
        leaf protocol-set {
          type protocol-set-ref;
@@ -1258,7 +1254,8 @@ Table of Contents
        leaf icmp-set {
          type icmp-type-set-ref;
          description
-           "A reference to an ICMP type set to match the ICMP type field.";
+           "A reference to an ICMP type set to match the ICMP type
+            field.";
        }
      }
 
@@ -1313,8 +1310,8 @@ Table of Contents
        }
        container ipv6-prefix-sets {
          description
-           "Data definitions for a list of IPv6 prefixes
-            which are matched as part of a policy.";
+           "Data definitions for a list of IPv6 prefixes which are
+            matched as part of a policy.";
          list prefix-set {
            key "name";
            description
@@ -1333,8 +1330,7 @@ Table of Contents
            leaf-list prefix {
              type inet:ipv6-prefix;
              description
-               "List of IPv6 prefixes to be used in match
-                conditions.";
+               "List of IPv6 prefixes to be used in match conditions.";
            }
          }
        }
@@ -1364,8 +1360,8 @@ Table of Contents
              }
              choice port {
                description
-                 "Choice of specifying the port number or referring
-                  to a group of port numbers.";
+                 "Choice of specifying the port number or referring to a
+                  group of port numbers.";
                container port-range-or-operator {
                  description
                    "Indicates a set of ports.";
@@ -1377,8 +1373,8 @@ Table of Contents
        }
        container protocol-sets {
          description
-           "Data definitions for a list of protocols which can
-            be matched in policies.";
+           "Data definitions for a list of protocols which can be matched
+            in policies.";
          list protocol-set {
            key "name";
            description
@@ -1401,8 +1397,8 @@ Table of Contents
        }
        container icmp-type-sets {
          description
-           "Data definitions for a list of ICMP types which can
-            be matched in policies.";
+           "Data definitions for a list of ICMP types which can be
+            matched in policies.";
          list icmp-type-set {
            key "name";
            description

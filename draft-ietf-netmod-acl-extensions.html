@@ -1523,7 +1523,7 @@ and destination prefixes are involved.<a href="#section-3.1-2" class="pilcrow">�
 <p id="section-3.2-4">A candidate structure is shown in <a href="#example_sets" class="auto internal xref">Figure 3</a>:<a href="#section-3.2-4" class="pilcrow">¶</a></p>
 <span id="name-examples-of-defined-sets"></span><div id="example_sets">
 <figure id="figure-3">
-          <div class="alignLeft art-ascii-art art-text artwork" id="section-3.2-5.1">
+          <div class="alignLeft art-text artwork" id="section-3.2-5.1">
 <pre>
      +--rw defined-sets
      |  +--rw prefix-sets
@@ -1555,7 +1555,7 @@ and destination prefixes are involved.<a href="#section-3.1-2" class="pilcrow">�
 Note that some aliases can be provided by decomposing them into separate sets.<a href="#section-3.2-6" class="pilcrow">¶</a></p>
 <span id="name-examples-of-aliases"></span><div id="example_alias">
 <figure id="figure-4">
-          <div class="alignLeft art-ascii-art art-text artwork" id="section-3.2-7.1">
+          <div class="alignLeft art-text artwork" id="section-3.2-7.1">
 <pre>
         |  +--rw aliases
         |  |  +--rw alias* [name]
@@ -1567,9 +1567,6 @@ Note that some aliases can be provided by decomposing them into separate sets.<a
         |  |     +--rw protocol*     uint8
         |  |     +--rw fqdn*         inet:domain-name
         |  |     +--rw uri*          inet:uri
-        |  +--rw acls
-        |     ...
-        |           +--rw rest-of-header?   binary
 </pre>
 </div>
 <figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
@@ -1676,7 +1673,7 @@ logical infrastructure.<a href="#section-3.8-3.4" class="pilcrow">¶</a>
 <p id="section-4.1-1"><a href="#enh-acl-tree" class="auto internal xref">Figure 5</a> shows the full enhanced ACL tree:<a href="#section-4.1-1" class="pilcrow">¶</a></p>
 <span id="name-enhanced-acl-tree"></span><div id="enh-acl-tree">
 <figure id="figure-5">
-          <div class="alignLeft art-ascii-art art-text artwork" id="section-4.1-2.1">
+          <div class="alignLeft art-text artwork" id="section-4.1-2.1">
 <pre>
 module: ietf-acl-enh
   +--rw defined-sets
@@ -1744,8 +1741,12 @@ module: ietf-acl-enh
   augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:matches/acl:l4
             /acl:tcp:
     +--rw flags-bitmask
-    |  +--rw operator?   operator
-    |  +--rw bitmask?    uint16
+    |  +--rw (mode)?
+    |     +--:(explicit)
+    |     |  +--rw operator?            operator
+    |     |  +--rw explicit-tcp-flag*   identityref
+    |     +--:(builtin)
+    |        +--rw bitmask?             uint16
     +--rw source-tcp-port-set?        port-set-ref
     +--rw destination-tcp-port-set?   port-set-ref
   augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:matches/acl:l4
@@ -1796,7 +1797,7 @@ Each set is uniquely identified by a name, and can be called from the relevant e
 <p id="section-4.3-3"><a href="#example_4" class="auto internal xref">Figure 6</a> shows an example of a request to install a filter to discard incoming TCP messages having all flags unset.<a href="#section-4.3-3" class="pilcrow">¶</a></p>
 <span id="name-example-to-deny-tcp-null-at"></span><div id="example_4">
 <figure id="figure-6">
-          <div class="alignLeft art-ascii-art art-text artwork" id="section-4.3-4.1">
+          <div class="alignLeft art-text artwork" id="section-4.3-4.1">
 <pre>
   {
      "ietf-access-control-list:acls": {
@@ -1846,7 +1847,7 @@ packets.  The following ACEs are defined (in this order):<a href="#section-4.4-3
         </ul>
 <span id="name-example-illustrating-candid"></span><div id="example_2">
 <figure id="figure-7">
-          <div class="alignLeft art-ascii-art art-text artwork" id="section-4.4-5.1">
+          <div class="alignLeft art-text artwork" id="section-4.4-5.1">
 <pre>
 {
      "ietf-access-control-list:acls": {
@@ -1908,7 +1909,7 @@ packets.  The following ACEs are defined (in this order):<a href="#section-4.4-3
         </ul>
 <span id="name-example-illustrating-candida"></span><div id="example_3">
 <figure id="figure-8">
-          <div class="alignLeft art-ascii-art art-text artwork" id="section-4.4-8.1">
+          <div class="alignLeft art-text artwork" id="section-4.4-8.1">
 <pre>
     {
      "ietf-access-control-list:acls": {
@@ -1972,7 +1973,7 @@ packets.  The following ACEs are defined (in this order):<a href="#section-4.4-3
 <p id="section-4.5-2"><a href="#example_5" class="auto internal xref">Figure 9</a> shows an ACL example to rate-limit incoming SYNs during a SYN flood attack.<a href="#section-4.5-2" class="pilcrow">¶</a></p>
 <span id="name-example-rate-limit-incoming"></span><div id="example_5">
 <figure id="figure-9">
-          <div class="alignLeft art-ascii-art art-text artwork" id="section-4.5-3.1">
+          <div class="alignLeft art-text artwork" id="section-4.5-3.1">
 <pre>
   {
      "ietf-access-control-list:acls": {
@@ -2018,7 +2019,7 @@ packets.  The following ACEs are defined (in this order):<a href="#section-4.4-3
         <h3 id="name-enhanced-acl-2">
 <a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-enhanced-acl-2" class="section-name selfRef">Enhanced ACL</a>
         </h3>
-<div class="breakable lang-ascii-art sourcecode" id="section-5.1-1">
+<div class="breakable sourcecode" id="section-5.1-1">
 <pre>&lt;CODE BEGINS&gt; file "ietf-acl-enh@2022-10-24.yang"
 
 module ietf-acl-enh {
@@ -2108,10 +2109,9 @@ module ietf-acl-enh {
     base offset-type;
     description
       "The offset start right after the end of the transport
-       payload. For example, this represents the beginning
-       of the TCP data right after any TCP options or the
-       beginning of the UDP payload righte after the UDP
-       header.";
+       payload. For example, this represents the beginning of the
+       TCP data right after any TCP options or the beginning of
+       the UDP payload righte after the UDP header.";
   }
 
   identity tcp-flag {
@@ -2124,7 +2124,7 @@ module ietf-acl-enh {
   identity ack {
     base tcp-flag;
     description
-      "TCP flag is used to mark the Acknowledgment field is significant";
+      "Acknowledgment TCP flag bit.";
     reference
       "RFC 9293: Transmission Control Protocol (TCP), Section 3.1";
   }
@@ -2140,9 +2140,7 @@ module ietf-acl-enh {
   identity fin {
     base tcp-flag;
     description
-      "The finished flag means there is no more data from the sender.
-      Therefore, it is used in the last packet sent from the sender.
-      It frees the reserved resources and gracefully terminates the connection";
+      "No more data from the sender.";
     reference
       "RFC 9293: Transmission Control Protocol (TCP), Section 3.1";
   }
@@ -2150,21 +2148,17 @@ module ietf-acl-enh {
   identity urg {
     base tcp-flag;
     description
-      "he Urgent pointer field is significant flag is used to notify the
-      receiver to process the urgent packets before processing all other packets.
-      The receiver will be notified when all known urgent
-      data has been received.";
+      "Urgent pointer TCP flag bit.";
     reference
-     "RFC 9293: Transmission Control Protocol (TCP), Section 3.1";
-
+      "RFC 9293: Transmission Control Protocol (TCP), Section 3.1";
   }
 
   identity psh {
     base tcp-flag;
     description
       "The Push function flag is similar to the URG flag and tells the
-      receiver to process these packets as they are received
-      instead of buffering them.";
+       receiver to process these packets as they are received
+       instead of buffering them.";
     reference
       "RFC 9293: Transmission Control Protocol (TCP), Section 3.1";
   }
@@ -2172,8 +2166,7 @@ module ietf-acl-enh {
   identity rst {
     base tcp-flag;
     description
-      "The Reset the connection flag gets sent from the receiver to the sender
-      when a packet is sent to a particular host that was not expecting it.";
+      "Reset TCP flag bit.";
     reference
       "RFC 9293: Transmission Control Protocol (TCP), Section 3.1";
   }
@@ -2181,19 +2174,17 @@ module ietf-acl-enh {
   identity ece {
     base tcp-flag;
     description
-      "This flag is responsible for indicating if the TCP peer is
-      Explicit Congestion Notification capable.";
+      "ECN-Echo TCP flag bit.";
     reference
-     "RFC 3168: The Addition of Explicit Congestion Notification (ECN) to IP";
+      "RFC 9293: Transmission Control Protocol (TCP), Section 3.1";
   }
 
   identity cwr {
     base tcp-flag;
     description
-      "The congestion window reduced flag is used by the sending
-      host to indicate it received a packet with the ECE flag set.";
+      "Congestion Window Reduced flag bit";
     reference
-     "RFC 3168: The Addition of Explicit Congestion Notification (ECN) to IP";
+      "RFC 9293: Transmission Control Protocol (TCP), Section 3.1";
   }
 
   typedef operator {
@@ -2206,16 +2197,15 @@ module ietf-acl-enh {
       bit match {
         position 1;
         description
-          "Match bit.  This is a bitwise match operation
-           defined as '(data &amp; value) == value'.";
+          "Match bit.  This is a bitwise match operation defined as
+           '(data &amp; value) == value'.";
       }
       bit any {
         position 2;
         description
-          "Any bit.  This is a match on any of the bits in
-           bitmask.  It evaluates to 'true' if any of the bits
-           in the value mask are set in the data,
-           i.e., '(data &amp; value) != 0'.";
+          "Any bit.  This is a match on any of the bits in  bitmask.
+           It evaluates to 'true' if any of the bits in the value mask
+           are set in the data,  i.e., '(data &amp; value) != 0'.";
       }
     }
     description
@@ -2296,10 +2286,12 @@ module ietf-acl-enh {
       "Defines a reference to an ICMP type set.";
   }
 
-grouping tcp-flags {
+  grouping tcp-flags {
     description
       "Operations on TCP flags.";
-    choice mode  {
+    choice mode {
+      description
+        "Choice of how flags are indicated.";
       case explicit {
         leaf operator {
           type operator;
@@ -2312,17 +2304,18 @@ grouping tcp-flags {
             base tcp-flag;
           }
           description
-            "An explicit list of the TCP flags that are to be matched. .";
+            "An explicit list of the TCP flags that are to be
+             matched.";
         }
       }
       case builtin {
         leaf bitmask {
           type uint16;
           description
-            "The bitmask matches the last 4 bits of byte 12
-            and byte 13 of the TCP header.  For clarity, the 4 bits
-            of byte 12 corresponding to the TCP data offset field
-            are not included in any matching.";
+            "The bitmask matches the last 4 bits of byte 12 and 13 of
+             the TCP header.  For clarity, the 4 bits of byte 12
+             corresponding to the TCP data offset field are not
+             included in any matching.";
         }
       }
     }
@@ -2345,7 +2338,6 @@ grouping tcp-flags {
   }
 
   grouping payload {
-   if-feature "match-on-payload";
     description
       "Operations on payload match.";
     leaf offset {
@@ -2353,16 +2345,15 @@ grouping tcp-flags {
         base offset-type;
       }
       description
-        "Indicates the payload offset. This will indicate
-         the position of the data in packet to use
-         for the match.";
+        "Indicates the payload offset. This will indicate the position
+         of the data in packet to use for the match.";
     }
     leaf offset-end {
       type uint64;
       units "bytes";
       description
-        "Indicates the number of bytes, starting from the offset
-         to cover when performing the prefix match.";
+        "Indicates the number of bytes, starting from the offset to
+         cover when performing the prefix match.";
     }
     leaf operator {
       type operator;
@@ -2385,6 +2376,7 @@ grouping tcp-flags {
       description
         "Match a prefix pattern.";
       container prefix-pattern {
+        if-feature "match-on-payload";
         description
           "Rule to perform payload-based match.";
         uses payload;
@@ -2404,17 +2396,20 @@ grouping tcp-flags {
     leaf source-ipv4-prefix-list {
       type ipv4-prefix-set-ref;
       description
-        "A reference to an IPv4 prefix list to match the source address.";
+        "A reference to an IPv4 prefix list to match the source
+         address.";
     }
     leaf destination-ipv4-prefix-list {
       type ipv4-prefix-set-ref;
       description
-        "A reference to a prefix list to match the destination address.";
+        "A reference to a prefix list to match the destination
+         address.";
     }
     leaf next-header-set {
       type protocol-set-ref;
       description
-        "A reference to a protocol set to match the next-header field.";
+        "A reference to a protocol set to match the next-header
+         field.";
     }
   }
 
@@ -2435,7 +2430,8 @@ grouping tcp-flags {
     leaf destination-ipv6-prefix-list {
       type ipv6-prefix-set-ref;
       description
-        "A reference to a prefix list to match the destination address.";
+        "A reference to a prefix list to match the destination
+         address.";
     }
     leaf protocol-set {
       type protocol-set-ref;
@@ -2488,7 +2484,8 @@ grouping tcp-flags {
     leaf icmp-set {
       type icmp-type-set-ref;
       description
-        "A reference to an ICMP type set to match the ICMP type field.";
+        "A reference to an ICMP type set to match the ICMP type
+         field.";
     }
   }
 
@@ -2543,8 +2540,8 @@ grouping tcp-flags {
     }
     container ipv6-prefix-sets {
       description
-        "Data definitions for a list of IPv6 prefixes
-         which are matched as part of a policy.";
+        "Data definitions for a list of IPv6 prefixes which are
+         matched as part of a policy.";
       list prefix-set {
         key "name";
         description
@@ -2563,8 +2560,7 @@ grouping tcp-flags {
         leaf-list prefix {
           type inet:ipv6-prefix;
           description
-            "List of IPv6 prefixes to be used in match
-             conditions.";
+            "List of IPv6 prefixes to be used in match conditions.";
         }
       }
     }
@@ -2594,8 +2590,8 @@ grouping tcp-flags {
           }
           choice port {
             description
-              "Choice of specifying the port number or referring
-               to a group of port numbers.";
+              "Choice of specifying the port number or referring to a
+               group of port numbers.";
             container port-range-or-operator {
               description
                 "Indicates a set of ports.";
@@ -2607,8 +2603,8 @@ grouping tcp-flags {
     }
     container protocol-sets {
       description
-        "Data definitions for a list of protocols which can
-         be matched in policies.";
+        "Data definitions for a list of protocols which can be matched
+         in policies.";
       list protocol-set {
         key "name";
         description
@@ -2631,8 +2627,8 @@ grouping tcp-flags {
     }
     container icmp-type-sets {
       description
-        "Data definitions for a list of ICMP types which can
-         be matched in policies.";
+        "Data definitions for a list of ICMP types which can be
+         matched in policies.";
       list icmp-type-set {
         key "name";
         description
@@ -2697,7 +2693,7 @@ grouping tcp-flags {
         </h3>
 <p id="section-7.1-1">This document requests IANA to register the following URIs in the "ns"
    subregistry within the "IETF XML Registry" <span>[<a href="#RFC3688" class="cite xref">RFC3688</a>]</span>:<a href="#section-7.1-1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-ascii-art art-text artwork" id="section-7.1-2">
+<div class="alignLeft art-text artwork" id="section-7.1-2">
 <pre>
          URI: urn:ietf:params:xml:ns:yang:ietf-acl-enh
          Registrant Contact: The IESG.
@@ -2718,7 +2714,7 @@ grouping tcp-flags {
 <p id="section-7.2-1">This document requests IANA to register the following YANG modules in
    the "YANG Module Names" subregistry <span>[<a href="#RFC6020" class="cite xref">RFC6020</a>]</span> within the "YANG
    Parameters" registry.<a href="#section-7.2-1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-ascii-art art-text artwork" id="section-7.2-2">
+<div class="alignLeft art-text artwork" id="section-7.2-2">
 <pre>
          name: ietf-acl-enh
          namespace: urn:ietf:params:xml:ns:yang:ietf-acl-enh
