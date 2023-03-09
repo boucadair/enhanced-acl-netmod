@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-03-07T01:36:19.165914+00:00",
+  "timestamp": "2023-03-09T01:25:55.684799+00:00",
   "repo": "boucadair/enhanced-acl-netmod",
   "labels": [
     {
@@ -650,13 +650,13 @@
       "labels": [],
       "body": "Innitial Commit #4 ",
       "createdAt": "2023-02-21T08:55:01Z",
-      "updatedAt": "2023-03-06T13:24:52Z",
+      "updatedAt": "2023-03-08T15:44:45Z",
       "baseRepository": "boucadair/enhanced-acl-netmod",
       "baseRefName": "main",
-      "baseRefOid": "2d4d1036c0441c8dae66b2edca7b30715689df1c",
+      "baseRefOid": "eba5999bfcccd64dccc383bfc261a970e87db046",
       "headRepository": "boucadair/enhanced-acl-netmod",
       "headRefName": "ISID-MACVLAN-Filters",
-      "headRefOid": "7de6950c748c6373996091e6809c10cf4bda88ab",
+      "headRefOid": "4fb211e735df3f03faaa52fd4b04eaba20a3a90f",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -670,7 +670,58 @@
           "updatedAt": "2023-03-06T13:08:24Z"
         }
       ],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOIykBHs5PNP2U",
+          "commit": {
+            "abbreviatedOid": "7de6950"
+          },
+          "author": "boucadair",
+          "authorAssociation": "OWNER",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2023-03-07T15:47:31Z",
+          "updatedAt": "2023-03-07T15:50:58Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "```suggestion\r\n  feature match-on-vlan-filter {\r\n\r\n```",
+              "createdAt": "2023-03-07T15:47:31Z",
+              "updatedAt": "2023-03-07T15:50:58Z"
+            },
+            {
+              "originalPosition": 26,
+              "body": "```suggestion\r\n      if-feature \"match-on-vlan-filter\";\r\n\r\n```",
+              "createdAt": "2023-03-07T15:47:54Z",
+              "updatedAt": "2023-03-07T15:50:58Z"
+            },
+            {
+              "originalPosition": 28,
+              "body": "```suggestion\r\n        \"Indicates how to handle MAC VLANs.\";\r\n\r\n```",
+              "createdAt": "2023-03-07T15:48:04Z",
+              "updatedAt": "2023-03-07T15:50:58Z"
+            },
+            {
+              "originalPosition": 7,
+              "body": "Can we add a reference? Thanks. ",
+              "createdAt": "2023-03-07T15:49:17Z",
+              "updatedAt": "2023-03-07T15:50:58Z"
+            },
+            {
+              "originalPosition": 18,
+              "body": "```suggestion\r\nBeing able to filter by I-component Service identifier is a feature of\r\n```",
+              "createdAt": "2023-03-07T15:49:57Z",
+              "updatedAt": "2023-03-07T15:50:58Z"
+            },
+            {
+              "originalPosition": 57,
+              "body": "Any pointer to cite here?",
+              "createdAt": "2023-03-07T15:50:36Z",
+              "updatedAt": "2023-03-07T15:50:58Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 18,
@@ -723,21 +774,161 @@
       "id": "PR_kwDOIykBHs5LXz5w",
       "title": "TCP flags new branch",
       "url": "https://github.com/boucadair/enhanced-acl-netmod/pull/20",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "sbarguil",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "To track previous comments follow #14 ",
       "createdAt": "2023-03-06T13:56:46Z",
-      "updatedAt": "2023-03-06T13:56:46Z",
+      "updatedAt": "2023-03-08T09:26:41Z",
       "baseRepository": "boucadair/enhanced-acl-netmod",
       "baseRefName": "main",
       "baseRefOid": "2d4d1036c0441c8dae66b2edca7b30715689df1c",
       "headRepository": "boucadair/enhanced-acl-netmod",
       "headRefName": "tcp-flags",
-      "headRefOid": "c20e4ed2d18381cb1608c6544a8b59d51af9da77",
-      "closedAt": null,
+      "headRefOid": "151203f93c86412e955c562505cb732108b5881d",
+      "closedAt": "2023-03-08T09:21:24Z",
+      "mergedAt": "2023-03-08T09:21:24Z",
+      "mergedBy": "boucadair",
+      "mergeCommit": {
+        "oid": "846fba235477f341633fd3ade7fdd9c9e8ba3f70"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOIykBHs5PNXIN",
+          "commit": {
+            "abbreviatedOid": "c20e4ed"
+          },
+          "author": "boucadair",
+          "authorAssociation": "OWNER",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2023-03-07T15:57:31Z",
+          "updatedAt": "2023-03-07T16:03:47Z",
+          "comments": [
+            {
+              "originalPosition": 9,
+              "body": "```suggestion\r\n  identity ack {\r\n\r\n```",
+              "createdAt": "2023-03-07T15:57:31Z",
+              "updatedAt": "2023-03-07T16:03:47Z"
+            },
+            {
+              "originalPosition": 12,
+              "body": "```suggestion\r\n      \"The acknowledgment TCP flag is used to acknowledge the \r\n\r\n```",
+              "createdAt": "2023-03-07T15:57:44Z",
+              "updatedAt": "2023-03-07T16:03:47Z"
+            },
+            {
+              "originalPosition": 13,
+              "body": "There is no diagram :-)",
+              "createdAt": "2023-03-07T15:58:17Z",
+              "updatedAt": "2023-03-07T16:03:47Z"
+            },
+            {
+              "originalPosition": 7,
+              "body": "Please add a reference statement that points to 9293#3.1. (https://www.rfc-editor.org/rfc/rfc9293#name-header-format)",
+              "createdAt": "2023-03-07T15:59:47Z",
+              "updatedAt": "2023-03-07T16:03:47Z"
+            },
+            {
+              "originalPosition": 25,
+              "body": "Please replace the description with the text from 3.1 of 9293 provided in the previous comment. Thanks.",
+              "createdAt": "2023-03-07T16:00:43Z",
+              "updatedAt": "2023-03-07T16:03:47Z"
+            },
+            {
+              "originalPosition": 19,
+              "body": "```suggestion\r\n  identity syn {\r\n\r\n```",
+              "createdAt": "2023-03-07T16:01:06Z",
+              "updatedAt": "2023-03-07T16:03:47Z"
+            },
+            {
+              "originalPosition": 28,
+              "body": "```suggestion\r\n  identity fin {\r\n\r\n```",
+              "createdAt": "2023-03-07T16:01:17Z",
+              "updatedAt": "2023-03-07T16:03:47Z"
+            },
+            {
+              "originalPosition": 36,
+              "body": "```suggestion\r\n  identity urg {\r\n\r\n```",
+              "createdAt": "2023-03-07T16:01:28Z",
+              "updatedAt": "2023-03-07T16:03:47Z"
+            },
+            {
+              "originalPosition": 44,
+              "body": "```suggestion\r\n     \"RFC 9293: Transmission Control Protocol (TCP), Section 3.1\";\r\n\r\n```",
+              "createdAt": "2023-03-07T16:01:54Z",
+              "updatedAt": "2023-03-07T16:03:47Z"
+            },
+            {
+              "originalPosition": 47,
+              "body": "```suggestion\r\n  identity psh {\r\n\r\n```",
+              "createdAt": "2023-03-07T16:02:06Z",
+              "updatedAt": "2023-03-07T16:03:47Z"
+            },
+            {
+              "originalPosition": 55,
+              "body": "```suggestion\r\n  identity rst {\r\n\r\n```",
+              "createdAt": "2023-03-07T16:02:19Z",
+              "updatedAt": "2023-03-07T16:03:47Z"
+            },
+            {
+              "originalPosition": 78,
+              "body": "```suggestion\r\n  identity ece {\r\n\r\n```",
+              "createdAt": "2023-03-07T16:02:43Z",
+              "updatedAt": "2023-03-07T16:03:47Z"
+            },
+            {
+              "originalPosition": 73,
+              "body": "I would delete this. Unless you want to have a name for each if reserved bits",
+              "createdAt": "2023-03-07T16:03:27Z",
+              "updatedAt": "2023-03-07T16:03:47Z"
+            },
+            {
+              "originalPosition": 87,
+              "body": "```suggestion\r\n  identity cwr {\r\n\r\n```",
+              "createdAt": "2023-03-07T16:03:40Z",
+              "updatedAt": "2023-03-07T16:03:47Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOIykBHs5PSblZ",
+          "commit": {
+            "abbreviatedOid": "151203f"
+          },
+          "author": "boucadair",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-03-08T09:21:07Z",
+          "updatedAt": "2023-03-08T09:21:07Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 21,
+      "id": "PR_kwDOIykBHs5Ljq-R",
+      "title": "Isid filter creation",
+      "url": "https://github.com/boucadair/enhanced-acl-netmod/pull/21",
+      "state": "CLOSED",
+      "author": "sbarguil",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-03-08T10:07:50Z",
+      "updatedAt": "2023-03-08T10:41:14Z",
+      "baseRepository": "boucadair/enhanced-acl-netmod",
+      "baseRefName": "main",
+      "baseRefOid": "846fba235477f341633fd3ade7fdd9c9e8ba3f70",
+      "headRepository": "boucadair/enhanced-acl-netmod",
+      "headRefName": "ISID-FILTER-I-D",
+      "headRefOid": "e94925ce96e38612466471cfd54a01c35c7b9eb8",
+      "closedAt": "2023-03-08T10:41:14Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
