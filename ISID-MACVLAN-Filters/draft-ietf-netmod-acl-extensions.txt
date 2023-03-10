@@ -5,11 +5,11 @@
 netmod                                                     O. G. D. Dios
 Internet-Draft                                                S. Barguil
 Intended status: Standards Track                              Telefonica
-Expires: 9 September 2023                                   M. Boucadair
+Expires: 11 September 2023                                  M. Boucadair
                                                                   Orange
                                                                    Q. Wu
                                                                   Huawei
-                                                            8 March 2023
+                                                           10 March 2023
 
 
         Extensions to the Access Control Lists (ACLs) YANG Model
@@ -49,7 +49,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 9 September 2023.
+   This Internet-Draft will expire on 11 September 2023.
 
 Copyright Notice
 
@@ -105,9 +105,9 @@ Table of Contents
 
 1.  Introduction
 
-   [RFC8519] defines Access control lists (ACLs) as a user-ordered set
+   [RFC8519] defines Access Control Lists (ACLs) as a user-ordered set
    of filtering rules.  The model targets the configuration of the
-   filtering behaviour of a device.  However, the model structure, as
+   filtering behavior of a device.  However, the model structure, as
    defined in [RFC8519], suffers from a set of limitations.  This
    document describes these limitations and proposes an enhanced ACL
    structure.  The YANG module in this document is solely based on
@@ -119,7 +119,7 @@ Table of Contents
    When managing ACLs, it is common for network operators to group match
    elements in pre-defined sets.  The consolidation into group matches
    allows for reducing the number of rules, especially in large scale
-   networks.  If it is needed, for example, to find a match against 100
+   networks.  If, for example, it is needed to find a match against 100
    IP addresses (or prefixes), a single rule will suffice rather than
    creating individual Access Control Entries (ACEs) for each IP address
    (or prefix).  In doing so, implementations would optimize the
@@ -182,13 +182,13 @@ Table of Contents
 
 3.1.  Suboptimal Configuration: Lack of Support for Lists of Prefixes
 
-   IP prefix related data nodes, e.g., "destination-ipv4-network" or
+   IP prefix-related data nodes, e.g., "destination-ipv4-network" or
    "destination-ipv6-network", do not support handling a list of IP
    prefixes, which may then lead to having to support large numbers of
    ACL entries in a configuration file.
 
    The same issue is encountered when ACLs have to be in place to
-   mitigate DDoS attacks (e.g., [RFC9132] when a set of sources are
+   mitigate DDoS attacks (e.g., [RFC9132]) when a set of sources are
    involved in such an attack.  The situation is even worse when both a
    list of sources and destination prefixes are involved.
 
@@ -277,7 +277,7 @@ Table of Contents
 
    *  Network controllers that need to manipulate large files.  All or a
       subset for this configuration will need to be passed to the
-      underlying network devices
+      underlying network devices.
 
    *  Devices may receive such a configuration and thus will need to
       maintain it locally.
@@ -392,9 +392,6 @@ Table of Contents
            |  |     +--rw protocol*     uint8
            |  |     +--rw fqdn*         inet:domain-name
            |  |     +--rw uri*          inet:uri
-           |  +--rw acls
-           |     ...
-           |           +--rw rest-of-header?   binary
 
                        Figure 4: Examples of Aliases.
 
@@ -410,8 +407,8 @@ Table of Contents
 
 3.4.  Partial or Lack of IPv4/IPv6 Fragment Handling
 
-   [RFC8519] does not support fragment handling capability for IPv6 but
-   offers a partial support for IPv4 by means of 'flags'.  Nevertheless,
+   [RFC8519] does not support fragment handling for IPv6 but offers a
+   partial support for IPv4 through the use of 'flags'.  Nevertheless,
    the use of 'flags' is problematic since it does not allow a bitmask
    to be defined.  For example, setting other bits not covered by the
    'flags' filtering clause in a packet will allow that packet to get
@@ -435,8 +432,8 @@ Table of Contents
    sending any ICMP error message), or 'reject' (i.e., drop matching
    traffic and send an ICMP error message to the source).  However,
    there are situations where the matching traffic can be accepted, but
-   with a rate-limit policy.  Such capability is not currently supported
-   by [RFC8519].
+   with a rate-limit policy.  This capability is not supported by
+   [RFC8519].
 
 3.7.  Payload-based Filtering
 
@@ -452,10 +449,10 @@ Table of Contents
 3.8.  Reuse the ACLs Content Across Several Devices
 
    Having a global network view of the ACLs is highly valuable for
-   service providers.  An ACL could be defined and applied following the
-   hierarchy of the network topology.  So, an ACL can be defined at the
-   network level and, then, that same ACL can be used (or referenced to)
-   in several devices (including termination points) within the same
+   service providers.  An ACL could be defined and applied based on the
+   network topology hierarchy.  So, an ACL can be defined at the network
+   level and, then, that same ACL can be used (or referenced to) in
+   several devices (including termination points) within the same
    network.
 
    This network/device ACLs differentiation introduces several new
@@ -546,8 +543,12 @@ Table of Contents
      augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:matches/acl:l4
                /acl:tcp:
        +--rw flags-bitmask
-       |  +--rw operator?   operator
-       |  +--rw bitmask?    uint16
+       |  +--rw (mode)?
+       |     +--:(explicit)
+       |     |  +--rw operator?            operator
+       |     |  +--rw explicit-tcp-flag*   identityref
+       |     +--:(builtin)
+       |        +--rw bitmask?             uint16
        +--rw source-tcp-port-set?        port-set-ref
        +--rw destination-tcp-port-set?   port-set-ref
      augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:matches/acl:l4
@@ -756,10 +757,8 @@ Table of Contents
 4.5.  Rate-Limit Traffic
 
    In order to support rate-limiting (see Section 3.6), a new action
-   called "rate-limit" is defined.
-
-   Figure 9 shows an ACL example to rate-limit incoming SYNs during a
-   SYN flood attack.
+   called "rate-limit" is defined.  Figure 9 shows an ACL example to
+   rate-limit incoming SYNs during a SYN flood attack.
 
      {
         "ietf-access-control-list:acls": {
@@ -790,12 +789,13 @@ Table of Contents
 
 4.6.  ISID Filter
 
-   Provider backbone bridging (PBB) was originally defined as IEEE
-   802.1ah standard.  However, instead of multiplexing VLANs, PBB
-   duplicates the MAC layer of the customer frame and separates it from
-   the provider domain, by encapsulating it in a 24 bit instance service
-   identifier (I-SID).  This allows for complete transparency between
-   the customer network and the provider network.
+   Provider backbone bridging (PBB) was originally defined as Virtual
+   Bridged Local Area Networks [IEEE802.1ah] standard.  However, instead
+   of multiplexing VLANs, PBB duplicates the MAC layer of the customer
+   frame and separates it from the provider domain, by encapsulating it
+   in a 24 bit instance service identifier (I-SID).  This allows for
+   complete transparency between the customer network and the provider
+   network.
 
    The I-component forms the customer or access facing interface or
    routing instance.  The I-component is responsible for mapping
@@ -839,11 +839,15 @@ Table of Contents
 
 4.7.  VLAN Filter
 
-   The flexibility to apply a traffic filter to a VLAN is part of the
-   VPN control requirements.  So, all packets that are bridged within a
-   VLAN or that are routed into or out of a VLAN can be captured.
+   Being able to filter all packets that are bridged within a VLAN or
+   that are routed into or out of a bridge domain is part of the VPN
+   control requirements derived of the EVPN definition done in
+   [RFC7209].  So, all packets that are bridged within a VLAN or that
+   are routed into or out of a VLAN can be captured, forwarded,
+   translated or dicarded based on the network policy applied.
 
-   Figure 11 shows an ACL example to apply a VLAN range Filter.
+   Figure 11 shows an ACL example to ilustrate how to apply a VLAN range
+   filter.
 
      {
        "ietf-acces-control-list:acls": {
@@ -871,13 +875,15 @@ Table of Contents
        }
       }
 
-                       Figure 11: Example VLAN Filter
+                     Figure 11: Example of VLAN Filter
 
 5.  YANG Modules
 
 5.1.  Enhanced ACL
 
-   <CODE BEGINS> file "ietf-acl-enh@2022-10-24.yang"
+   <CODE BEGINS>
+    file ietf-acl-enh@2022-10-24.yang
+
    module ietf-acl-enh {
      yang-version 1.1;
      namespace "urn:ietf:params:xml:ns:yang:ietf-acl-enh";
@@ -904,15 +910,15 @@ Table of Contents
      organization
        "IETF NETMOD Working Group";
      contact
-       "WG Web:   <https://datatracker.ietf.org/wg/netmod/>
-        WG List:  <mailto:netmod@ietf.org>
+       "WG Web:   https://datatracker.ietf.org/wg/netmod/
+        WG List:  mailto:netmod@ietf.org
 
         Author:    Mohamed Boucadair
-                  <mailto:mohamed.boucadair@orange.com>
+                  mailto:mohamed.boucadair@orange.com
         Author:    Samier Barguil
-                  <mailto:samier.barguilgiraldo.ext@telefonica.com>
+                  mailto:samier.barguilgiraldo.ext@telefonica.com
         Author:    Oscar Gonzalez de Dios
-                  <mailto:oscar.gonzalezdedios@telefonica.com>";
+                  mailto:oscar.gonzalezdedios@telefonica.com";
      description
        "This module contains YANG definitions for enhanced ACLs.
 
@@ -976,10 +982,82 @@ Table of Contents
        base offset-type;
        description
          "The offset start right after the end of the transport
-          payload. For example, this represents the beginning
-          of the TCP data right after any TCP options or the
-          beginning of the UDP payload righte after the UDP
-          header.";
+          payload. For example, this represents the beginning of the
+          TCP data right after any TCP options or the beginning of
+          the UDP payload right after the UDP header.";
+     }
+
+     identity tcp-flag {
+       description
+         "Base Identity for the TCP Flags.";
+       reference
+         "RFC 9293: Transmission Control Protocol (TCP), Section 3.1";
+     }
+
+     identity ack {
+       base tcp-flag;
+       description
+         "Acknowledgment TCP flag bit.";
+       reference
+         "RFC 9293: Transmission Control Protocol (TCP), Section 3.1";
+     }
+
+     identity syn {
+       base tcp-flag;
+       description
+         "Synchronize sequence numbers.";
+       reference
+         "RFC 9293: Transmission Control Protocol (TCP), Section 3.1";
+     }
+
+     identity fin {
+       base tcp-flag;
+       description
+         "No more data from the sender.";
+       reference
+         "RFC 9293: Transmission Control Protocol (TCP), Section 3.1";
+     }
+
+     identity urg {
+       base tcp-flag;
+       description
+         "Urgent pointer TCP flag bit.";
+       reference
+         "RFC 9293: Transmission Control Protocol (TCP), Section 3.1";
+     }
+
+     identity psh {
+       base tcp-flag;
+       description
+         "The Push function flag is similar to the URG flag and tells
+          the receiver to process these packets as they are received
+          instead of buffering them.";
+       reference
+         "RFC 9293: Transmission Control Protocol (TCP), Section 3.1";
+     }
+
+     identity rst {
+       base tcp-flag;
+       description
+         "Reset TCP flag bit.";
+       reference
+         "RFC 9293: Transmission Control Protocol (TCP), Section 3.1";
+     }
+
+     identity ece {
+       base tcp-flag;
+       description
+         "ECN-Echo TCP flag bit.";
+       reference
+         "RFC 9293: Transmission Control Protocol (TCP), Section 3.1";
+     }
+
+     identity cwr {
+       base tcp-flag;
+       description
+         "Congestion Window Reduced flag bit";
+       reference
+         "RFC 9293: Transmission Control Protocol (TCP), Section 3.1";
      }
 
      typedef operator {
@@ -992,16 +1070,15 @@ Table of Contents
          bit match {
            position 1;
            description
-             "Match bit.  This is a bitwise match operation
-              defined as '(data & value) == value'.";
+             "Match bit.  This is a bitwise match operation defined as
+              '(data & value) == value'.";
          }
          bit any {
            position 2;
            description
-             "Any bit.  This is a match on any of the bits in
-              bitmask.  It evaluates to 'true' if any of the bits
-              in the value mask are set in the data,
-              i.e., '(data & value) != 0'.";
+             "Any bit.  This is a match on any of the bits in  bitmask.
+              It evaluates to 'true' if any of the bits in the value mask
+              are set in the data,  i.e., '(data & value) != 0'.";
          }
        }
        description
@@ -1085,19 +1162,36 @@ Table of Contents
      grouping tcp-flags {
        description
          "Operations on TCP flags.";
-       leaf operator {
-         type operator;
-         default "match";
+       choice mode {
          description
-           "How to interpret the TCP flags.";
-       }
-       leaf bitmask {
-         type uint16;
-         description
-           "The bitmask matches the last 4 bits of byte 12
-            and byte 13 of the TCP header.  For clarity, the 4 bits
-            of byte 12 corresponding to the TCP data offset field
-            are not included in any matching.";
+           "Choice of how flags are indicated.";
+
+         case explicit {
+           leaf operator {
+             type operator;
+             default "match";
+             description
+               "How to interpret the TCP flags.";
+           }
+           leaf-list explicit-tcp-flag {
+             type identityref {
+               base tcp-flag;
+             }
+             description
+               "An explicit list of the TCP flags that are to be
+                matched.";
+           }
+         }
+         case builtin {
+           leaf bitmask {
+             type uint16;
+             description
+               "The bitmask matches the last 4 bits of byte 12 and 13 of
+                the TCP header.  For clarity, the 4 bits of byte 12
+                corresponding to the TCP data offset field are not
+                included in any matching.";
+           }
+         }
        }
      }
 
@@ -1118,7 +1212,6 @@ Table of Contents
      }
 
      grouping payload {
-      if-feature "match-on-payload";
        description
          "Operations on payload match.";
        leaf offset {
@@ -1126,16 +1219,15 @@ Table of Contents
            base offset-type;
          }
          description
-           "Indicates the payload offset. This will indicate
-            the position of the data in packet to use
-            for the match.";
+           "Indicates the payload offset. This will indicate the position
+            of the data in packet to use for the match.";
        }
        leaf offset-end {
          type uint64;
          units "bytes";
          description
-           "Indicates the number of bytes, starting from the offset
-            to cover when performing the prefix match.";
+           "Indicates the number of bytes, starting from the offset to
+            cover when performing the prefix match.";
        }
        leaf operator {
          type operator;
@@ -1158,6 +1250,7 @@ Table of Contents
          description
            "Match a prefix pattern.";
          container prefix-pattern {
+           if-feature "match-on-payload";
            description
              "Rule to perform payload-based match.";
            uses payload;
@@ -1182,6 +1275,8 @@ Table of Contents
              filter to match a specific type of frame format";
          }
          choice vlan-type {
+           description
+             "vlan definition from range or operator.";
            case range {
              leaf lower-vlan {
                type uint16;
@@ -1215,8 +1310,6 @@ Table of Contents
                   match.";
              }
            }
-           description
-             "vlan definition from range or operator.";
          }
        }
      }
@@ -1228,11 +1321,15 @@ Table of Contents
          "Handle the augmentation of ISID Filter.";
        container isid-filter {
          if-feature "match-on-isid-filter";
+
          description
            "Indicates how to handle ISID filters.
            The I-component is responsible for mapping customer
            Ethernet traffic to the appropriate ISID.";
+
          choice isid-type {
+           description
+             "ISID definition from range or operator.";
            case range {
              leaf lower-isid {
                type uint16;
@@ -1266,8 +1363,6 @@ Table of Contents
                   match.";
              }
            }
-           description
-             "ISID definition from range or operator.";
          }
        }
      }
@@ -1284,17 +1379,20 @@ Table of Contents
        leaf source-ipv4-prefix-list {
          type ipv4-prefix-set-ref;
          description
-           "A reference to an IPv4 prefix list to match the source address.";
+           "A reference to an IPv4 prefix list to match the source
+            address.";
        }
        leaf destination-ipv4-prefix-list {
          type ipv4-prefix-set-ref;
          description
-           "A reference to a prefix list to match the destination address.";
+           "A reference to a prefix list to match the destination
+            address.";
        }
        leaf next-header-set {
          type protocol-set-ref;
          description
-           "A reference to a protocol set to match the next-header field.";
+           "A reference to a protocol set to match the next-header
+            field.";
        }
      }
 
@@ -1315,7 +1413,8 @@ Table of Contents
        leaf destination-ipv6-prefix-list {
          type ipv6-prefix-set-ref;
          description
-           "A reference to a prefix list to match the destination address.";
+           "A reference to a prefix list to match the destination
+            address.";
        }
        leaf protocol-set {
          type protocol-set-ref;
@@ -1368,7 +1467,8 @@ Table of Contents
        leaf icmp-set {
          type icmp-type-set-ref;
          description
-           "A reference to an ICMP type set to match the ICMP type field.";
+           "A reference to an ICMP type set to match the ICMP type
+            field.";
        }
      }
 
@@ -1423,8 +1523,8 @@ Table of Contents
        }
        container ipv6-prefix-sets {
          description
-           "Data definitions for a list of IPv6 prefixes
-            which are matched as part of a policy.";
+           "Data definitions for a list of IPv6 prefixes which are
+            matched as part of a policy.";
          list prefix-set {
            key "name";
            description
@@ -1443,8 +1543,7 @@ Table of Contents
            leaf-list prefix {
              type inet:ipv6-prefix;
              description
-               "List of IPv6 prefixes to be used in match
-                conditions.";
+               "List of IPv6 prefixes to be used in match conditions.";
            }
          }
        }
@@ -1474,8 +1573,8 @@ Table of Contents
              }
              choice port {
                description
-                 "Choice of specifying the port number or referring
-                  to a group of port numbers.";
+                 "Choice of specifying the port number or referring to a
+                  group of port numbers.";
                container port-range-or-operator {
                  description
                    "Indicates a set of ports.";
@@ -1487,8 +1586,8 @@ Table of Contents
        }
        container protocol-sets {
          description
-           "Data definitions for a list of protocols which can
-            be matched in policies.";
+           "Data definitions for a list of protocols which can be matched
+            in policies.";
          list protocol-set {
            key "name";
            description
@@ -1502,17 +1601,18 @@ Table of Contents
            leaf-list protocol {
              type union {
                type uint8;
-               type string; //Check if we can reuse an IANA-maintained module
+               type string;
              }
              description
-               "Value of the protocl set.";
+               "Value of the protocol set.";
+             //Check if we can reuse an IANA-maintained module
            }
          }
        }
        container icmp-type-sets {
          description
-           "Data definitions for a list of ICMP types which can
-            be matched in policies.";
+           "Data definitions for a list of ICMP types which can be
+            matched in policies.";
          list icmp-type-set {
            key "name";
            description
@@ -1627,6 +1727,11 @@ Table of Contents
    [RFC6242]  Wasserman, M., "Using the NETCONF Protocol over Secure
               Shell (SSH)", RFC 6242, DOI 10.17487/RFC6242, June 2011,
               <https://www.rfc-editor.org/rfc/rfc6242>.
+
+   [RFC7209]  Sajassi, A., Aggarwal, R., Uttaro, J., Bitar, N.,
+              Henderickx, W., and A. Isaac, "Requirements for Ethernet
+              VPN (EVPN)", RFC 7209, DOI 10.17487/RFC7209, May 2014,
+              <https://www.rfc-editor.org/rfc/rfc7209>.
 
    [RFC7950]  Bjorklund, M., Ed., "The YANG 1.1 Data Modeling Language",
               RFC 7950, DOI 10.17487/RFC7950, August 2016,
@@ -1765,7 +1870,9 @@ Appendix A.  XLTS Template to Generate The ICMP Type IANA-Maintained
 
 Appendix B.  Initial Version of the The ICMP Type IANA-Maintained Module
 
-   <CODE BEGINS> file "iana-icmp-types@2020-09-25.yang"
+   <CODE BEGINS>
+    file iana-icmp-types@2020-09-25.yang
+
    module iana-icmp-types {
      yang-version 1.1;
      namespace "urn:ietf:params:xml:ns:yang:iana-icmp-types";
@@ -1790,7 +1897,7 @@ Appendix B.  Initial Version of the The ICMP Type IANA-Maintained Module
        "This YANG module translates IANA registry 'ICMP Type Numbers' to
         YANG derived types.
 
-        Copyright (c) 2020 IETF Trust and the persons identified as
+        Copyright (c) 2023 IETF Trust and the persons identified as
         authors of the code. All rights reserved.
 
         Redistribution and use in source and binary forms, with or
@@ -2086,9 +2193,13 @@ Appendix B.  Initial Version of the The ICMP Type IANA-Maintained Module
 Appendix C.  Acknowledgements
 
    Many thanks to Jon Shallow and Miguel Cros for the review and
-   comments to the document, incuding priror to publishing the document.
+   comments to the document, including prior to publishing the document.
 
-   Thanks to Qiufang Ma for the comments and suggestions.
+   Thanks to Qiufang Ma and Victor Lopez for the comments and
+   suggestions.
+
+   The IANA-maintined model was generated using an XSLT stylesheet from
+   the 'iana-yang' project (https://github.com/llhotka/iana-yang).
 
    This work is partially supported by the European Commission under
    Horizon 2020 Secured autonomic traffic management for a Tera of SDN
