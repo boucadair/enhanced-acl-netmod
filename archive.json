@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-03-09T01:25:55.684799+00:00",
+  "timestamp": "2023-03-12T01:24:08.539058+00:00",
   "repo": "boucadair/enhanced-acl-netmod",
   "labels": [
     {
@@ -350,6 +350,26 @@
       "updatedAt": "2023-03-03T14:19:27Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 22,
+      "id": "I_kwDOIykBHs5gf3Wg",
+      "title": "Update Match Filter to support aliases",
+      "url": "https://github.com/boucadair/enhanced-acl-netmod/issues/22",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "boucadair"
+      ],
+      "labels": [
+        "YANG"
+      ],
+      "body": "",
+      "createdAt": "2023-03-10T13:17:05Z",
+      "updatedAt": "2023-03-10T13:17:06Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -471,7 +491,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2023-02-17T16:05:38Z",
-      "updatedAt": "2023-02-17T16:10:19Z",
+      "updatedAt": "2023-03-10T12:33:58Z",
       "baseRepository": "boucadair/enhanced-acl-netmod",
       "baseRefName": "main",
       "baseRefOid": "1430d2c8fa91cfba08d643603a422b8058578148",
@@ -507,7 +527,7 @@
       ],
       "body": "tcp flags match is very difficult to understand,",
       "createdAt": "2023-02-20T09:26:11Z",
-      "updatedAt": "2023-03-06T13:56:58Z",
+      "updatedAt": "2023-03-10T12:33:48Z",
       "baseRepository": "boucadair/enhanced-acl-netmod",
       "baseRefName": "main",
       "baseRefOid": "2d4d1036c0441c8dae66b2edca7b30715689df1c",
@@ -643,24 +663,26 @@
       "id": "PR_kwDOIykBHs5KaKJy",
       "title": "ISID and MAC Filter Creation",
       "url": "https://github.com/boucadair/enhanced-acl-netmod/pull/17",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "sbarguil",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Innitial Commit #4 ",
       "createdAt": "2023-02-21T08:55:01Z",
-      "updatedAt": "2023-03-08T15:44:45Z",
+      "updatedAt": "2023-03-10T12:47:26Z",
       "baseRepository": "boucadair/enhanced-acl-netmod",
       "baseRefName": "main",
-      "baseRefOid": "eba5999bfcccd64dccc383bfc261a970e87db046",
+      "baseRefOid": "2deab0750810707522a0802f420abe37ffc93948",
       "headRepository": "boucadair/enhanced-acl-netmod",
       "headRefName": "ISID-MACVLAN-Filters",
-      "headRefOid": "4fb211e735df3f03faaa52fd4b04eaba20a3a90f",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "c6e5458ebfc54b5412e22829113c4f7b31d6e8d5",
+      "closedAt": "2023-03-10T12:47:25Z",
+      "mergedAt": "2023-03-10T12:47:25Z",
+      "mergedBy": "boucadair",
+      "mergeCommit": {
+        "oid": "3e7d7000de455f8dee987768adc85eb2fc522eb0"
+      },
       "comments": [
         {
           "author": "sbarguil",
@@ -781,7 +803,7 @@
       "labels": [],
       "body": "To track previous comments follow #14 ",
       "createdAt": "2023-03-06T13:56:46Z",
-      "updatedAt": "2023-03-08T09:26:41Z",
+      "updatedAt": "2023-03-10T12:33:49Z",
       "baseRepository": "boucadair/enhanced-acl-netmod",
       "baseRefName": "main",
       "baseRefOid": "2d4d1036c0441c8dae66b2edca7b30715689df1c",
@@ -921,7 +943,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2023-03-08T10:07:50Z",
-      "updatedAt": "2023-03-08T10:41:14Z",
+      "updatedAt": "2023-03-10T12:33:53Z",
       "baseRepository": "boucadair/enhanced-acl-netmod",
       "baseRefName": "main",
       "baseRefOid": "846fba235477f341633fd3ade7fdd9c9e8ba3f70",
