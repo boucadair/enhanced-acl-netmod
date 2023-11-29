@@ -5,11 +5,11 @@
 netmod                                                     O. G. D. Dios
 Internet-Draft                                                S. Barguil
 Intended status: Standards Track                              Telefonica
-Expires: 19 April 2024                                      M. Boucadair
+Expires: 1 June 2024                                        M. Boucadair
                                                                   Orange
                                                                    Q. Wu
                                                                   Huawei
-                                                         17 October 2023
+                                                        29 November 2023
 
 
         Extensions to the Access Control Lists (ACLs) YANG Model
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 19 April 2024.
+   This Internet-Draft will expire on 1 June 2024.
 
 Copyright Notice
 
