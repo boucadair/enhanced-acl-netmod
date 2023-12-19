@@ -69,6 +69,7 @@ Copyright Notice
 Table of Contents
 
    1.  Introduction
+     1.1.  Editorial Note (To be removed by RFC Editor)
    2.  Terminology
    3.  Overall Structure of The Enhanced ACL Module
      3.1.  Tree Structure
@@ -172,13 +173,40 @@ Table of Contents
 
    The document also defines IANA-maintained modules for ICMP types and
    IPv6 extension headers.  The design of the modules adheres to the
-   recommendations in [I-D.boucadair-netmod-rfc8407bis].  The templates
-   to generate the modules is available at Appendix A.1, Appendix B.1,
-   and Appendix C.1.  Readers should refer to the IANA websites
-   [REF_TBC], [REF_TBC2], and [REF_TBC3] to retrieve the latest version
-   of the modules.  The modules are provided in Appendix A.2,
-   Appendix B.2, and Appendix C.2 for the users convenience, but these
-   appendices will be removed from the final RFC.
+   recommendations in [I-D.ietf-netmod-rfc8407bis].  The templates to
+   generate the modules is available at Appendix A.1, Appendix B.1, and
+   Appendix C.1.  Readers should refer to the IANA websites
+   [IANA_ICMPv4_YANG_URL], [IANA_ICMPv6_YANG_URL], and
+   [IANA_IPV6_YANG_URL] to retrieve the latest version of the modules.
+
+1.1.  Editorial Note (To be removed by RFC Editor)
+
+   Note to the RFC Editor: This section is to be removed prior to
+   publication.
+
+   This document contains placeholder values that need to be replaced
+   with finalized values at the time of publication.  This note
+   summarizes all of the substitutions that are needed.
+
+   (1) Please apply the following replacements:
+
+   XXXX --> the assigned RFC number for this I-D 2022-10-24 --> the
+   actual date of the publication of this document
+
+   (2) The modules are provided in Appendix A.2, Appendix B.2, and
+   Appendix C.2 for the users convenience before publication as RFC.
+   Please removed these appendices from the final RFC.
+
+   (3) Please update the following references:
+
+   *  IANA_ICMPv4_YANG_URL --> The URL to retrieve the latest version of
+      the IANA-maintained ICMPv4 module.
+
+   *  IANA_ICMPv6_YANG_URL --> The URL to retrieve the latest version of
+      the IANA-maintained ICMPv6 module.
+
+   *  IANA_IPV6_YANG_URL --> The URL to retrieve the latest version of
+      the IPv6 Extension Header Types IANA module.
 
 2.  Terminology
 
@@ -2215,13 +2243,13 @@ module: ietf-acl-enh
 
 7.2.  Informative References
 
-   [I-D.boucadair-netmod-rfc8407bis]
+   [I-D.ietf-netmod-rfc8407bis]
               Boucadair, M. and Q. Wu, "Guidelines for Authors and
               Reviewers of Documents Containing YANG Data Models", Work
-              in Progress, Internet-Draft, draft-boucadair-netmod-
-              rfc8407bis-02, 26 July 2023,
-              <https://datatracker.ietf.org/doc/html/draft-boucadair-
-              netmod-rfc8407bis-02>.
+              in Progress, Internet-Draft, draft-ietf-netmod-rfc8407bis-
+              06, 18 December 2023,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-netmod-
+              rfc8407bis-06>.
 
    [IANA-ICMPv4]
               "ICMP Type Numbers", n.d.,
