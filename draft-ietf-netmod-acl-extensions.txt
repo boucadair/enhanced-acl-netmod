@@ -5,11 +5,11 @@
 netmod                                                     O. G. D. Dios
 Internet-Draft                                                S. Barguil
 Intended status: Standards Track                              Telefonica
-Expires: 1 June 2024                                        M. Boucadair
+Expires: 21 June 2024                                       M. Boucadair
                                                                   Orange
                                                                    Q. Wu
                                                                   Huawei
-                                                        29 November 2023
+                                                        19 December 2023
 
 
         Extensions to the Access Control Lists (ACLs) YANG Model
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 1 June 2024.
+   This Internet-Draft will expire on 21 June 2024.
 
 Copyright Notice
 
@@ -756,17 +756,20 @@ module: ietf-acl-enh
      import iana-icmpv4-types {
        prefix iana-icmpv4-types;
        reference
-         "TBC";
+         "RFC XXXX: Extensions to the Access Control Lists (ACLs)
+                    YANG Model";
      }
      import iana-icmpv6-types {
        prefix iana-icmpv6-types;
        reference
-         "TBC";
+         "RFC XXXX: Extensions to the Access Control Lists (ACLs)
+                    YANG Model";
      }
      import iana-ipv6-ext-types {
        prefix iana-ipv6-ext-types;
        reference
-         "TBC";
+         "RFC XXXX: Extensions to the Access Control Lists (ACLs)
+                    YANG Model";
      }
 
      organization
@@ -1891,7 +1894,12 @@ module: ietf-acl-enh
    effect on network operations.  These are the subtrees and data nodes
    and their sensitivity/vulnerability:
 
-   *  TBC
+   'defined-sets' and 'aliases':  These lists specify a setf of sets and
+      aliases.  Simialr to [RFC8519], unauthorized write access to these
+      list can allow intruders to modify the entries so as to permit
+      traffic that should not be permitted, or deny traffic that should
+      be permitted.  The former may result in a DoS attack, or
+      compromise a device.  The latter may result in a DoS attack.
 
    Some of the readable data nodes in this YANG module may be considered
    sensitive or vulnerable in some network environments.  It is thus
@@ -1899,7 +1907,9 @@ module: ietf-acl-enh
    notification) to these data nodes.  These are the subtrees and data
    nodes and their sensitivity/vulnerability:
 
-   *  TBC
+   'defined-sets' and 'aliases':  Unauthorized read access of these
+      lists will allow an attacker to identify the actual resources that
+      are bound to ACLs.
 
 6.  IANA Considerations
 
