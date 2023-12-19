@@ -106,7 +106,7 @@ Table of Contents
    Appendix C.  IPv6 Extension Header Types
      C.1.  XSLT Template to Generate The IPv6 Extension Header Types
            IANA-Maintained Module
-     C.2.  Initial Version of the The ICMPv4 Types IANA-Maintained
+     C.2.  Initial Version of the The ICMPv6 Types IANA-Maintained
            Module
    Appendix D.  Problem Statement & Gap Analysis
      D.1.  Suboptimal Configuration: Lack of Support for Lists of
@@ -3195,9 +3195,9 @@ C.1.  XSLT Template to Generate The IPv6 Extension Header Types IANA-
    </stylesheet>
    <CODE ENDS>
 
-C.2.  Initial Version of the The ICMPv4 Types IANA-Maintained Module
+C.2.  Initial Version of the The ICMPv6 Types IANA-Maintained Module
 
-   <CODE BEGINS> file "iana-ipv6-ext-types@2023-09-29.yang"
+   <CODE BEGINS> file "iana-ipv6-ext-types@2023-04-28.yang"
    module iana-ipv6-ext-types {
      yang-version 1.1;
      namespace "urn:ietf:params:xml:ns:yang:iana-ipv6-ext-types";
