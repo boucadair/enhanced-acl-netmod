@@ -5,11 +5,11 @@
 netmod                                                     O. G. D. Dios
 Internet-Draft                                                S. Barguil
 Intended status: Standards Track                              Telefonica
-Expires: 13 June 2024                                       M. Boucadair
+Expires: 21 June 2024                                       M. Boucadair
                                                                   Orange
                                                                    Q. Wu
                                                                   Huawei
-                                                        11 December 2023
+                                                        19 December 2023
 
 
         Extensions to the Access Control Lists (ACLs) YANG Model
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 13 June 2024.
+   This Internet-Draft will expire on 21 June 2024.
 
 Copyright Notice
 
@@ -107,7 +107,7 @@ Table of Contents
    Appendix C.  IPv6 Extension Header Types
      C.1.  XSLT Template to Generate The IPv6 Extension Header Types
            IANA-Maintained Module
-     C.2.  Initial Version of the The ICMPv4 Types IANA-Maintained
+     C.2.  Initial Version of the The ICMPv6 Types IANA-Maintained
            Module
    Appendix D.  Problem Statement & Gap Analysis
      D.1.  Suboptimal Configuration: Lack of Support for Lists of
@@ -129,12 +129,9 @@ Table of Contents
    of filtering rules.  The model targets the configuration of the
    filtering behavior of a device.  However, the model structure, as
    defined in [RFC8519], suffers from a set of limitations.  This
-   document describes these limitations and proposes an enhanced ACL
-   structure.  The YANG module in this document is solely based on
-   augmentations to the ACL YANG module defined in [RFC8519].
-
-   The motivation of such enhanced ACL structure is discussed in detail
-   in Appendix D.
+   document describes these limitations and specifies an enhanced ACL
+   structure (Section 4).  The motivation of such enhanced ACL structure
+   is discussed in detail in Appendix D.
 
    When managing ACLs, it is common for network operators to group match
    elements in pre-defined sets.  The consolidation into group matches
@@ -145,20 +142,20 @@ Table of Contents
    (or prefix).  In doing so, implementations would optimize the
    performance of matching lists vs multiple rules matching.
 
-   The enhanced ACL structure is also meant to facilitate the management
-   of network operators.  Instead of entering the IP address or port
-   number literals, using user-named lists decouples the creation of the
-   rule from the management of the sets.  Hence, it is possible to
-   remove/add entries to the list without redefining the (parent) ACL
-   rule.
+   The enhanced ACL structure (Section 4) is also meant to facilitate
+   the management of network operators.  Instead of entering the IP
+   address or port number literals, using user-named lists decouples the
+   creation of the rule from the management of the sets.  Hence, it is
+   possible to remove/add entries to the list without redefining the
+   (parent) ACL rule.
 
    In addition, the notion of Access Control List (ACL) and defined sets
    is generalized so that it is not device-specific as per [RFC8519].
-   ACLs and defined sets may be defined at network / administrative
-   domain level and associated to devices.  This approach facilitates
-   the reusability across multiple network elements.  For example,
-   managing the IP prefix sets from a network level makes it easier to
-   maintain by the security groups.
+   ACLs and defined sets may be defined at network/administrative domain
+   level and associated to devices.  This approach facilitates the
+   reusability across multiple network elements.  For example, managing
+   the IP prefix sets from a network level makes it easier to maintain
+   by the security groups.
 
    Network operators maintain sets of IP prefixes that are related to
    each other, e.g., deny-lists or accept-lists that are associated with
@@ -171,13 +168,17 @@ Table of Contents
    filtering rules conveyed in messages triggered by these tools is
    valuable from a network operation standpoint.
 
+   The enhanced ACL module (Section 4) conforms to the Network
+   Management Datastore Architecture (NMDA) defined in [RFC8342].
+
    The document also defines IANA-maintained modules for ICMP types and
    IPv6 extension headers.  The design of the modules adheres to the
    recommendations in [I-D.ietf-netmod-rfc8407bis].  The templates to
    generate the modules is available at Appendix A.1, Appendix B.1, and
    Appendix C.1.  Readers should refer to the IANA websites
-   [IANA_ICMPv4_YANG_URL], [IANA_ICMPv6_YANG_URL], and
-   [IANA_IPV6_YANG_URL] to retrieve the latest version of the modules.
+   "IANA_ICMPv4_YANG_URL", "IANA_ICMPv6_YANG_URL", and
+   "IANA_IPV6_YANG_URL" to retrieve the latest version of these IANA-
+   maintained modules.
 
 1.1.  Editorial Note (To be removed by RFC Editor)
 
@@ -784,17 +785,20 @@ module: ietf-acl-enh
      import iana-icmpv4-types {
        prefix iana-icmpv4-types;
        reference
-         "TBC";
+         "RFC XXXX: Extensions to the Access Control Lists (ACLs)
+                    YANG Model";
      }
      import iana-icmpv6-types {
        prefix iana-icmpv6-types;
        reference
-         "TBC";
+         "RFC XXXX: Extensions to the Access Control Lists (ACLs)
+                    YANG Model";
      }
      import iana-ipv6-ext-types {
        prefix iana-ipv6-ext-types;
        reference
-         "TBC";
+         "RFC XXXX: Extensions to the Access Control Lists (ACLs)
+                    YANG Model";
      }
 
      organization
@@ -1919,7 +1923,12 @@ module: ietf-acl-enh
    effect on network operations.  These are the subtrees and data nodes
    and their sensitivity/vulnerability:
 
-   *  TBC
+   'defined-sets' and 'aliases':  These lists specify a setf of sets and
+      aliases.  Simialr to [RFC8519], unauthorized write access to these
+      list can allow intruders to modify the entries so as to permit
+      traffic that should not be permitted, or deny traffic that should
+      be permitted.  The former may result in a DoS attack, or
+      compromise a device.  The latter may result in a DoS attack.
 
    Some of the readable data nodes in this YANG module may be considered
    sensitive or vulnerable in some network environments.  It is thus
@@ -1927,7 +1936,9 @@ module: ietf-acl-enh
    notification) to these data nodes.  These are the subtrees and data
    nodes and their sensitivity/vulnerability:
 
-   *  TBC
+   'defined-sets' and 'aliases':  Unauthorized read access of these
+      lists will allow an attacker to identify the actual resources that
+      are bound to ACLs.
 
 6.  IANA Considerations
 
@@ -2217,6 +2228,11 @@ module: ietf-acl-enh
               DOI 10.17487/RFC8341, March 2018,
               <https://www.rfc-editor.org/rfc/rfc8341>.
 
+   [RFC8342]  Bjorklund, M., Schoenwaelder, J., Shafer, P., Watsen, K.,
+              and R. Wilton, "Network Management Datastore Architecture
+              (NMDA)", RFC 8342, DOI 10.17487/RFC8342, March 2018,
+              <https://www.rfc-editor.org/rfc/rfc8342>.
+
    [RFC8446]  Rescorla, E., "The Transport Layer Security (TLS) Protocol
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
               <https://www.rfc-editor.org/rfc/rfc8446>.
@@ -2237,9 +2253,9 @@ module: ietf-acl-enh
               Boucadair, M. and Q. Wu, "Guidelines for Authors and
               Reviewers of Documents Containing YANG Data Models", Work
               in Progress, Internet-Draft, draft-ietf-netmod-rfc8407bis-
-              05, 1 December 2023,
+              06, 18 December 2023,
               <https://datatracker.ietf.org/doc/html/draft-ietf-netmod-
-              rfc8407bis-05>.
+              rfc8407bis-06>.
 
    [IANA-ICMPv4]
               "ICMP Type Numbers", n.d.,
@@ -2413,6 +2429,9 @@ A.2.  Initial Version of the The ICMPv4 Types IANA-Maintained Module
         forth in Section 4.c of the IETF Trust's Legal Provisions
         Relating to IETF Documents
         (https://trustee.ietf.org/license-info).
+
+        The initial version of this YANG module is part of RFC XXXX;
+        see the RFC itself for full legal notices.
 
         This version of this YANG module was generated from the
         corresponding IANA registry using an XSLT stylesheet from the
@@ -2817,6 +2836,9 @@ B.2.  Initial Version of the The ICMPv4 Types IANA-Maintained Module
         Relating to IETF Documents
         (https://trustee.ietf.org/license-info).
 
+        The initial version of this YANG module is part of RFC XXXX;
+        see the RFC itself for full legal notices.
+
         This version of this YANG module was generated from the
         corresponding IANA registry using an XSLT stylesheet from the
         'iana-yang' project (https://github.com/llhotka/iana-yang).";
@@ -3207,9 +3229,9 @@ C.1.  XSLT Template to Generate The IPv6 Extension Header Types IANA-
    </stylesheet>
    <CODE ENDS>
 
-C.2.  Initial Version of the The ICMPv4 Types IANA-Maintained Module
+C.2.  Initial Version of the The ICMPv6 Types IANA-Maintained Module
 
-   <CODE BEGINS> file "iana-ipv6-ext-types@2023-09-29.yang"
+   <CODE BEGINS> file "iana-ipv6-ext-types@2023-04-28.yang"
    module iana-ipv6-ext-types {
      yang-version 1.1;
      namespace "urn:ietf:params:xml:ns:yang:iana-ipv6-ext-types";
