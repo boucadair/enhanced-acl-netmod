@@ -5,11 +5,11 @@
 netmod                                                     O. G. D. Dios
 Internet-Draft                                                S. Barguil
 Intended status: Standards Track                              Telefonica
-Expires: 21 June 2024                                       M. Boucadair
+Expires: 26 July 2024                                       M. Boucadair
                                                                   Orange
                                                                    Q. Wu
                                                                   Huawei
-                                                        19 December 2023
+                                                         23 January 2024
 
 
         Extensions to the Access Control Lists (ACLs) YANG Model
@@ -50,11 +50,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 21 June 2024.
+   This Internet-Draft will expire on 26 July 2024.
 
 Copyright Notice
 
-   Copyright (c) 2023 IETF Trust and the persons identified as the
+   Copyright (c) 2024 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -1589,6 +1589,12 @@ module: ietf-acl-enh
        container ipv4-fragment {
          description
            "Indicates how to handle IPv4 fragments.";
+         must "not(/acl:acls/acl:acl/acl:aces"
+            + "/acl:ace/acl:matches/acl:l3/acl:ipv4/acl:flags)" {
+           error-message
+             "Either flags or fragment should be provided, but not
+              both.";
+         }
          uses fragment-fields;
        }
        leaf source-ipv4-prefix-list {
@@ -1650,6 +1656,12 @@ module: ietf-acl-enh
        container flags-bitmask {
          description
            "Indicates how to handle TCP flags.";
+         must "not(/acl:acls/acl:acl/acl:aces/acl:ace/acl:matches"
+            + "/acl:l4/acl:tcp/acl:flags)" {
+           error-message
+             "Either flags or flags-bitmask should be provided, but not
+              both.";
+         }
          uses tcp-flags;
        }
        leaf source-tcp-port-set {
@@ -2043,14 +2055,14 @@ module: ietf-acl-enh
    [IANA-ICMPv4]:
 
    When this registry is modified, the YANG module "iana-icmpv4-types"
-   [IANA_ICMPv4_YANG_URL] must be updated as defined in RFCXXXX.
+   [IANA_ICMPv4_YANG_URL] must be updated as defined in RFC XXXX.
 
    IANA is requested to updated the "Reference" in the "ICMP Type
    Numbers" registry as follows:
 
    OLD:  [RFC2780]
 
-   NEW:  [RFC2780][This_Document]
+   NEW:  [RFC2780][RFCXXXX]
 
 6.3.2.  ICMPv6 Types IANA Module
 
@@ -2098,14 +2110,14 @@ module: ietf-acl-enh
    [IANA-ICMPv6]:
 
    When this registry is modified, the YANG module "iana-icmpv6-types"
-   [IANA_ICMPv6_YANG_URL] must be updated as defined in RFCXXXX.
+   [IANA_ICMPv6_YANG_URL] must be updated as defined in RFC XXXX.
 
    IANA is requested to updated the "Reference" in the "ICMPv6 "type"
    Numbers" registry as follows:
 
    OLD:  [RFC4443]
 
-   NEW:  [RFC4443][This_Document]
+   NEW:  [RFC4443][RFCXXXX]
 
 6.3.3.  IPv6 Extension Header Types IANA Module
 
@@ -2153,14 +2165,14 @@ module: ietf-acl-enh
    Types" registry [IANA-IPv6]:
 
    When this registry is modified, the YANG module "iana-ipv6-ext-types"
-   [IANA_IPV6_YANG_URL] must be updated as defined in RFCXXXX.
+   [IANA_IPV6_YANG_URL] must be updated as defined in RFC XXXX.
 
    IANA is requested to updated the "Reference" in the "IPv6 Extension
    Header Types" registry as follows:
 
    OLD:  [RFC2780][RFC5237][RFC7045]
 
-   NEW:  [RFC2780][RFC5237][RFC7045][This_Document]
+   NEW:  [RFC2780][RFC5237][RFC7045][RFCXXXX]
 
 7.  References
 
@@ -3592,10 +3604,10 @@ Appendix E.  Acknowledgements
    Many thanks to Jon Shallow and Miguel Cros for the review and
    comments to the document, including prior to publishing the document.
 
-   Thanks to Qiufang Ma, Victor Lopez, and Joe Clarke for the comments
-   and suggestions.
+   Thanks to Qiufang Ma, Victor Lopez, Joe Clarke, and Mahesh
+   Jethanandani for the comments and suggestions.
 
-   The IANA-maintained models were generated using an XSLT stylesheet
+   The IANA-maintained modules were generated using an XSLT stylesheet
    from the 'iana-yang' project (https://github.com/llhotka/iana-yang).
 
    This work is partially supported by the European Commission under

@@ -15,11 +15,11 @@
 the limitations of the ACL model as initially defined in RFC 8519. 
        The document also defines IANA-maintained modules for ICMP types and IPv6 extension headers. 
     " name="description">
-<meta content="xml2rfc 3.19.0" name="generator">
+<meta content="xml2rfc 3.19.1" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ietf-netmod-acl-extensions-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.19.0
+  xml2rfc 3.19.1
     Python 3.11.6
     ConfigArgParse 1.7
     google-i18n-address 3.1.0
@@ -32,7 +32,7 @@ the limitations of the ACL model as initially defined in RFC 8519.
     requests 2.31.0
     setuptools 68.2.2
     six 1.16.0
-    wcwidth 0.2.12
+    wcwidth 0.2.13
 -->
 <link href="draft-ietf-netmod-acl-extensions.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1031,11 +1031,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">Enhanced ACLs</td>
-<td class="right">December 2023</td>
+<td class="right">January 2024</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Dios, et al.</td>
-<td class="center">Expires 21 June 2024</td>
+<td class="center">Expires 26 July 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1048,12 +1048,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-netmod-acl-extensions-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-12-19" class="published">19 December 2023</time>
+<time datetime="2024-01-23" class="published">23 January 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-06-21">21 June 2024</time></dd>
+<dd class="expires"><time datetime="2024-07-26">26 July 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1113,7 +1113,7 @@ the limitations of the ACL model as initially defined in RFC 8519.<a href="#sect
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 21 June 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 26 July 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1122,7 +1122,7 @@ the limitations of the ACL model as initially defined in RFC 8519.<a href="#sect
 <a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
         </h2>
 <p id="section-boilerplate.2-1">
-            Copyright (c) 2023 IETF Trust and the persons identified as the
+            Copyright (c) 2024 IETF Trust and the persons identified as the
             document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.2-2">
             This document is subject to BCP 78 and the IETF Trust's Legal
@@ -2855,6 +2855,12 @@ grouping mpls-match-parameters-config {
     container ipv4-fragment {
       description
         "Indicates how to handle IPv4 fragments.";
+      must "not(/acl:acls/acl:acl/acl:aces"
+         + "/acl:ace/acl:matches/acl:l3/acl:ipv4/acl:flags)" {
+        error-message
+          "Either flags or fragment should be provided, but not
+           both.";
+      }
       uses fragment-fields;
     }
     leaf source-ipv4-prefix-list {
@@ -2916,6 +2922,12 @@ grouping mpls-match-parameters-config {
     container flags-bitmask {
       description
         "Indicates how to handle TCP flags.";
+      must "not(/acl:acls/acl:acl/acl:aces/acl:ace/acl:matches"
+         + "/acl:l4/acl:tcp/acl:flags)" {
+        error-message
+          "Either flags or flags-bitmask should be provided, but not
+           both.";
+      }
       uses tcp-flags;
     }
     leaf source-tcp-port-set {
@@ -3344,7 +3356,7 @@ existing revision statements.<a href="#section-6.3.1-8" class="pilcrow">¶</a></
 <div class="alignLeft art-text artwork" id="section-6.3.1-10">
 <pre>
 When this registry is modified, the YANG module "iana-icmpv4-types"
-[IANA_ICMPv4_YANG_URL] must be updated as defined in RFCXXXX.
+[IANA_ICMPv4_YANG_URL] must be updated as defined in RFC XXXX.
 </pre><a href="#section-6.3.1-10" class="pilcrow">¶</a>
 </div>
 <p id="section-6.3.1-11">IANA is requested to updated the "Reference" in the "ICMP Type Numbers" registry
@@ -3357,7 +3369,7 @@ as follows:<a href="#section-6.3.1-11" class="pilcrow">¶</a></p>
             <dd class="break"></dd>
 <dt id="section-6.3.1-12.3">NEW:</dt>
             <dd style="margin-left: 1.5em" id="section-6.3.1-12.4">
-              <p id="section-6.3.1-12.4.1"><span>[<a href="#RFC2780" class="cite xref">RFC2780</a>]</span>[This_Document]<a href="#section-6.3.1-12.4.1" class="pilcrow">¶</a></p>
+              <p id="section-6.3.1-12.4.1"><span>[<a href="#RFC2780" class="cite xref">RFC2780</a>]</span>[RFCXXXX]<a href="#section-6.3.1-12.4.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 </dl>
@@ -3424,7 +3436,7 @@ existing revision statements.<a href="#section-6.3.2-8" class="pilcrow">¶</a></
 <div class="alignLeft art-text artwork" id="section-6.3.2-10">
 <pre>
 When this registry is modified, the YANG module "iana-icmpv6-types"
-[IANA_ICMPv6_YANG_URL] must be updated as defined in RFCXXXX.
+[IANA_ICMPv6_YANG_URL] must be updated as defined in RFC XXXX.
 </pre><a href="#section-6.3.2-10" class="pilcrow">¶</a>
 </div>
 <p id="section-6.3.2-11">IANA is requested to updated the "Reference" in the "ICMPv6 "type" Numbers" registry
@@ -3437,7 +3449,7 @@ as follows:<a href="#section-6.3.2-11" class="pilcrow">¶</a></p>
             <dd class="break"></dd>
 <dt id="section-6.3.2-12.3">NEW:</dt>
             <dd style="margin-left: 1.5em" id="section-6.3.2-12.4">
-              <p id="section-6.3.2-12.4.1"><span>[<a href="#RFC4443" class="cite xref">RFC4443</a>]</span>[This_Document]<a href="#section-6.3.2-12.4.1" class="pilcrow">¶</a></p>
+              <p id="section-6.3.2-12.4.1"><span>[<a href="#RFC4443" class="cite xref">RFC4443</a>]</span>[RFCXXXX]<a href="#section-6.3.2-12.4.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 </dl>
@@ -3504,7 +3516,7 @@ existing revision statements.<a href="#section-6.3.3-8" class="pilcrow">¶</a></
 <div class="alignLeft art-text artwork" id="section-6.3.3-10">
 <pre>
 When this registry is modified, the YANG module "iana-ipv6-ext-types"
-[IANA_IPV6_YANG_URL] must be updated as defined in RFCXXXX.
+[IANA_IPV6_YANG_URL] must be updated as defined in RFC XXXX.
 </pre><a href="#section-6.3.3-10" class="pilcrow">¶</a>
 </div>
 <p id="section-6.3.3-11">IANA is requested to updated the "Reference" in the "IPv6 Extension Header Types" registry
@@ -3517,7 +3529,7 @@ as follows:<a href="#section-6.3.3-11" class="pilcrow">¶</a></p>
             <dd class="break"></dd>
 <dt id="section-6.3.3-12.3">NEW:</dt>
             <dd style="margin-left: 1.5em" id="section-6.3.3-12.4">
-              <p id="section-6.3.3-12.4.1"><span>[<a href="#RFC2780" class="cite xref">RFC2780</a>]</span><span>[<a href="#RFC5237" class="cite xref">RFC5237</a>]</span><span>[<a href="#RFC7045" class="cite xref">RFC7045</a>]</span>[This_Document]<a href="#section-6.3.3-12.4.1" class="pilcrow">¶</a></p>
+              <p id="section-6.3.3-12.4.1"><span>[<a href="#RFC2780" class="cite xref">RFC2780</a>]</span><span>[<a href="#RFC5237" class="cite xref">RFC5237</a>]</span><span>[<a href="#RFC7045" class="cite xref">RFC7045</a>]</span>[RFCXXXX]<a href="#section-6.3.3-12.4.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 </dl>
@@ -5071,8 +5083,8 @@ logical infrastructure.<a href="#appendix-D.8-3.4.1" class="pilcrow">¶</a></p>
 <a href="#appendix-E" class="section-number selfRef">Appendix E. </a><a href="#name-acknowledgements" class="section-name selfRef">Acknowledgements</a>
       </h2>
 <p id="appendix-E-1">Many thanks to Jon Shallow and Miguel Cros for the review and comments to the document, including prior to publishing the document.<a href="#appendix-E-1" class="pilcrow">¶</a></p>
-<p id="appendix-E-2">Thanks to Qiufang Ma, Victor Lopez, and Joe Clarke for the comments and suggestions.<a href="#appendix-E-2" class="pilcrow">¶</a></p>
-<p id="appendix-E-3">The IANA-maintained models were generated using an XSLT stylesheet from the 'iana-yang' project (https://github.com/llhotka/iana-yang).<a href="#appendix-E-3" class="pilcrow">¶</a></p>
+<p id="appendix-E-2">Thanks to Qiufang Ma, Victor Lopez, Joe Clarke, and Mahesh Jethanandani for the comments and suggestions.<a href="#appendix-E-2" class="pilcrow">¶</a></p>
+<p id="appendix-E-3">The IANA-maintained modules were generated using an XSLT stylesheet from the 'iana-yang' project (https://github.com/llhotka/iana-yang).<a href="#appendix-E-3" class="pilcrow">¶</a></p>
 <p id="appendix-E-4">This work is partially supported by the European Commission under   Horizon 2020 Secured autonomic traffic management for a Tera of SDN
  flows (Teraflow) project (grant agreement number 101015857).<a href="#appendix-E-4" class="pilcrow">¶</a></p>
 </section>
