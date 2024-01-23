@@ -1630,7 +1630,7 @@ Each set is uniquely identified by a name and can be called from the relevant en
 <a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-tcp-flags-handling" class="section-name selfRef">TCP Flags Handling</a>
         </h3>
 <p id="section-3.4-1">The augmented ACL structure includes a new leaf 'flags-bitmask' to better handle flags.<a href="#section-3.4-1" class="pilcrow">¶</a></p>
-<p id="section-3.4-2">Clients that support both 'flags-bitmask' and 'flags' matching fields <span class="bcp14">MUST NOT</span> set these fields in the same request. Note that it is <span class="bcp14">RECOMMENDED</span> to use 'flags-bitmask'<a href="#section-3.4-2" class="pilcrow">¶</a></p>
+<p id="section-3.4-2">Clients that support both 'flags-bitmask' and 'flags' matching fields <span class="bcp14">MUST NOT</span> set these fields in the same request.<a href="#section-3.4-2" class="pilcrow">¶</a></p>
 <p id="section-3.4-3"><a href="#example_4" class="auto internal xref">Figure 2</a> shows an example of a request to install a filter to discard incoming TCP messages having all flags unset.<a href="#section-3.4-3" class="pilcrow">¶</a></p>
 <span id="name-example-of-an-acl-to-deny-t"></span><div id="example_4">
 <figure id="figure-2">
