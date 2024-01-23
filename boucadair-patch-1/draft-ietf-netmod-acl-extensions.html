@@ -1248,7 +1248,7 @@ the limitations of the ACL model as initially defined in RFC 8519.<a href="#sect
                 <p id="section-toc.1-1.9.2.1.1"><a href="#appendix-B.1" class="auto internal xref">B.1</a>.  <a href="#name-xslt-template-to-generate-th" class="internal xref">XSLT Template to Generate The ICMPv6 Types IANA-Maintained Module</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2">
-                <p id="section-toc.1-1.9.2.2.1"><a href="#appendix-B.2" class="auto internal xref">B.2</a>.  <a href="#name-initial-version-of-the-the-i" class="internal xref">Initial Version of the The ICMPv4 Types IANA-Maintained Module</a></p>
+                <p id="section-toc.1-1.9.2.2.1"><a href="#appendix-B.2" class="auto internal xref">B.2</a>.  <a href="#name-initial-version-of-the-the-i" class="internal xref">Initial Version of the The ICMPv6 Types IANA-Maintained Module</a></p>
 </li>
             </ul>
 </li>
@@ -1357,7 +1357,7 @@ websites "IANA_ICMPv4_YANG_URL", "IANA_ICMPv6_YANG_URL", and "IANA_IPV6_YANG_URL
 <p id="section-1.1-3">(1) Please apply the following replacements:<a href="#section-1.1-3" class="pilcrow">¶</a></p>
 <p id="section-1.1-4">XXXX --&gt; the assigned RFC number for this I-D
 2022-10-24 --&gt; the actual date of the publication of this document<a href="#section-1.1-4" class="pilcrow">¶</a></p>
-<p id="section-1.1-5">(2) The modules are provided in <a href="#iana-icmp" class="auto internal xref">Appendix A.2</a>, <a href="#iana-icmpv6" class="auto internal xref">Appendix B.2</a>, and <a href="#iana-ipv6-ext" class="auto internal xref">Appendix C.2</a> for the users convenience before publication as RFC. Please removed these appendices from the final RFC.<a href="#section-1.1-5" class="pilcrow">¶</a></p>
+<p id="section-1.1-5">(2) The modules are provided in <a href="#iana-icmp" class="auto internal xref">Appendix A.2</a>, <a href="#iana-icmpv6" class="auto internal xref">Appendix B.2</a>, and <a href="#iana-ipv6-ext" class="auto internal xref">Appendix C.2</a> for the users convenience before publication as RFC. Please remove these appendices from the final RFC.<a href="#section-1.1-5" class="pilcrow">¶</a></p>
 <p id="section-1.1-6">(3) Please update  the following references:<a href="#section-1.1-6" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1.1-7.1">
@@ -1630,7 +1630,7 @@ Each set is uniquely identified by a name and can be called from the relevant en
 <a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-tcp-flags-handling" class="section-name selfRef">TCP Flags Handling</a>
         </h3>
 <p id="section-3.4-1">The augmented ACL structure includes a new leaf 'flags-bitmask' to better handle flags.<a href="#section-3.4-1" class="pilcrow">¶</a></p>
-<p id="section-3.4-2">Clients that support both 'flags-bitmask' and 'flags' matching fields <span class="bcp14">MUST NOT</span> set these fields in the same request.<a href="#section-3.4-2" class="pilcrow">¶</a></p>
+<p id="section-3.4-2">Clients that support both 'flags-bitmask' and 'flags' matching fields <span class="bcp14">MUST NOT</span> set these fields in the same request. Note that it is <span class="bcp14">RECOMMENDED</span> to use 'flags-bitmask'<a href="#section-3.4-2" class="pilcrow">¶</a></p>
 <p id="section-3.4-3"><a href="#example_4" class="auto internal xref">Figure 2</a> shows an example of a request to install a filter to discard incoming TCP messages having all flags unset.<a href="#section-3.4-3" class="pilcrow">¶</a></p>
 <span id="name-example-of-an-acl-to-deny-t"></span><div id="example_4">
 <figure id="figure-2">
@@ -2853,12 +2853,6 @@ grouping mpls-match-parameters-config {
     description
       "Handle non-initial and initial fragments for IPv4 packets.";
     container ipv4-fragment {
-      must "not(/acl:acls/acl:acl/acl:aces"
-         + "/acl:ace/acl:matches/acl:l3/acl:ipv4/acl:flags)" {
-        error-message
-          "Either flags or fragment should be provided, but not
-           both.";
-      }
       description
         "Indicates how to handle IPv4 fragments.";
       uses fragment-fields;
@@ -2920,12 +2914,6 @@ grouping mpls-match-parameters-config {
     description
       "Handles TCP flags and port sets.";
     container flags-bitmask {
-      must "not(/acl:acls/acl:acl/acl:aces/acl:ace/acl:matches"
-         + "/acl:l4/acl:tcp/acl:flags)" {
-        error-message
-          "Either flags or flags-bitmask should be provided, but not
-           both.";
-      }
       description
         "Indicates how to handle TCP flags.";
       uses tcp-flags;
@@ -3200,7 +3188,7 @@ grouping mpls-match-parameters-config {
 <span class="break"></span><dl class="dlParallel" id="section-5-4">
         <dt id="section-5-4.1">'defined-sets' and 'aliases':</dt>
         <dd style="margin-left: 1.5em" id="section-5-4.2">
-          <p id="section-5-4.2.1">These lists specify a setf of sets and aliases. Simialr to <span>[<a href="#RFC8519" class="cite xref">RFC8519</a>]</span>, unauthorized write access to these
+          <p id="section-5-4.2.1">These lists specify a set of sets and aliases. Similar to <span>[<a href="#RFC8519" class="cite xref">RFC8519</a>]</span>, unauthorized write access to these
    list can allow intruders to modify the entries so as to permit
    traffic that should not be permitted, or deny traffic that should
    be permitted.  The former may result in a DoS attack, or
@@ -4208,7 +4196,7 @@ module iana-icmpv4-types {
 <div id="iana-icmpv6">
 <section id="appendix-B.2">
         <h3 id="name-initial-version-of-the-the-i">
-<a href="#appendix-B.2" class="section-number selfRef">B.2. </a><a href="#name-initial-version-of-the-the-i" class="section-name selfRef">Initial Version of the The ICMPv4 Types IANA-Maintained Module</a>
+<a href="#appendix-B.2" class="section-number selfRef">B.2. </a><a href="#name-initial-version-of-the-the-i" class="section-name selfRef">Initial Version of the The ICMPv6 Types IANA-Maintained Module</a>
         </h3>
 <div class="breakable sourcecode" id="appendix-B.2-1">
 <pre>&lt;CODE BEGINS&gt; file "iana-icmpv6-types@2020-09-25.yang"
@@ -4934,7 +4922,7 @@ maintain it locally.<a href="#appendix-D.1-6.2.1" class="pilcrow">¶</a></p>
 <a href="#appendix-D.2" class="section-number selfRef">D.2. </a><a href="#name-manageability-impossibility" class="section-name selfRef">Manageability: Impossibility to Use Aliases or Defined Sets</a>
         </h3>
 <p id="appendix-D.2-1">The same approach as the one discussed for IP prefixes can be generalized by introducing the concept of "aliases" or "defined sets".<a href="#appendix-D.2-1" class="pilcrow">¶</a></p>
-<p id="appendix-D.2-2">The defined sets are reusable definitions across several ACLs. Each category is modelled in YANG as a list of parameters related to the class it represents. The following sets can be considered:<a href="#appendix-D.2-2" class="pilcrow">¶</a></p>
+<p id="appendix-D.2-2">The defined sets are reusable definitions across several ACLs. Each category is modeled in YANG as a list of parameters related to the class it represents. The following sets can be considered:<a href="#appendix-D.2-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D.2-3.1">
             <span class="break"></span><dl class="dlParallel" id="appendix-D.2-3.1.1">
