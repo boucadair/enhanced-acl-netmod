@@ -5,11 +5,11 @@
 netmod                                                     O. G. D. Dios
 Internet-Draft                                                S. Barguil
 Intended status: Standards Track                              Telefonica
-Expires: 21 June 2024                                       M. Boucadair
+Expires: 26 July 2024                                       M. Boucadair
                                                                   Orange
                                                                    Q. Wu
                                                                   Huawei
-                                                        19 December 2023
+                                                         23 January 2024
 
 
         Extensions to the Access Control Lists (ACLs) YANG Model
@@ -50,11 +50,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 21 June 2024.
+   This Internet-Draft will expire on 26 July 2024.
 
 Copyright Notice
 
-   Copyright (c) 2023 IETF Trust and the persons identified as the
+   Copyright (c) 2024 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -1587,6 +1587,12 @@ module: ietf-acl-enh
        description
          "Handle non-initial and initial fragments for IPv4 packets.";
        container ipv4-fragment {
+         must "not(/acl:acls/acl:acl/acl:aces"
+            + "/acl:ace/acl:matches/acl:l3/acl:ipv4/acl:flags)" {
+           error-message
+             "Either flags or fragment should be provided, but not
+              both.";
+         }
          description
            "Indicates how to handle IPv4 fragments.";
          uses fragment-fields;
@@ -1648,6 +1654,12 @@ module: ietf-acl-enh
        description
          "Handles TCP flags and port sets.";
        container flags-bitmask {
+         must "not(/acl:acls/acl:acl/acl:aces/acl:ace/acl:matches"
+            + "/acl:l4/acl:tcp/acl:flags)" {
+           error-message
+             "Either flags or flags-bitmask should be provided, but not
+              both.";
+         }
          description
            "Indicates how to handle TCP flags.";
          uses tcp-flags;
