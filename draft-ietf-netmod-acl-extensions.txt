@@ -5,11 +5,11 @@
 netmod                                                     O. G. D. Dios
 Internet-Draft                                                S. Barguil
 Intended status: Standards Track                              Telefonica
-Expires: 26 July 2024                                       M. Boucadair
+Expires: 27 July 2024                                       M. Boucadair
                                                                   Orange
                                                                    Q. Wu
                                                                   Huawei
-                                                         23 January 2024
+                                                         24 January 2024
 
 
         Extensions to the Access Control Lists (ACLs) YANG Model
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 July 2024.
+   This Internet-Draft will expire on 27 July 2024.
 
 Copyright Notice
 
@@ -107,8 +107,8 @@ Table of Contents
    Appendix C.  IPv6 Extension Header Types
      C.1.  XSLT Template to Generate The IPv6 Extension Header Types
            IANA-Maintained Module
-     C.2.  Initial Version of the The ICMPv6 Types IANA-Maintained
-           Module
+     C.2.  Initial Version of The IPv6 Extension Header Types
+           IANA-Maintained Module
    Appendix D.  Problem Statement & Gap Analysis
      D.1.  Suboptimal Configuration: Lack of Support for Lists of
            Prefixes
@@ -3243,7 +3243,8 @@ C.1.  XSLT Template to Generate The IPv6 Extension Header Types IANA-
    </stylesheet>
    <CODE ENDS>
 
-C.2.  Initial Version of the The ICMPv6 Types IANA-Maintained Module
+C.2.  Initial Version of The IPv6 Extension Header Types IANA-Maintained
+      Module
 
    <CODE BEGINS> file "iana-ipv6-ext-types@2023-04-28.yang"
    module iana-ipv6-ext-types {
