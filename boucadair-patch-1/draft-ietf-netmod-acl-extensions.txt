@@ -125,7 +125,7 @@ Table of Contents
      E.2.  Fragments Handling
      E.3.  VLAN Filtering
      E.4.  ISID Filtering
-   Appendix F.  Rate-Limit
+     E.5.  Rate-Limit
    Acknowledgements
    Authors' Addresses
 
@@ -3617,7 +3617,7 @@ E.4.  ISID Filtering
 
                 Figure 7: Example ISID Filter (Message Body)
 
-Appendix F.  Rate-Limit
+E.5.  Rate-Limit
 
    Figure 8 shows an ACL example to rate-limit incoming SYNs during a
    SYN flood attack.
