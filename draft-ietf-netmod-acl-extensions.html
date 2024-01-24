@@ -2300,8 +2300,9 @@ module ietf-acl-enh {
         position 2;
         description
           "Any bit. This is a match on any of the bits in  bitmask.
-           It evaluates to 'true' if any of the bits in the value mask
-           are set in the data,  i.e., '(data &amp; value) != 0'.";
+           It evaluates to 'true' if any of the bits in the
+           value mask are set in the data,  i.e.,
+           '(data &amp; value) != 0'.";
       }
     }
     description
@@ -2522,8 +2523,9 @@ grouping mpls-match-parameters-config {
         base offset-type;
       }
       description
-        "Indicates the payload offset. This will indicate the position
-         of the data in packet to use for the match.";
+        "Indicates the payload offset. This will indicate
+         the position of the data in packet to use for
+         the match.";
     }
     leaf offset-end {
       type uint64;
@@ -2704,8 +2706,8 @@ grouping mpls-match-parameters-config {
         when "derived-from-or-self(../counter-type, "
            + "'acl-enh:counter-name')" {
           description
-            "Name for the counter or variable to update when counter-type
-            is 'counter-name'.";
+            "Name for the counter or variable to update when
+            'counter-type' is 'counter-name'.";
         }
         type string;
         description
@@ -2746,7 +2748,8 @@ grouping mpls-match-parameters-config {
           "Provides the rule set that matches MPLS headers.";
       }
       description
-        "Matches against MPLS headers, for example, label values";
+        "Matches against MPLS headers, for example, label
+         values";
     }
   }
 
@@ -3094,8 +3097,8 @@ grouping mpls-match-parameters-config {
     }
     container protocol-sets {
       description
-        "Data definitions for a list of protocols which can be matched
-         in policies.";
+        "Data definitions for a list of protocols which can be
+         matched in policies.";
       list protocol-set {
         key "name";
         description
@@ -3103,8 +3106,8 @@ grouping mpls-match-parameters-config {
         leaf name {
           type string;
           description
-            "Name of the protocols set -- this is used as a label to
-             reference the set in match conditions.";
+            "Name of the protocols set -- this is used as a
+             label to reference the set in match conditions.";
         }
         leaf-list protocol {
           type union {
@@ -3128,8 +3131,8 @@ grouping mpls-match-parameters-config {
         leaf name {
           type string;
           description
-            "Name of the ICMPv4 type set -- this is used as a label to
-             reference the set in match conditions.";
+            "Name of the ICMPv4 type set -- this is used as a label
+             to reference the set in match conditions.";
         }
         list types {
           key "type";
@@ -3150,8 +3153,8 @@ grouping mpls-match-parameters-config {
         leaf name {
           type string;
           description
-            "Name of the ICMPv6 type set -- this is used as a label to
-             reference the set in match conditions.";
+            "Name of the ICMPv6 type set -- this is used as a label
+             to reference the set in match conditions.";
         }
         list types {
           key "type";
