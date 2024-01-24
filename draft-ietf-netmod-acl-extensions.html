@@ -1296,10 +1296,30 @@ the limitations of the ACL model as initially defined in RFC 8519.<a href="#sect
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
-            <p id="section-toc.1-1.12.1"><a href="#appendix-E" class="auto internal xref">Appendix E</a>.  <a href="#name-acknowledgements" class="internal xref">Acknowledgements</a></p>
+            <p id="section-toc.1-1.12.1"><a href="#appendix-E" class="auto internal xref">Appendix E</a>.  <a href="#name-examples" class="internal xref">Examples</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.1">
+                <p id="section-toc.1-1.12.2.1.1"><a href="#appendix-E.1" class="auto internal xref">E.1</a>.  <a href="#name-tcp-flags-handling-2" class="internal xref">TCP Flags Handling</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.2">
+                <p id="section-toc.1-1.12.2.2.1"><a href="#appendix-E.2" class="auto internal xref">E.2</a>.  <a href="#name-fragments-handling-2" class="internal xref">Fragments Handling</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.3">
+                <p id="section-toc.1-1.12.2.3.1"><a href="#appendix-E.3" class="auto internal xref">E.3</a>.  <a href="#name-vlan-filtering" class="internal xref">VLAN Filtering</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.4">
+                <p id="section-toc.1-1.12.2.4.1"><a href="#appendix-E.4" class="auto internal xref">E.4</a>.  <a href="#name-isid-filtering" class="internal xref">ISID Filtering</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.5">
+                <p id="section-toc.1-1.12.2.5.1"><a href="#appendix-E.5" class="auto internal xref">E.5</a>.  <a href="#name-rate-limit" class="internal xref">Rate-Limit</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13">
-            <p id="section-toc.1-1.13.1"><a href="#appendix-F" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
+            <p id="section-toc.1-1.13.1"><a href="#appendix-F" class="auto internal xref"></a><a href="#name-acknowledgements" class="internal xref">Acknowledgements</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.14">
+            <p id="section-toc.1-1.14.1"><a href="#appendix-G" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
 </li>
         </ul>
 </nav>
@@ -1330,11 +1350,11 @@ literals, using user-named lists decouples the creation of the rule
 from the management of the sets. Hence, it is possible to remove/add
  entries to the list without redefining the (parent) ACL rule.<a href="#section-1-3" class="pilcrow">¶</a></p>
 <p id="section-1-4">In addition, the notion of Access Control List (ACL) and defined sets
- is generalized so that it is not device-specific as per <span>[<a href="#RFC8519" class="cite xref">RFC8519</a>]</span>.  ACLs
- and defined sets may be defined at network/administrative domain level
- and associated to devices. This approach facilitates the reusability across multiple
-  network elements. For example, managing the IP prefix sets from a network
-   level makes it easier to maintain by the security groups.<a href="#section-1-4" class="pilcrow">¶</a></p>
+is generalized so that it is not device-specific as per <span>[<a href="#RFC8519" class="cite xref">RFC8519</a>]</span>.  ACLs
+and defined sets may be defined at network/administrative domain level
+and associated to devices. This approach facilitates the reusability across multiple
+network elements. For example, managing the IP prefix sets from a network
+level makes it easier to maintain by the security groups.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5">Network operators maintain sets of IP prefixes that are related to each other,
 e.g., deny-lists or accept-lists that are associated with those provided by a
  VPN customer. These lists are maintained and manipulated by security expert teams.<a href="#section-1-5" class="pilcrow">¶</a></p>
@@ -1344,9 +1364,9 @@ tools such as DDoS mitigation <span>[<a href="#RFC9132" class="cite xref">RFC913
 messages triggered by  these tools is valuable from a network operation standpoint.<a href="#section-1-6" class="pilcrow">¶</a></p>
 <p id="section-1-7">The enhanced ACL module (<a href="#sec-module" class="auto internal xref">Section 4</a>) conforms to the Network
 Management Datastore Architecture (NMDA) defined in <span>[<a href="#RFC8342" class="cite xref">RFC8342</a>]</span>.<a href="#section-1-7" class="pilcrow">¶</a></p>
-<p id="section-1-8">The document also defines IANA-maintained modules for ICMP types and IPv6 extension headers. The design of the modules adheres to the recommendations
-in <span>[<a href="#I-D.ietf-netmod-rfc8407bis" class="cite xref">I-D.ietf-netmod-rfc8407bis</a>]</span>. The templates to generate the modules is available at <a href="#template" class="auto internal xref">Appendix A.1</a>, <a href="#v6-template" class="auto internal xref">Appendix B.1</a>, and <a href="#iana-ipv6-ext-template" class="auto internal xref">Appendix C.1</a>. Readers should refer to the IANA
-websites "IANA_ICMPv4_YANG_URL", "IANA_ICMPv6_YANG_URL", and "IANA_IPV6_YANG_URL" to retrieve the latest version of these IANA-maintained modules.<a href="#section-1-8" class="pilcrow">¶</a></p>
+<p id="section-1-8">A set of examples to illustrate the use of the enhanced ACL module are provided in <a href="#sec-examples" class="auto internal xref">Appendix E</a>.<a href="#section-1-8" class="pilcrow">¶</a></p>
+<p id="section-1-9">The document also defines IANA-maintained modules for ICMP types and IPv6 extension headers. The design of the modules adheres to the recommendations
+in <span>[<a href="#I-D.ietf-netmod-rfc8407bis" class="cite xref">I-D.ietf-netmod-rfc8407bis</a>]</span>. The templates to generate the modules are available in <a href="#template" class="auto internal xref">Appendix A.1</a>, <a href="#v6-template" class="auto internal xref">Appendix B.1</a>, and <a href="#iana-ipv6-ext-template" class="auto internal xref">Appendix C.1</a>. Readers should refer to the IANA websites "IANA_ICMPv4_YANG_URL", "IANA_ICMPv6_YANG_URL", and "IANA_IPV6_YANG_URL" to retrieve the latest version of these IANA-maintained modules.<a href="#section-1-9" class="pilcrow">¶</a></p>
 <div id="editorial-note-to-be-removed-by-rfc-editor">
 <section id="section-1.1">
         <h3 id="name-editorial-note-to-be-remove">
@@ -1599,7 +1619,7 @@ Each set is uniquely identified by a name and can be called from the relevant en
             <span class="break"></span><dl class="dlParallel" id="section-3.2-2.5.1">
               <dt id="section-3.2-2.5.1.1">ICMP sets:</dt>
               <dd style="margin-left: 1.5em" id="section-3.2-2.5.1.2">
-                <p id="section-3.2-2.5.1.2.1">It contains a list of ICMPv4 or ICMPv6 types, each of them identified by a type value, optionally the code and the rest of the header.<a href="#section-3.2-2.5.1.2.1" class="pilcrow">¶</a></p>
+                <p id="section-3.2-2.5.1.2.1">It contains a list of ICMPv4 <span>[<a href="#RFC0792" class="cite xref">RFC0792</a>]</span> or ICMPv6 <span>[<a href="#RFC4443" class="cite xref">RFC4443</a>]</span> types, each of them identified by a type value, optionally the code and the rest of the header.<a href="#section-3.2-2.5.1.2.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
 </dl>
@@ -1621,7 +1641,7 @@ Each set is uniquely identified by a name and can be called from the relevant en
         <h3 id="name-ipv6-extension-headers">
 <a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-ipv6-extension-headers" class="section-name selfRef">IPv6 Extension Headers</a>
         </h3>
-<p id="section-3.3-1">The module can be used to manage ACLs that require matching against IPv6 extension headers. To that aim, a new IANA-maintained module is defined in in this document.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.3-1">The module can be used to manage ACLs that require matching against IPv6 extension headers. To that aim, a new IANA-maintained module for IPv6 extension header types is defined in this document.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="tcp-flags-handling">
@@ -1629,46 +1649,8 @@ Each set is uniquely identified by a name and can be called from the relevant en
         <h3 id="name-tcp-flags-handling">
 <a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-tcp-flags-handling" class="section-name selfRef">TCP Flags Handling</a>
         </h3>
-<p id="section-3.4-1">The augmented ACL structure includes a new leaf 'flags-bitmask' to better handle flags.<a href="#section-3.4-1" class="pilcrow">¶</a></p>
+<p id="section-3.4-1">The augmented ACL structure (<a href="#enh-acl-tree" class="auto internal xref">Figure 1</a>) includes a new leaf 'flags-bitmask' to better handle TCP flags <span>[<a href="#RFC9293" class="cite xref">RFC9293</a>]</span>.<a href="#section-3.4-1" class="pilcrow">¶</a></p>
 <p id="section-3.4-2">Clients that support both 'flags-bitmask' and 'flags' matching fields <span class="bcp14">MUST NOT</span> set these fields in the same request.<a href="#section-3.4-2" class="pilcrow">¶</a></p>
-<p id="section-3.4-3"><a href="#example_4" class="auto internal xref">Figure 2</a> shows an example of a request to install a filter to discard incoming TCP messages having all flags unset.<a href="#section-3.4-3" class="pilcrow">¶</a></p>
-<span id="name-example-of-an-acl-to-deny-t"></span><div id="example_4">
-<figure id="figure-2">
-          <div class="lang-json sourcecode" id="section-3.4-4.1">
-<pre>
-{
-   "ietf-access-control-list:acls":{
-      "acl":[
-         {
-            "name":"tcp-flags-example",
-            "aces":{
-               "ace":[
-                  {
-                     "name":"null-attack",
-                     "matches":{
-                        "tcp":{
-                           "acl-enh:flags-bitmask":{
-                              "operator":"not any",
-                              "bitmask":4095
-                           }
-                        }
-                     },
-                     "actions":{
-                        "forwarding":"drop"
-                     }
-                  }
-               ]
-            }
-         }
-      ]
-   }
-}
-</pre>
-</div>
-<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
-<a href="#name-example-of-an-acl-to-deny-t" class="selfRef">Example of an ACL to Deny TCP Null Attack Messages (Request Body)</a>
-          </figcaption></figure>
-</div>
 </section>
 </div>
 <div id="fragments-handling">
@@ -1676,137 +1658,8 @@ Each set is uniquely identified by a name and can be called from the relevant en
         <h3 id="name-fragments-handling">
 <a href="#section-3.5" class="section-number selfRef">3.5. </a><a href="#name-fragments-handling" class="section-name selfRef">Fragments Handling</a>
         </h3>
-<p id="section-3.5-1">The augmented ACL structure includes a new leaf 'fragment' to better handle fragments.<a href="#section-3.5-1" class="pilcrow">¶</a></p>
+<p id="section-3.5-1">The augmented ACL structure (<a href="#enh-acl-tree" class="auto internal xref">Figure 1</a>) includes a new leaf 'fragment' to better handle fragments.<a href="#section-3.5-1" class="pilcrow">¶</a></p>
 <p id="section-3.5-2">Clients that support both 'fragment' and 'flags' matching fields <span class="bcp14">MUST NOT</span> set these fields in the same request.<a href="#section-3.5-2" class="pilcrow">¶</a></p>
-<p id="section-3.5-3"><a href="#example_2" class="auto internal xref">Figure 3</a> shows the content of a POST request to allow the traffic destined to 198.51.100.0/24 and UDP port number 53, but to drop all fragmented
-packets.  The following ACEs are defined (in this order):<a href="#section-3.5-3" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-3.5-4.1">
-            <p id="section-3.5-4.1.1">"drop-all-fragments" ACE: discards all fragments.<a href="#section-3.5-4.1.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-3.5-4.2">
-            <p id="section-3.5-4.2.1">"allow-dns-packets" ACE: accepts DNS packets destined to 198.51.100.0/24.<a href="#section-3.5-4.2.1" class="pilcrow">¶</a></p>
-</li>
-        </ul>
-<span id="name-example-illustrating-candid"></span><div id="example_2">
-<figure id="figure-3">
-          <div class="lang-json sourcecode" id="section-3.5-5.1">
-<pre>
-{
-   "ietf-access-control-list:acls":{
-      "acl":[
-         {
-            "name":"dns-fragments",
-            "type":"ipv4-acl-type",
-            "aces":{
-               "ace":[
-                  {
-                     "name":"drop-all-fragments",
-                     "matches":{
-                        "ipv4":{
-                           "acl-enh:ipv4-fragment":{
-                              "operator":"match",
-                              "type":"isf"
-                           }
-                        }
-                     },
-                     "actions":{
-                        "forwarding":"drop"
-                     }
-                  },
-                  {
-                     "name":"allow-dns-packets",
-                     "matches":{
-                        "ipv4":{
-                           "destination-ipv4-network":"198.51.100.0/24"
-                        },
-                        "udp":{
-                           "destination-port":{
-                              "operator":"eq",
-                              "port":53
-                           }
-                        },
-                        "actions":{
-                           "forwarding":"accept"
-                        }
-                     }
-                  }
-               ]
-            }
-         }
-      ]
-   }
-}
-</pre>
-</div>
-<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
-<a href="#name-example-illustrating-candid" class="selfRef">Example Illustrating Candidate Filtering of IPv4 Fragmented Packets (Message Body)</a>
-          </figcaption></figure>
-</div>
-<p id="section-3.5-6"><a href="#example_3" class="auto internal xref">Figure 4</a> shows an example of the body of a POST request to allow the traffic destined to 2001:db8::/32 and UDP port number 53, but to drop all fragmented packets. The following ACEs are defined (in this order):<a href="#section-3.5-6" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-3.5-7.1">
-            <p id="section-3.5-7.1.1">"drop-all-fragments" ACE: discards all fragments (including atomic fragments). That is, IPv6 packets that include a Fragment header (44) are dropped.<a href="#section-3.5-7.1.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-3.5-7.2">
-            <p id="section-3.5-7.2.1">"allow-dns-packets" ACE: accepts DNS packets destined to 2001:db8::/32.<a href="#section-3.5-7.2.1" class="pilcrow">¶</a></p>
-</li>
-        </ul>
-<span id="name-an-example-illustrating-fil"></span><div id="example_3">
-<figure id="figure-4">
-          <div class="lang-json sourcecode" id="section-3.5-8.1">
-<pre>
-{
-   "ietf-access-control-list:acls":{
-      "acl":[
-         {
-            "name":"dns-fragments",
-            "type":"ipv6-acl-type",
-            "aces":{
-               "ace":[
-                  {
-                     "name":"drop-all-fragments",
-                     "matches":{
-                        "ipv6":{
-                           "acl-enh:ipv6-fragment":{
-                              "operator":"match",
-                              "type":"isf"
-                           }
-                        }
-                     },
-                     "actions":{
-                        "forwarding":"drop"
-                     }
-                  },
-                  {
-                     "name":"allow-dns-packets",
-                     "matches":{
-                        "ipv6":{
-                           "destination-ipv6-network":"2001:db8::/32"
-                        },
-                        "udp":{
-                           "destination-port":{
-                              "operator":"eq",
-                              "port":53
-                           }
-                        }
-                     },
-                     "actions":{
-                        "forwarding":"accept"
-                     }
-                  }
-               ]
-            }
-         }
-      ]
-   }
-}
-</pre>
-</div>
-<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
-<a href="#name-an-example-illustrating-fil" class="selfRef">An Example Illustrating Filtering of IPv6 Fragmented Packets (Message Body)</a>
-          </figcaption></figure>
-</div>
 </section>
 </div>
 <div id="payload-based-filtering">
@@ -1814,7 +1667,7 @@ packets.  The following ACEs are defined (in this order):<a href="#section-3.5-3
         <h3 id="name-payload-based-filtering">
 <a href="#section-3.6" class="section-number selfRef">3.6. </a><a href="#name-payload-based-filtering" class="section-name selfRef">Payload-based Filtering</a>
         </h3>
-<p id="section-3.6-1">Some transport protocols use existing protocols (e.g., TCP or UDP) as substrate. The match criteria for such protocols may rely upon the 'protocol' under 'l3', TCP/UDP match criteria, part of the TCP/UDP payload, or a combination thereof. A new feature, called "match-on-payload", is defined in the document.<a href="#section-3.6-1" class="pilcrow">¶</a></p>
+<p id="section-3.6-1">Some transport protocols use existing protocols (e.g., TCP or UDP) as substrate. The match criteria for such protocols may rely upon the 'protocol' under 'l3', TCP/UDP match criteria, part of the TCP/UDP payload, or a combination thereof. A new feature, called "match-on-payload", is defined in the document. This can be used, for example, for QUIC <span>[<a href="#RFC9000" class="cite xref">RFC9000</a>]</span> or for tunneling protocols.<a href="#section-3.6-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="match-mpls-headers">
@@ -1822,7 +1675,7 @@ packets.  The following ACEs are defined (in this order):<a href="#section-3.5-3
         <h3 id="name-match-mpls-headers">
 <a href="#section-3.7" class="section-number selfRef">3.7. </a><a href="#name-match-mpls-headers" class="section-name selfRef">Match MPLS Headers</a>
         </h3>
-<p id="section-3.7-1">The ACL model can be used to create rules to match MPLS fields on a packet. The MPLS headers defined in <span>[<a href="#RFC3032" class="cite xref">RFC3032</a>]</span> and <span>[<a href="#RFC5462" class="cite xref">RFC5462</a>]</span> contains the following fields:<a href="#section-3.7-1" class="pilcrow">¶</a></p>
+<p id="section-3.7-1">The enhanced ACL module can be used to create rules to match against MPLS fields of a packet. The MPLS header defined in <span>[<a href="#RFC3032" class="cite xref">RFC3032</a>]</span> and <span>[<a href="#RFC5462" class="cite xref">RFC5462</a>]</span> contains the following fields:<a href="#section-3.7-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.7-2.1">
             <p id="section-3.7-2.1.1">Traffic Class: 3 bits 'EXP' renamed to 'Traffic Class Field."<a href="#section-3.7-2.1.1" class="pilcrow">¶</a></p>
@@ -1834,28 +1687,27 @@ packets.  The following ACEs are defined (in this order):<a href="#section-3.5-3
             <p id="section-3.7-2.3.1">TTL: An eight-bit field that is used to encode a time-to-live value.<a href="#section-3.7-2.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-3.7-3">The structure of the MPLS ACL subtree is shown in <a href="#example_8" class="auto internal xref">Figure 5</a>:<a href="#section-3.7-3" class="pilcrow">¶</a></p>
-<span id="name-mpls-header-match-subtree"></span><div id="example_8">
-<figure id="figure-5">
-          <div class="alignLeft art-text artwork" id="section-3.7-4.1">
-<pre>
-  augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:matches:
-    ...
-    +--rw (mpls)?
-       +--:(mpls-values)
-          +--rw mpls-values {match-on-mpls}?
-             +--rw traffic-class?       uint8
-             +--rw label-position       identityref
-             +--rw upper-label-range?   uint32
-             +--rw lower-label-range?   uint32
-             +--rw label-block-name     string
-             +--rw ttl-value?           uint8
-</pre>
-</div>
-<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
-<a href="#name-mpls-header-match-subtree" class="selfRef">MPLS Header Match Subtree</a>
-          </figcaption></figure>
-</div>
+<p id="section-3.7-3">The augmented ACL structure (<a href="#enh-acl-tree" class="auto internal xref">Figure 1</a>) allows an operator to configure ACLs that match based upon the following data nodes:<a href="#section-3.7-3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.7-4.1">
+            <p id="section-3.7-4.1.1">"traffic-class"<a href="#section-3.7-4.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.7-4.2">
+            <p id="section-3.7-4.2.1">"label-position" (e.g., top, bottom)<a href="#section-3.7-4.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.7-4.3">
+            <p id="section-3.7-4.3.1">"upper-label-range"<a href="#section-3.7-4.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.7-4.4">
+            <p id="section-3.7-4.4.1">"lower-label-range"<a href="#section-3.7-4.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.7-4.5">
+            <p id="section-3.7-4.5.1">"label-block-name"<a href="#section-3.7-4.5.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.7-4.6">
+            <p id="section-3.7-4.6.1">"ttl-value"<a href="#section-3.7-4.6.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
 </section>
 </div>
 <div id="vlan-filter">
@@ -1865,46 +1717,10 @@ packets.  The following ACEs are defined (in this order):<a href="#section-3.5-3
         </h3>
 <p id="section-3.8-1">Being able to filter all packets that are bridged within a VLAN or that
 are routed into or out of a bridge domain is part of the VPN control
-requirements derived of the EVPN definition done in <span>[<a href="#RFC7209" class="cite xref">RFC7209</a>]</span>.
-So, all packets that are bridged within a VLAN or that are routed into or
-out of a VLAN can be captured, forwarded, translated or discarded based
-on the network policy applied.<a href="#section-3.8-1" class="pilcrow">¶</a></p>
-<p id="section-3.8-2"><a href="#example_7" class="auto internal xref">Figure 6</a> shows an ACL example to illustrate how to apply a VLAN range filter.<a href="#section-3.8-2" class="pilcrow">¶</a></p>
-<span id="name-example-of-vlan-filter-mess"></span><div id="example_7">
-<figure id="figure-6">
-          <div class="lang-json sourcecode" id="section-3.8-3.1">
-<pre>
-{
-   "ietf-acces-control-list:acls":{
-      "acl":[
-         {
-            "name":"VLAN_FILTER",
-            "aces":{
-               "ace":[
-                  {
-                     "name":"1",
-                     "matches":{
-                        "ietf-acl-enh:vlan-filter":{
-                           "lower-vlan":10,
-                           "upper-vlan":20
-                        }
-                     },
-                     "actions":{
-                        "forwarding":"ietf-acces-control-list:accept"
-                     }
-                  }
-               ]
-            }
-         }
-      ]
-   }
-}
-</pre>
-</div>
-<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
-<a href="#name-example-of-vlan-filter-mess" class="selfRef">Example of VLAN Filter (Message Body)</a>
-          </figcaption></figure>
-</div>
+requirements derived of the EVPN definition in <span>[<a href="#RFC7209" class="cite xref">RFC7209</a>]</span>.
+All packets that are bridged within a VLAN or that are routed into or
+out of a VLAN can be captured, forwarded, translated, or discarded based
+on the network policy.<a href="#section-3.8-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="isid-filter">
@@ -1913,54 +1729,18 @@ on the network policy applied.<a href="#section-3.8-1" class="pilcrow">¶</a></p
 <a href="#section-3.9" class="section-number selfRef">3.9. </a><a href="#name-isid-filter" class="section-name selfRef">ISID Filter</a>
         </h3>
 <p id="section-3.9-1">Provider backbone bridging (PBB) was originally defined as Virtual
-Bridged Local Area Networks [IEEE802.1ah]
+Bridged Local Area Networks <span>[<a href="#IEEE-802-1ah" class="cite xref">IEEE-802-1ah</a>]</span>
 standard. However, instead of multiplexing VLANs, PBB
 duplicates the MAC layer of the customer frame and separates it from
-the provider domain, by encapsulating it in a 24 bit instance service
-identifier (I-SID). This provides for more transparency between the
+the provider domain, by encapsulating it in a 24-bit instance service
+identifier (I-SID). This provides more transparency between the
 customer network and the provider network.<a href="#section-3.9-1" class="pilcrow">¶</a></p>
 <p id="section-3.9-2">The I-component forms the customer or access facing interface or
 routing instance. The I-component is responsible for mapping customer
-Ethernet traffic to the appropriate I-SID. In the network is
-mandatory to configure the default service identifier.<a href="#section-3.9-2" class="pilcrow">¶</a></p>
+Ethernet traffic to the appropriate I-SID. It is
+mandatory to configure the default service identifier in the network.<a href="#section-3.9-2" class="pilcrow">¶</a></p>
 <p id="section-3.9-3">Being able to filter by I-component Service identifier is a feature of
 the EVNP-PBB configuration.<a href="#section-3.9-3" class="pilcrow">¶</a></p>
-<p id="section-3.9-4"><a href="#example_6" class="auto internal xref">Figure 7</a> shows an ACL example to illustrate the ISID range filtering.<a href="#section-3.9-4" class="pilcrow">¶</a></p>
-<span id="name-example-isid-filter-message"></span><div id="example_6">
-<figure id="figure-7">
-          <div class="lang-json sourcecode" id="section-3.9-5.1">
-<pre>
-{
-   "ietf-acces-control-list:acls":{
-      "acl":[
-         {
-            "name":"test",
-            "aces":{
-               "ace":[
-                  {
-                     "name":"1",
-                     "matches":{
-                        "ietf-acl-enh:isid-filter":{
-                           "lower-isid":100,
-                           "upper-isid":200
-                        }
-                     },
-                     "actions":{
-                        "forwarding":"ietf-acces-control-list:accept"
-                     }
-                  }
-               ]
-            }
-         }
-      ]
-   }
-}
-</pre>
-</div>
-<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
-<a href="#name-example-isid-filter-message" class="selfRef">Example ISID Filter (Message Body)</a>
-          </figcaption></figure>
-</div>
 </section>
 </div>
 <div id="additional-actions">
@@ -1968,46 +1748,7 @@ the EVNP-PBB configuration.<a href="#section-3.9-3" class="pilcrow">¶</a></p>
         <h3 id="name-additional-actions">
 <a href="#section-3.10" class="section-number selfRef">3.10. </a><a href="#name-additional-actions" class="section-name selfRef">Additional Actions</a>
         </h3>
-<p id="section-3.10-1">In order to support rate-limiting (see <a href="#ps-rate" class="auto internal xref">Appendix D.6</a>), a new action called "rate-limit" is defined. <a href="#example_5" class="auto internal xref">Figure 8</a> shows an ACL example to rate-limit incoming SYNs during a SYN flood attack.<a href="#section-3.10-1" class="pilcrow">¶</a></p>
-<span id="name-an-example-of-rate-limit-in"></span><div id="example_5">
-<figure id="figure-8">
-          <div class="lang-json sourcecode" id="section-3.10-2.1">
-<pre>
-{
-   "ietf-access-control-list:acls":{
-      "acl":[
-         {
-            "name":"tcp-flags-example-with-rate-limit",
-            "aces":{
-               "ace":[
-                  {
-                     "name":"rate-limit-syn",
-                     "matches":{
-                        "tcp":{
-                           "acl-enh:flags-bitmask":{
-                              "operator":"match",
-                              "bitmask":2
-                           }
-                        }
-                     },
-                     "actions":{
-                        "forwarding":"accept",
-                        "acl-enh:rate-limit":"20.00"
-                     }
-                  }
-               ]
-            }
-         }
-      ]
-   }
-}
-</pre>
-</div>
-<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
-<a href="#name-an-example-of-rate-limit-in" class="selfRef">An Example of Rate-Limit Incoming TCP SYNs (Message Body).</a>
-          </figcaption></figure>
-</div>
-<p id="section-3.10-3">Also, the model supports new actions to complement existing ones: Log ('log-action') and write a counter ('counter-action'). The current version of the module supports only local actions.<a href="#section-3.10-3" class="pilcrow">¶</a></p>
+<p id="section-3.10-1">In order to support rate-limiting (see <a href="#ps-rate" class="auto internal xref">Appendix D.6</a>), a new action called "rate-limit" is defined. Also, the model supports new actions to complement existing ones: Log ('log-action') and write a counter ('counter-action'). The current version of the module supports only local actions.<a href="#section-3.10-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -3552,6 +3293,10 @@ as follows:<a href="#section-6.3.3-11" class="pilcrow">¶</a></p>
 <a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
+<dt id="RFC0792">[RFC0792]</dt>
+        <dd>
+<span class="refAuthor">Postel, J.</span>, <span class="refTitle">"Internet Control Message Protocol"</span>, <span class="seriesInfo">STD 5</span>, <span class="seriesInfo">RFC 792</span>, <span class="seriesInfo">DOI 10.17487/RFC0792</span>, <time datetime="1981-09" class="refDate">September 1981</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc792">https://www.rfc-editor.org/rfc/rfc792</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
@@ -3563,6 +3308,10 @@ as follows:<a href="#section-6.3.3-11" class="pilcrow">¶</a></p>
 <dt id="RFC3688">[RFC3688]</dt>
         <dd>
 <span class="refAuthor">Mealling, M.</span>, <span class="refTitle">"The IETF XML Registry"</span>, <span class="seriesInfo">BCP 81</span>, <span class="seriesInfo">RFC 3688</span>, <span class="seriesInfo">DOI 10.17487/RFC3688</span>, <time datetime="2004-01" class="refDate">January 2004</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3688">https://www.rfc-editor.org/rfc/rfc3688</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC4443">[RFC4443]</dt>
+        <dd>
+<span class="refAuthor">Conta, A.</span>, <span class="refAuthor">Deering, S.</span>, and <span class="refAuthor">M. Gupta, Ed.</span>, <span class="refTitle">"Internet Control Message Protocol (ICMPv6) for the Internet Protocol Version 6 (IPv6) Specification"</span>, <span class="seriesInfo">STD 89</span>, <span class="seriesInfo">RFC 4443</span>, <span class="seriesInfo">DOI 10.17487/RFC4443</span>, <time datetime="2006-03" class="refDate">March 2006</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4443">https://www.rfc-editor.org/rfc/rfc4443</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC5462">[RFC5462]</dt>
         <dd>
@@ -3621,8 +3370,12 @@ as follows:<a href="#section-6.3.3-11" class="pilcrow">¶</a></p>
 <span class="refAuthor">Jethanandani, M.</span>, <span class="refAuthor">Agarwal, S.</span>, <span class="refAuthor">Huang, L.</span>, and <span class="refAuthor">D. Blair</span>, <span class="refTitle">"YANG Data Model for Network Access Control Lists (ACLs)"</span>, <span class="seriesInfo">RFC 8519</span>, <span class="seriesInfo">DOI 10.17487/RFC8519</span>, <time datetime="2019-03" class="refDate">March 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8519">https://www.rfc-editor.org/rfc/rfc8519</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8956">[RFC8956]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Loibl, C., Ed.</span>, <span class="refAuthor">Raszuk, R., Ed.</span>, and <span class="refAuthor">S. Hares, Ed.</span>, <span class="refTitle">"Dissemination of Flow Specification Rules for IPv6"</span>, <span class="seriesInfo">RFC 8956</span>, <span class="seriesInfo">DOI 10.17487/RFC8956</span>, <time datetime="2020-12" class="refDate">December 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8956">https://www.rfc-editor.org/rfc/rfc8956</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9293">[RFC9293]</dt>
+      <dd>
+<span class="refAuthor">Eddy, W., Ed.</span>, <span class="refTitle">"Transmission Control Protocol (TCP)"</span>, <span class="seriesInfo">STD 7</span>, <span class="seriesInfo">RFC 9293</span>, <span class="seriesInfo">DOI 10.17487/RFC9293</span>, <time datetime="2022-08" class="refDate">August 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9293">https://www.rfc-editor.org/rfc/rfc9293</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -3653,13 +3406,13 @@ as follows:<a href="#section-6.3.3-11" class="pilcrow">¶</a></p>
         <dd>
 <span class="refTitle">"YANG Parameters"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.iana.org/assignments/yang-parameters">https://www.iana.org/assignments/yang-parameters</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="IEEE-802-1ah">[IEEE-802-1ah]</dt>
+        <dd>
+<span class="refTitle">"IEEE Standard for Local and metropolitan area networks -- Virtual Bridged Local Area Networks Amendment 7: Provider Backbone Bridges"</span>, <span>n.d.</span>, <span>&lt;<a href="https://standards.ieee.org/standard/802_1ah-2008.html">https://standards.ieee.org/standard/802_1ah-2008.html</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC2780">[RFC2780]</dt>
         <dd>
 <span class="refAuthor">Bradner, S.</span> and <span class="refAuthor">V. Paxson</span>, <span class="refTitle">"IANA Allocation Guidelines For Values In the Internet Protocol and Related Headers"</span>, <span class="seriesInfo">BCP 37</span>, <span class="seriesInfo">RFC 2780</span>, <span class="seriesInfo">DOI 10.17487/RFC2780</span>, <time datetime="2000-03" class="refDate">March 2000</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2780">https://www.rfc-editor.org/rfc/rfc2780</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC4443">[RFC4443]</dt>
-        <dd>
-<span class="refAuthor">Conta, A.</span>, <span class="refAuthor">Deering, S.</span>, and <span class="refAuthor">M. Gupta, Ed.</span>, <span class="refTitle">"Internet Control Message Protocol (ICMPv6) for the Internet Protocol Version 6 (IPv6) Specification"</span>, <span class="seriesInfo">STD 89</span>, <span class="seriesInfo">RFC 4443</span>, <span class="seriesInfo">DOI 10.17487/RFC4443</span>, <time datetime="2006-03" class="refDate">March 2006</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4443">https://www.rfc-editor.org/rfc/rfc4443</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC5237">[RFC5237]</dt>
         <dd>
@@ -3676,6 +3429,10 @@ as follows:<a href="#section-6.3.3-11" class="pilcrow">¶</a></p>
 <dt id="RFC8955">[RFC8955]</dt>
         <dd>
 <span class="refAuthor">Loibl, C.</span>, <span class="refAuthor">Hares, S.</span>, <span class="refAuthor">Raszuk, R.</span>, <span class="refAuthor">McPherson, D.</span>, and <span class="refAuthor">M. Bacher</span>, <span class="refTitle">"Dissemination of Flow Specification Rules"</span>, <span class="seriesInfo">RFC 8955</span>, <span class="seriesInfo">DOI 10.17487/RFC8955</span>, <time datetime="2020-12" class="refDate">December 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8955">https://www.rfc-editor.org/rfc/rfc8955</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9000">[RFC9000]</dt>
+        <dd>
+<span class="refAuthor">Iyengar, J., Ed.</span> and <span class="refAuthor">M. Thomson, Ed.</span>, <span class="refTitle">"QUIC: A UDP-Based Multiplexed and Secure Transport"</span>, <span class="seriesInfo">RFC 9000</span>, <span class="seriesInfo">DOI 10.17487/RFC9000</span>, <time datetime="2021-05" class="refDate">May 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9000">https://www.rfc-editor.org/rfc/rfc9000</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9132">[RFC9132]</dt>
       <dd>
@@ -4832,9 +4589,9 @@ module iana-ipv6-ext-types {
 <p id="appendix-D.1-2">The same issue is encountered when ACLs have to be in place to mitigate DDoS
 attacks that involve a set of sources (e.g., <span>[<a href="#RFC9132" class="cite xref">RFC9132</a>]</span>). The situation is even worse when both a list of sources
 and destination prefixes are involved in the filtering.<a href="#appendix-D.1-2" class="pilcrow">¶</a></p>
-<p id="appendix-D.1-3"><a href="#example" class="auto internal xref">Figure 9</a> shows an example of the required ACL configuration for filtering traffic from two prefixes.<a href="#appendix-D.1-3" class="pilcrow">¶</a></p>
+<p id="appendix-D.1-3"><a href="#example" class="auto internal xref">Figure 2</a> shows an example of the required ACL configuration for filtering traffic from two prefixes.<a href="#appendix-D.1-3" class="pilcrow">¶</a></p>
 <span id="name-example-illustrating-sub-op"></span><div id="example">
-<figure id="figure-9">
+<figure id="figure-2">
           <div class="alignLeft art-text artwork" id="appendix-D.1-4.1">
 <pre>
 {
@@ -4913,7 +4670,7 @@ and destination prefixes are involved in the filtering.<a href="#appendix-D.1-2"
 }
 </pre>
 </div>
-<figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
+<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
 <a href="#name-example-illustrating-sub-op" class="selfRef">Example Illustrating Sub-optimal Use of the ACL Model with a Prefix List (Message Body)</a>
           </figcaption></figure>
 </div>
@@ -5080,20 +4837,341 @@ logical infrastructure.<a href="#appendix-D.8-3.4.1" class="pilcrow">¶</a></p>
 </div>
 </section>
 </div>
-<div id="acknowledgements">
+<div id="sec-examples">
 <section id="appendix-E">
-      <h2 id="name-acknowledgements">
-<a href="#appendix-E" class="section-number selfRef">Appendix E. </a><a href="#name-acknowledgements" class="section-name selfRef">Acknowledgements</a>
+      <h2 id="name-examples">
+<a href="#appendix-E" class="section-number selfRef">Appendix E. </a><a href="#name-examples" class="section-name selfRef">Examples</a>
       </h2>
-<p id="appendix-E-1">Many thanks to Jon Shallow and Miguel Cros for the review and comments to the document, including prior to publishing the document.<a href="#appendix-E-1" class="pilcrow">¶</a></p>
-<p id="appendix-E-2">Thanks to Qiufang Ma, Victor Lopez, Joe Clarke, and Mahesh Jethanandani for the comments and suggestions.<a href="#appendix-E-2" class="pilcrow">¶</a></p>
-<p id="appendix-E-3">The IANA-maintained modules were generated using an XSLT stylesheet from the 'iana-yang' project (https://github.com/llhotka/iana-yang).<a href="#appendix-E-3" class="pilcrow">¶</a></p>
-<p id="appendix-E-4">This work is partially supported by the European Commission under   Horizon 2020 Secured autonomic traffic management for a Tera of SDN
- flows (Teraflow) project (grant agreement number 101015857).<a href="#appendix-E-4" class="pilcrow">¶</a></p>
+<p id="appendix-E-1">This section provides a few examples to illustrate the use of the enhanced ACL module.<a href="#appendix-E-1" class="pilcrow">¶</a></p>
+<p id="appendix-E-2"><a href="#example_4" class="auto internal xref">Figure 3</a> shows an example of a request to install a filter to discard incoming TCP messages having all flags unset.<a href="#appendix-E-2" class="pilcrow">¶</a></p>
+<div id="tcp-flags-handling-1">
+<section id="appendix-E.1">
+        <h3 id="name-tcp-flags-handling-2">
+<a href="#appendix-E.1" class="section-number selfRef">E.1. </a><a href="#name-tcp-flags-handling-2" class="section-name selfRef">TCP Flags Handling</a>
+        </h3>
+<span id="name-example-of-an-acl-to-deny-t"></span><div id="example_4">
+<figure id="figure-3">
+          <div class="lang-json sourcecode" id="appendix-E.1-1.1">
+<pre>
+{
+   "ietf-access-control-list:acls":{
+      "acl":[
+         {
+            "name":"tcp-flags-example",
+            "aces":{
+               "ace":[
+                  {
+                     "name":"null-attack",
+                     "matches":{
+                        "tcp":{
+                           "acl-enh:flags-bitmask":{
+                              "operator":"not any",
+                              "bitmask":4095
+                           }
+                        }
+                     },
+                     "actions":{
+                        "forwarding":"drop"
+                     }
+                  }
+               ]
+            }
+         }
+      ]
+   }
+}
+</pre>
+</div>
+<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
+<a href="#name-example-of-an-acl-to-deny-t" class="selfRef">Example of an ACL to Deny TCP Null Attack Messages (Request Body)</a>
+          </figcaption></figure>
+</div>
+</section>
+</div>
+<div id="fragments-handling-1">
+<section id="appendix-E.2">
+        <h3 id="name-fragments-handling-2">
+<a href="#appendix-E.2" class="section-number selfRef">E.2. </a><a href="#name-fragments-handling-2" class="section-name selfRef">Fragments Handling</a>
+        </h3>
+<p id="appendix-E.2-1"><a href="#example_2" class="auto internal xref">Figure 4</a> shows the content of a POST request to allow the traffic destined to 198.51.100.0/24 and UDP port number 53, but to drop all fragmented
+packets.  The following ACEs are defined (in this order):<a href="#appendix-E.2-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-E.2-2.1">
+            <p id="appendix-E.2-2.1.1">"drop-all-fragments" ACE: discards all fragments.<a href="#appendix-E.2-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-E.2-2.2">
+            <p id="appendix-E.2-2.2.1">"allow-dns-packets" ACE: accepts DNS packets destined to 198.51.100.0/24.<a href="#appendix-E.2-2.2.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<span id="name-example-illustrating-candid"></span><div id="example_2">
+<figure id="figure-4">
+          <div class="lang-json sourcecode" id="appendix-E.2-3.1">
+<pre>
+{
+   "ietf-access-control-list:acls":{
+      "acl":[
+         {
+            "name":"dns-fragments",
+            "type":"ipv4-acl-type",
+            "aces":{
+               "ace":[
+                  {
+                     "name":"drop-all-fragments",
+                     "matches":{
+                        "ipv4":{
+                           "acl-enh:ipv4-fragment":{
+                              "operator":"match",
+                              "type":"isf"
+                           }
+                        }
+                     },
+                     "actions":{
+                        "forwarding":"drop"
+                     }
+                  },
+                  {
+                     "name":"allow-dns-packets",
+                     "matches":{
+                        "ipv4":{
+                           "destination-ipv4-network":"198.51.100.0/24"
+                        },
+                        "udp":{
+                           "destination-port":{
+                              "operator":"eq",
+                              "port":53
+                           }
+                        },
+                        "actions":{
+                           "forwarding":"accept"
+                        }
+                     }
+                  }
+               ]
+            }
+         }
+      ]
+   }
+}
+</pre>
+</div>
+<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
+<a href="#name-example-illustrating-candid" class="selfRef">Example Illustrating Candidate Filtering of IPv4 Fragmented Packets (Message Body)</a>
+          </figcaption></figure>
+</div>
+<p id="appendix-E.2-4"><a href="#example_3" class="auto internal xref">Figure 5</a> shows an example of the body of a POST request to allow the traffic destined to 2001:db8::/32 and UDP port number 53, but to drop all fragmented packets. The following ACEs are defined (in this order):<a href="#appendix-E.2-4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-E.2-5.1">
+            <p id="appendix-E.2-5.1.1">"drop-all-fragments" ACE: discards all fragments (including atomic fragments). That is, IPv6 packets that include a Fragment header (44) are dropped.<a href="#appendix-E.2-5.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-E.2-5.2">
+            <p id="appendix-E.2-5.2.1">"allow-dns-packets" ACE: accepts DNS packets destined to 2001:db8::/32.<a href="#appendix-E.2-5.2.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<span id="name-an-example-illustrating-fil"></span><div id="example_3">
+<figure id="figure-5">
+          <div class="lang-json sourcecode" id="appendix-E.2-6.1">
+<pre>
+{
+   "ietf-access-control-list:acls":{
+      "acl":[
+         {
+            "name":"dns-fragments",
+            "type":"ipv6-acl-type",
+            "aces":{
+               "ace":[
+                  {
+                     "name":"drop-all-fragments",
+                     "matches":{
+                        "ipv6":{
+                           "acl-enh:ipv6-fragment":{
+                              "operator":"match",
+                              "type":"isf"
+                           }
+                        }
+                     },
+                     "actions":{
+                        "forwarding":"drop"
+                     }
+                  },
+                  {
+                     "name":"allow-dns-packets",
+                     "matches":{
+                        "ipv6":{
+                           "destination-ipv6-network":"2001:db8::/32"
+                        },
+                        "udp":{
+                           "destination-port":{
+                              "operator":"eq",
+                              "port":53
+                           }
+                        }
+                     },
+                     "actions":{
+                        "forwarding":"accept"
+                     }
+                  }
+               ]
+            }
+         }
+      ]
+   }
+}
+</pre>
+</div>
+<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
+<a href="#name-an-example-illustrating-fil" class="selfRef">An Example Illustrating Filtering of IPv6 Fragmented Packets (Message Body)</a>
+          </figcaption></figure>
+</div>
+</section>
+</div>
+<div id="vlan-filtering">
+<section id="appendix-E.3">
+        <h3 id="name-vlan-filtering">
+<a href="#appendix-E.3" class="section-number selfRef">E.3. </a><a href="#name-vlan-filtering" class="section-name selfRef">VLAN Filtering</a>
+        </h3>
+<p id="appendix-E.3-1"><a href="#example_7" class="auto internal xref">Figure 6</a> shows an ACL example to illustrate how to apply a VLAN range filter.<a href="#appendix-E.3-1" class="pilcrow">¶</a></p>
+<span id="name-example-of-vlan-filter-mess"></span><div id="example_7">
+<figure id="figure-6">
+          <div class="lang-json sourcecode" id="appendix-E.3-2.1">
+<pre>
+{
+   "ietf-acces-control-list:acls":{
+      "acl":[
+         {
+            "name":"VLAN_FILTER",
+            "aces":{
+               "ace":[
+                  {
+                     "name":"1",
+                     "matches":{
+                        "ietf-acl-enh:vlan-filter":{
+                           "lower-vlan":10,
+                           "upper-vlan":20
+                        }
+                     },
+                     "actions":{
+                        "forwarding":"ietf-acces-control-list:accept"
+                     }
+                  }
+               ]
+            }
+         }
+      ]
+   }
+}
+</pre>
+</div>
+<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
+<a href="#name-example-of-vlan-filter-mess" class="selfRef">Example of VLAN Filter (Message Body)</a>
+          </figcaption></figure>
+</div>
+</section>
+</div>
+<div id="isid-filtering">
+<section id="appendix-E.4">
+        <h3 id="name-isid-filtering">
+<a href="#appendix-E.4" class="section-number selfRef">E.4. </a><a href="#name-isid-filtering" class="section-name selfRef">ISID Filtering</a>
+        </h3>
+<p id="appendix-E.4-1"><a href="#example_6" class="auto internal xref">Figure 7</a> shows an ACL example to illustrate the ISID range filtering.<a href="#appendix-E.4-1" class="pilcrow">¶</a></p>
+<span id="name-example-isid-filter-message"></span><div id="example_6">
+<figure id="figure-7">
+          <div class="lang-json sourcecode" id="appendix-E.4-2.1">
+<pre>
+{
+   "ietf-acces-control-list:acls":{
+      "acl":[
+         {
+            "name":"test",
+            "aces":{
+               "ace":[
+                  {
+                     "name":"1",
+                     "matches":{
+                        "ietf-acl-enh:isid-filter":{
+                           "lower-isid":100,
+                           "upper-isid":200
+                        }
+                     },
+                     "actions":{
+                        "forwarding":"ietf-acces-control-list:accept"
+                     }
+                  }
+               ]
+            }
+         }
+      ]
+   }
+}
+</pre>
+</div>
+<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
+<a href="#name-example-isid-filter-message" class="selfRef">Example ISID Filter (Message Body)</a>
+          </figcaption></figure>
+</div>
+</section>
+</div>
+<div id="rate-limit">
+<section id="appendix-E.5">
+        <h3 id="name-rate-limit">
+<a href="#appendix-E.5" class="section-number selfRef">E.5. </a><a href="#name-rate-limit" class="section-name selfRef">Rate-Limit</a>
+        </h3>
+<p id="appendix-E.5-1"><a href="#example_5" class="auto internal xref">Figure 8</a> shows an ACL example to rate-limit incoming SYNs during a SYN flood attack.<a href="#appendix-E.5-1" class="pilcrow">¶</a></p>
+<span id="name-an-example-of-rate-limit-in"></span><div id="example_5">
+<figure id="figure-8">
+          <div class="lang-json sourcecode" id="appendix-E.5-2.1">
+<pre>
+{
+   "ietf-access-control-list:acls":{
+      "acl":[
+         {
+            "name":"tcp-flags-example-with-rate-limit",
+            "aces":{
+               "ace":[
+                  {
+                     "name":"rate-limit-syn",
+                     "matches":{
+                        "tcp":{
+                           "acl-enh:flags-bitmask":{
+                              "operator":"match",
+                              "bitmask":2
+                           }
+                        }
+                     },
+                     "actions":{
+                        "forwarding":"accept",
+                        "acl-enh:rate-limit":"20.00"
+                     }
+                  }
+               ]
+            }
+         }
+      ]
+   }
+}
+</pre>
+</div>
+<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
+<a href="#name-an-example-of-rate-limit-in" class="selfRef">An Example of Rate-Limit Incoming TCP SYNs (Message Body).</a>
+          </figcaption></figure>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="acknowledgements">
+<section id="appendix-F">
+      <h2 id="name-acknowledgements">
+<a href="#name-acknowledgements" class="section-name selfRef">Acknowledgements</a>
+      </h2>
+<p id="appendix-F-1">Many thanks to Jon Shallow and Miguel Cros for the review and comments to the document, including prior to publishing the document.<a href="#appendix-F-1" class="pilcrow">¶</a></p>
+<p id="appendix-F-2">Thanks to Qiufang Ma, Victor Lopez, Joe Clarke, and Mahesh Jethanandani for the comments and suggestions.<a href="#appendix-F-2" class="pilcrow">¶</a></p>
+<p id="appendix-F-3">The IANA-maintained modules were generated using an XSLT stylesheet from the 'iana-yang' project (https://github.com/llhotka/iana-yang).<a href="#appendix-F-3" class="pilcrow">¶</a></p>
+<p id="appendix-F-4">This work is partially supported by the European Commission under   Horizon 2020 Secured autonomic traffic management for a Tera of SDN
+ flows (Teraflow) project (grant agreement number 101015857).<a href="#appendix-F-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authors-addresses">
-<section id="appendix-F">
+<section id="appendix-G">
       <h2 id="name-authors-addresses">
 <a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
       </h2>
