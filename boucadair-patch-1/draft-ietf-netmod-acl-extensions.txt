@@ -517,8 +517,6 @@ module: ietf-acl-enh
    This model imports types from [RFC6991], [RFC8519], and [RFC8294].
 
    <CODE BEGINS> file "ietf-acl-enh@2022-10-24.yang"
-   =============== NOTE: '\' line wrapping per RFC 8792 ================
-
    module ietf-acl-enh {
      yang-version 1.1;
      namespace "urn:ietf:params:xml:ns:yang:ietf-acl-enh";
@@ -798,9 +796,9 @@ module: ietf-acl-enh
            position 2;
            description
              "Any bit. This is a match on any of the bits in  bitmask.
-              It evaluates to 'true' if any of the bits in the value \
-                                                                    mask
-              are set in the data,  i.e., '(data & value) != 0'.";
+              It evaluates to 'true' if any of the bits in the
+              value mask are set in the data,  i.e.,
+              '(data & value) != 0'.";
          }
        }
        description
@@ -1021,9 +1019,9 @@ module: ietf-acl-enh
            base offset-type;
          }
          description
-           "Indicates the payload offset. This will indicate the \
-                                                                position
-            of the data in packet to use for the match.";
+           "Indicates the payload offset. This will indicate
+            the position of the data in packet to use for
+            the match.";
        }
        leaf offset-end {
          type uint64;
@@ -1204,9 +1202,8 @@ module: ietf-acl-enh
            when "derived-from-or-self(../counter-type, "
               + "'acl-enh:counter-name')" {
              description
-               "Name for the counter or variable to update when counter\
-                                                                  -type
-               is 'counter-name'.";
+               "Name for the counter or variable to update when
+               'counter-type' is 'counter-name'.";
            }
            type string;
            description
@@ -1247,8 +1244,8 @@ module: ietf-acl-enh
              "Provides the rule set that matches MPLS headers.";
          }
          description
-           "Matches against MPLS headers, for example, label values"\
-                                                             ;
+           "Matches against MPLS headers, for example, label
+            values";
        }
      }
 
@@ -1596,9 +1593,8 @@ module: ietf-acl-enh
        }
        container protocol-sets {
          description
-           "Data definitions for a list of protocols which can be \
-                                                                 matched
-            in policies.";
+           "Data definitions for a list of protocols which can be
+            matched in policies.";
          list protocol-set {
            key "name";
            description
@@ -1606,8 +1602,8 @@ module: ietf-acl-enh
            leaf name {
              type string;
              description
-               "Name of the protocols set -- this is used as a label to
-                reference the set in match conditions.";
+               "Name of the protocols set -- this is used as a
+                label to reference the set in match conditions.";
            }
            leaf-list protocol {
              type union {
@@ -1631,9 +1627,8 @@ module: ietf-acl-enh
            leaf name {
              type string;
              description
-               "Name of the ICMPv4 type set -- this is used as a label \
-                                                                      to
-                reference the set in match conditions.";
+               "Name of the ICMPv4 type set -- this is used as a label
+                to reference the set in match conditions.";
            }
            list types {
              key "type";
@@ -1654,9 +1649,8 @@ module: ietf-acl-enh
            leaf name {
              type string;
              description
-               "Name of the ICMPv6 type set -- this is used as a label \
-                                                                      to
-                reference the set in match conditions.";
+               "Name of the ICMPv6 type set -- this is used as a label
+                to reference the set in match conditions.";
            }
            list types {
              key "type";
@@ -2076,9 +2070,9 @@ module: ietf-acl-enh
               <https://www.iana.org/assignments/yang-parameters>.
 
    [IEEE-802-1ah]
-              "IEEE Standard for Local and metropolitan area networks --
-              Virtual Bridged Local Area Networks Amendment 7: Provider
-              Backbone Bridges", n.d.,
+              IEEE, "IEEE Standard for Local and metropolitan area
+              networks -- Virtual Bridged Local Area Networks Amendment
+              7: Provider Backbone Bridges", August 2008,
               <https://standards.ieee.org/standard/802_1ah-2008.html>.
 
    [RFC2780]  Bradner, S. and V. Paxson, "IANA Allocation Guidelines For

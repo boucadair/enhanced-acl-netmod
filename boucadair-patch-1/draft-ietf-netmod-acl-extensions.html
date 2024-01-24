@@ -1762,8 +1762,6 @@ the EVNP-PBB configuration.<a href="#section-3.9-3" class="pilcrow">¶</a></p>
 <div class="breakable sourcecode" id="section-4-2">
 <pre>&lt;CODE BEGINS&gt; file "ietf-acl-enh@2022-10-24.yang"
 
-=============== NOTE: '\' line wrapping per RFC 8792 ================
-
 module ietf-acl-enh {
   yang-version 1.1;
   namespace "urn:ietf:params:xml:ns:yang:ietf-acl-enh";
@@ -2043,9 +2041,9 @@ module ietf-acl-enh {
         position 2;
         description
           "Any bit. This is a match on any of the bits in  bitmask.
-           It evaluates to 'true' if any of the bits in the value \
-                                                                 mask
-           are set in the data,  i.e., '(data &amp; value) != 0'.";
+           It evaluates to 'true' if any of the bits in the
+           value mask are set in the data,  i.e.,
+           '(data &amp; value) != 0'.";
       }
     }
     description
@@ -2266,9 +2264,9 @@ grouping mpls-match-parameters-config {
         base offset-type;
       }
       description
-        "Indicates the payload offset. This will indicate the \
-                                                             position
-         of the data in packet to use for the match.";
+        "Indicates the payload offset. This will indicate
+         the position of the data in packet to use for
+         the match.";
     }
     leaf offset-end {
       type uint64;
@@ -2449,9 +2447,8 @@ grouping mpls-match-parameters-config {
         when "derived-from-or-self(../counter-type, "
            + "'acl-enh:counter-name')" {
           description
-            "Name for the counter or variable to update when counter\
-                                                               -type
-            is 'counter-name'.";
+            "Name for the counter or variable to update when
+            'counter-type' is 'counter-name'.";
         }
         type string;
         description
@@ -2492,8 +2489,8 @@ grouping mpls-match-parameters-config {
           "Provides the rule set that matches MPLS headers.";
       }
       description
-        "Matches against MPLS headers, for example, label values"\
-                                                          ;
+        "Matches against MPLS headers, for example, label
+         values";
     }
   }
 
@@ -2841,9 +2838,8 @@ grouping mpls-match-parameters-config {
     }
     container protocol-sets {
       description
-        "Data definitions for a list of protocols which can be \
-                                                              matched
-         in policies.";
+        "Data definitions for a list of protocols which can be
+         matched in policies.";
       list protocol-set {
         key "name";
         description
@@ -2851,8 +2847,8 @@ grouping mpls-match-parameters-config {
         leaf name {
           type string;
           description
-            "Name of the protocols set -- this is used as a label to
-             reference the set in match conditions.";
+            "Name of the protocols set -- this is used as a
+             label to reference the set in match conditions.";
         }
         leaf-list protocol {
           type union {
@@ -2876,9 +2872,8 @@ grouping mpls-match-parameters-config {
         leaf name {
           type string;
           description
-            "Name of the ICMPv4 type set -- this is used as a label \
-                                                                   to
-             reference the set in match conditions.";
+            "Name of the ICMPv4 type set -- this is used as a label
+             to reference the set in match conditions.";
         }
         list types {
           key "type";
@@ -2899,9 +2894,8 @@ grouping mpls-match-parameters-config {
         leaf name {
           type string;
           description
-            "Name of the ICMPv6 type set -- this is used as a label \
-                                                                   to
-             reference the set in match conditions.";
+            "Name of the ICMPv6 type set -- this is used as a label
+             to reference the set in match conditions.";
         }
         list types {
           key "type";
@@ -3414,7 +3408,7 @@ as follows:<a href="#section-6.3.3-11" class="pilcrow">¶</a></p>
 <dd class="break"></dd>
 <dt id="IEEE-802-1ah">[IEEE-802-1ah]</dt>
         <dd>
-<span class="refTitle">"IEEE Standard for Local and metropolitan area networks -- Virtual Bridged Local Area Networks Amendment 7: Provider Backbone Bridges"</span>, <span>n.d.</span>, <span>&lt;<a href="https://standards.ieee.org/standard/802_1ah-2008.html">https://standards.ieee.org/standard/802_1ah-2008.html</a>&gt;</span>. </dd>
+<span class="refAuthor">IEEE</span>, <span class="refTitle">"IEEE Standard for Local and metropolitan area networks -- Virtual Bridged Local Area Networks Amendment 7: Provider Backbone Bridges"</span>, <time datetime="2008-08" class="refDate">August 2008</time>, <span>&lt;<a href="https://standards.ieee.org/standard/802_1ah-2008.html">https://standards.ieee.org/standard/802_1ah-2008.html</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2780">[RFC2780]</dt>
         <dd>
