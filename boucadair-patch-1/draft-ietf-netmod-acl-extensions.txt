@@ -5,11 +5,11 @@
 netmod                                                     O. G. D. Dios
 Internet-Draft                                                S. Barguil
 Intended status: Standards Track                              Telefonica
-Expires: 26 July 2024                                       M. Boucadair
+Expires: 27 July 2024                                       M. Boucadair
                                                                   Orange
                                                                    Q. Wu
                                                                   Huawei
-                                                         23 January 2024
+                                                         24 January 2024
 
 
         Extensions to the Access Control Lists (ACLs) YANG Model
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 July 2024.
+   This Internet-Draft will expire on 27 July 2024.
 
 Copyright Notice
 
@@ -107,8 +107,8 @@ Table of Contents
    Appendix C.  IPv6 Extension Header Types
      C.1.  XSLT Template to Generate The IPv6 Extension Header Types
            IANA-Maintained Module
-     C.2.  Initial Version of the The ICMPv6 Types IANA-Maintained
-           Module
+     C.2.  Initial Version of The IPv6 Extension Header Types
+           IANA-Maintained Module
    Appendix D.  Problem Statement & Gap Analysis
      D.1.  Suboptimal Configuration: Lack of Support for Lists of
            Prefixes
@@ -120,7 +120,13 @@ Table of Contents
      D.7.  Payload-based Filtering
      D.8.  Reuse the ACLs Content Across Several Devices
      D.9.  Match MPLS Headers
-   Appendix E.  Acknowledgements
+   Appendix E.  Examples
+     E.1.  TCP Flags Handling
+     E.2.  Fragments Handling
+     E.3.  VLAN Filtering
+     E.4.  ISID Filtering
+   Appendix F.  Rate-Limit
+   Acknowledgements
    Authors' Addresses
 
 1.  Introduction
@@ -171,10 +177,13 @@ Table of Contents
    The enhanced ACL module (Section 4) conforms to the Network
    Management Datastore Architecture (NMDA) defined in [RFC8342].
 
+   A set of examples to illustrate the use of the enhanced ACL module
+   are provided in Appendix E.
+
    The document also defines IANA-maintained modules for ICMP types and
    IPv6 extension headers.  The design of the modules adheres to the
    recommendations in [I-D.ietf-netmod-rfc8407bis].  The templates to
-   generate the modules is available at Appendix A.1, Appendix B.1, and
+   generate the modules are available in Appendix A.1, Appendix B.1, and
    Appendix C.1.  Readers should refer to the IANA websites
    "IANA_ICMPv4_YANG_URL", "IANA_ICMPv6_YANG_URL", and
    "IANA_IPV6_YANG_URL" to retrieve the latest version of these IANA-
@@ -399,9 +408,9 @@ module: ietf-acl-enh
          protocol can be identified either by a number (e.g., 17) or a
          name (e.g., UDP).
 
-   *  ICMP sets:  It contains a list of ICMPv4 or ICMPv6 types, each of
-         them identified by a type value, optionally the code and the
-         rest of the header.
+   *  ICMP sets:  It contains a list of ICMPv4 [RFC0792] or ICMPv6
+         [RFC4443] types, each of them identified by a type value,
+         optionally the code and the rest of the header.
 
    *  Aliases:  An alias is defined by a combination of various
          parameters (e.g., IP prefix, protocol, port number, or VLAN).
@@ -411,178 +420,24 @@ module: ietf-acl-enh
 3.3.  IPv6 Extension Headers
 
    The module can be used to manage ACLs that require matching against
-   IPv6 extension headers.  To that aim, a new IANA-maintained module is
-   defined in in this document.
+   IPv6 extension headers.  To that aim, a new IANA-maintained module
+   for IPv6 extension header types is defined in this document.
 
 3.4.  TCP Flags Handling
 
-   The augmented ACL structure includes a new leaf 'flags-bitmask' to
-   better handle flags.
+   The augmented ACL structure (Figure 1) includes a new leaf 'flags-
+   bitmask' to better handle TCP flags [RFC9293].
 
    Clients that support both 'flags-bitmask' and 'flags' matching fields
-   MUST NOT set these fields in the same request.  Note that it is
-   RECOMMENDED to use 'flags-bitmask'
-
-   Figure 2 shows an example of a request to install a filter to discard
-   incoming TCP messages having all flags unset.
-
-   {
-      "ietf-access-control-list:acls":{
-         "acl":[
-            {
-               "name":"tcp-flags-example",
-               "aces":{
-                  "ace":[
-                     {
-                        "name":"null-attack",
-                        "matches":{
-                           "tcp":{
-                              "acl-enh:flags-bitmask":{
-                                 "operator":"not any",
-                                 "bitmask":4095
-                              }
-                           }
-                        },
-                        "actions":{
-                           "forwarding":"drop"
-                        }
-                     }
-                  ]
-               }
-            }
-         ]
-      }
-   }
-
-        Figure 2: Example of an ACL to Deny TCP Null Attack Messages
-                               (Request Body)
+   MUST NOT set these fields in the same request.
 
 3.5.  Fragments Handling
 
-   The augmented ACL structure includes a new leaf 'fragment' to better
-   handle fragments.
+   The augmented ACL structure (Figure 1) includes a new leaf 'fragment'
+   to better handle fragments.
 
    Clients that support both 'fragment' and 'flags' matching fields MUST
    NOT set these fields in the same request.
-
-   Figure 3 shows the content of a POST request to allow the traffic
-   destined to 198.51.100.0/24 and UDP port number 53, but to drop all
-   fragmented packets.  The following ACEs are defined (in this order):
-
-   *  "drop-all-fragments" ACE: discards all fragments.
-
-   *  "allow-dns-packets" ACE: accepts DNS packets destined to
-      198.51.100.0/24.
-
-   {
-      "ietf-access-control-list:acls":{
-         "acl":[
-            {
-               "name":"dns-fragments",
-               "type":"ipv4-acl-type",
-               "aces":{
-                  "ace":[
-                     {
-                        "name":"drop-all-fragments",
-                        "matches":{
-                           "ipv4":{
-                              "acl-enh:ipv4-fragment":{
-                                 "operator":"match",
-                                 "type":"isf"
-                              }
-                           }
-                        },
-                        "actions":{
-                           "forwarding":"drop"
-                        }
-                     },
-                     {
-                        "name":"allow-dns-packets",
-                        "matches":{
-                           "ipv4":{
-                              "destination-ipv4-network":"198.51.100.0/24"
-                           },
-                           "udp":{
-                              "destination-port":{
-                                 "operator":"eq",
-                                 "port":53
-                              }
-                           },
-                           "actions":{
-                              "forwarding":"accept"
-                           }
-                        }
-                     }
-                  ]
-               }
-            }
-         ]
-      }
-   }
-
-         Figure 3: Example Illustrating Candidate Filtering of IPv4
-                     Fragmented Packets (Message Body)
-
-   Figure 4 shows an example of the body of a POST request to allow the
-   traffic destined to 2001:db8::/32 and UDP port number 53, but to drop
-   all fragmented packets.  The following ACEs are defined (in this
-   order):
-
-   *  "drop-all-fragments" ACE: discards all fragments (including atomic
-      fragments).  That is, IPv6 packets that include a Fragment header
-      (44) are dropped.
-
-   *  "allow-dns-packets" ACE: accepts DNS packets destined to
-      2001:db8::/32.
-
-   {
-      "ietf-access-control-list:acls":{
-         "acl":[
-            {
-               "name":"dns-fragments",
-               "type":"ipv6-acl-type",
-               "aces":{
-                  "ace":[
-                     {
-                        "name":"drop-all-fragments",
-                        "matches":{
-                           "ipv6":{
-                              "acl-enh:ipv6-fragment":{
-                                 "operator":"match",
-                                 "type":"isf"
-                              }
-                           }
-                        },
-                        "actions":{
-                           "forwarding":"drop"
-                        }
-                     },
-                     {
-                        "name":"allow-dns-packets",
-                        "matches":{
-                           "ipv6":{
-                              "destination-ipv6-network":"2001:db8::/32"
-                           },
-                           "udp":{
-                              "destination-port":{
-                                 "operator":"eq",
-                                 "port":53
-                              }
-                           }
-                        },
-                        "actions":{
-                           "forwarding":"accept"
-                        }
-                     }
-                  ]
-               }
-            }
-         ]
-      }
-   }
-
-       Figure 4: An Example Illustrating Filtering of IPv6 Fragmented
-                           Packets (Message Body)
 
 3.6.  Payload-based Filtering
 
@@ -590,13 +445,14 @@ module: ietf-acl-enh
    substrate.  The match criteria for such protocols may rely upon the
    'protocol' under 'l3', TCP/UDP match criteria, part of the TCP/UDP
    payload, or a combination thereof.  A new feature, called "match-on-
-   payload", is defined in the document.
+   payload", is defined in the document.  This can be used, for example,
+   for QUIC [RFC9000] or for tunneling protocols.
 
 3.7.  Match MPLS Headers
 
-   The ACL model can be used to create rules to match MPLS fields on a
-   packet.  The MPLS headers defined in [RFC3032] and [RFC5462] contains
-   the following fields:
+   The enhanced ACL module can be used to create rules to match against
+   MPLS fields of a packet.  The MPLS header defined in [RFC3032] and
+   [RFC5462] contains the following fields:
 
    *  Traffic Class: 3 bits 'EXP' renamed to 'Traffic Class Field."
 
@@ -606,156 +462,63 @@ module: ietf-acl-enh
    *  TTL: An eight-bit field that is used to encode a time-to-live
       value.
 
-   The structure of the MPLS ACL subtree is shown in Figure 5:
+   The augmented ACL structure (Figure 1) allows an operator to
+   configure ACLs that match based upon the following data nodes:
 
-     augment /acl:acls/acl:acl/acl:aces/acl:ace/acl:matches:
-       ...
-       +--rw (mpls)?
-          +--:(mpls-values)
-             +--rw mpls-values {match-on-mpls}?
-                +--rw traffic-class?       uint8
-                +--rw label-position       identityref
-                +--rw upper-label-range?   uint32
-                +--rw lower-label-range?   uint32
-                +--rw label-block-name     string
-                +--rw ttl-value?           uint8
+   *  "traffic-class"
 
-                    Figure 5: MPLS Header Match Subtree
+   *  "label-position" (e.g., top, bottom)
+
+   *  "upper-label-range"
+
+   *  "lower-label-range"
+
+   *  "label-block-name"
+
+   *  "ttl-value"
 
 3.8.  VLAN Filter
 
    Being able to filter all packets that are bridged within a VLAN or
    that are routed into or out of a bridge domain is part of the VPN
-   control requirements derived of the EVPN definition done in
-   [RFC7209].  So, all packets that are bridged within a VLAN or that
-   are routed into or out of a VLAN can be captured, forwarded,
-   translated or discarded based on the network policy applied.
-
-   Figure 6 shows an ACL example to illustrate how to apply a VLAN range
-   filter.
-
-   {
-      "ietf-acces-control-list:acls":{
-         "acl":[
-            {
-               "name":"VLAN_FILTER",
-               "aces":{
-                  "ace":[
-                     {
-                        "name":"1",
-                        "matches":{
-                           "ietf-acl-enh:vlan-filter":{
-                              "lower-vlan":10,
-                              "upper-vlan":20
-                           }
-                        },
-                        "actions":{
-                           "forwarding":"ietf-acces-control-list:accept"
-                        }
-                     }
-                  ]
-               }
-            }
-         ]
-      }
-   }
-
-              Figure 6: Example of VLAN Filter (Message Body)
+   control requirements derived of the EVPN definition in [RFC7209].
+   All packets that are bridged within a VLAN or that are routed into or
+   out of a VLAN can be captured, forwarded, translated, or discarded
+   based on the network policy.
 
 3.9.  ISID Filter
 
    Provider backbone bridging (PBB) was originally defined as Virtual
-   Bridged Local Area Networks [IEEE802.1ah] standard.  However, instead
-   of multiplexing VLANs, PBB duplicates the MAC layer of the customer
-   frame and separates it from the provider domain, by encapsulating it
-   in a 24 bit instance service identifier (I-SID).  This provides for
-   more transparency between the customer network and the provider
-   network.
+   Bridged Local Area Networks [IEEE-802-1ah] standard.  However,
+   instead of multiplexing VLANs, PBB duplicates the MAC layer of the
+   customer frame and separates it from the provider domain, by
+   encapsulating it in a 24-bit instance service identifier (I-SID).
+   This provides more transparency between the customer network and the
+   provider network.
 
    The I-component forms the customer or access facing interface or
    routing instance.  The I-component is responsible for mapping
-   customer Ethernet traffic to the appropriate I-SID.  In the network
-   is mandatory to configure the default service identifier.
+   customer Ethernet traffic to the appropriate I-SID.  It is mandatory
+   to configure the default service identifier in the network.
 
    Being able to filter by I-component Service identifier is a feature
    of the EVNP-PBB configuration.
 
-   Figure 7 shows an ACL example to illustrate the ISID range filtering.
-
-   {
-      "ietf-acces-control-list:acls":{
-         "acl":[
-            {
-               "name":"test",
-               "aces":{
-                  "ace":[
-                     {
-                        "name":"1",
-                        "matches":{
-                           "ietf-acl-enh:isid-filter":{
-                              "lower-isid":100,
-                              "upper-isid":200
-                           }
-                        },
-                        "actions":{
-                           "forwarding":"ietf-acces-control-list:accept"
-                        }
-                     }
-                  ]
-               }
-            }
-         ]
-      }
-   }
-
-                Figure 7: Example ISID Filter (Message Body)
-
 3.10.  Additional Actions
 
    In order to support rate-limiting (see Appendix D.6), a new action
-   called "rate-limit" is defined.  Figure 8 shows an ACL example to
-   rate-limit incoming SYNs during a SYN flood attack.
-
-   {
-      "ietf-access-control-list:acls":{
-         "acl":[
-            {
-               "name":"tcp-flags-example-with-rate-limit",
-               "aces":{
-                  "ace":[
-                     {
-                        "name":"rate-limit-syn",
-                        "matches":{
-                           "tcp":{
-                              "acl-enh:flags-bitmask":{
-                                 "operator":"match",
-                                 "bitmask":2
-                              }
-                           }
-                        },
-                        "actions":{
-                           "forwarding":"accept",
-                           "acl-enh:rate-limit":"20.00"
-                        }
-                     }
-                  ]
-               }
-            }
-         ]
-      }
-   }
-
-    Figure 8: An Example of Rate-Limit Incoming TCP SYNs (Message Body).
-
-   Also, the model supports new actions to complement existing ones: Log
-   ('log-action') and write a counter ('counter-action').  The current
-   version of the module supports only local actions.
+   called "rate-limit" is defined.  Also, the model supports new actions
+   to complement existing ones: Log ('log-action') and write a counter
+   ('counter-action').  The current version of the module supports only
+   local actions.
 
 4.  Enhanced ACL YANG Module
 
    This model imports types from [RFC6991], [RFC8519], and [RFC8294].
 
    <CODE BEGINS> file "ietf-acl-enh@2022-10-24.yang"
+   =============== NOTE: '\' line wrapping per RFC 8792 ================
+
    module ietf-acl-enh {
      yang-version 1.1;
      namespace "urn:ietf:params:xml:ns:yang:ietf-acl-enh";
@@ -1035,7 +798,8 @@ module: ietf-acl-enh
            position 2;
            description
              "Any bit. This is a match on any of the bits in  bitmask.
-              It evaluates to 'true' if any of the bits in the value mask
+              It evaluates to 'true' if any of the bits in the value \
+                                                                    mask
               are set in the data,  i.e., '(data & value) != 0'.";
          }
        }
@@ -1257,7 +1021,8 @@ module: ietf-acl-enh
            base offset-type;
          }
          description
-           "Indicates the payload offset. This will indicate the position
+           "Indicates the payload offset. This will indicate the \
+                                                                position
             of the data in packet to use for the match.";
        }
        leaf offset-end {
@@ -1439,7 +1204,8 @@ module: ietf-acl-enh
            when "derived-from-or-self(../counter-type, "
               + "'acl-enh:counter-name')" {
              description
-               "Name for the counter or variable to update when counter-type
+               "Name for the counter or variable to update when counter\
+                                                                  -type
                is 'counter-name'.";
            }
            type string;
@@ -1481,7 +1247,8 @@ module: ietf-acl-enh
              "Provides the rule set that matches MPLS headers.";
          }
          description
-           "Matches against MPLS headers, for example, label values";
+           "Matches against MPLS headers, for example, label values"\
+                                                             ;
        }
      }
 
@@ -1588,6 +1355,12 @@ module: ietf-acl-enh
        description
          "Handle non-initial and initial fragments for IPv4 packets.";
        container ipv4-fragment {
+         must "not(/acl:acls/acl:acl/acl:aces"
+            + "/acl:ace/acl:matches/acl:l3/acl:ipv4/acl:flags)" {
+           error-message
+             "Either flags or fragment should be provided, but not
+              both.";
+         }
          description
            "Indicates how to handle IPv4 fragments.";
          uses fragment-fields;
@@ -1649,6 +1422,12 @@ module: ietf-acl-enh
        description
          "Handles TCP flags and port sets.";
        container flags-bitmask {
+         must "not(/acl:acls/acl:acl/acl:aces/acl:ace/acl:matches"
+            + "/acl:l4/acl:tcp/acl:flags)" {
+           error-message
+             "Either flags or flags-bitmask should be provided, but not
+              both.";
+         }
          description
            "Indicates how to handle TCP flags.";
          uses tcp-flags;
@@ -1817,7 +1596,8 @@ module: ietf-acl-enh
        }
        container protocol-sets {
          description
-           "Data definitions for a list of protocols which can be matched
+           "Data definitions for a list of protocols which can be \
+                                                                 matched
             in policies.";
          list protocol-set {
            key "name";
@@ -1851,7 +1631,8 @@ module: ietf-acl-enh
            leaf name {
              type string;
              description
-               "Name of the ICMPv4 type set -- this is used as a label to
+               "Name of the ICMPv4 type set -- this is used as a label \
+                                                                      to
                 reference the set in match conditions.";
            }
            list types {
@@ -1873,7 +1654,8 @@ module: ietf-acl-enh
            leaf name {
              type string;
              description
-               "Name of the ICMPv6 type set -- this is used as a label to
+               "Name of the ICMPv6 type set -- this is used as a label \
+                                                                      to
                 reference the set in match conditions.";
            }
            list types {
@@ -2167,6 +1949,10 @@ module: ietf-acl-enh
 
 7.1.  Normative References
 
+   [RFC0792]  Postel, J., "Internet Control Message Protocol", STD 5,
+              RFC 792, DOI 10.17487/RFC0792, September 1981,
+              <https://www.rfc-editor.org/rfc/rfc792>.
+
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
@@ -2180,6 +1966,12 @@ module: ietf-acl-enh
    [RFC3688]  Mealling, M., "The IETF XML Registry", BCP 81, RFC 3688,
               DOI 10.17487/RFC3688, January 2004,
               <https://www.rfc-editor.org/rfc/rfc3688>.
+
+   [RFC4443]  Conta, A., Deering, S., and M. Gupta, Ed., "Internet
+              Control Message Protocol (ICMPv6) for the Internet
+              Protocol Version 6 (IPv6) Specification", STD 89,
+              RFC 4443, DOI 10.17487/RFC4443, March 2006,
+              <https://www.rfc-editor.org/rfc/rfc4443>.
 
    [RFC5462]  Andersson, L. and R. Asati, "Multiprotocol Label Switching
               (MPLS) Label Stack Entry: "EXP" Field Renamed to "Traffic
@@ -2250,6 +2042,10 @@ module: ietf-acl-enh
               RFC 8956, DOI 10.17487/RFC8956, December 2020,
               <https://www.rfc-editor.org/rfc/rfc8956>.
 
+   [RFC9293]  Eddy, W., Ed., "Transmission Control Protocol (TCP)",
+              STD 7, RFC 9293, DOI 10.17487/RFC9293, August 2022,
+              <https://www.rfc-editor.org/rfc/rfc9293>.
+
 7.2.  Informative References
 
    [I-D.ietf-netmod-rfc8407bis]
@@ -2279,16 +2075,16 @@ module: ietf-acl-enh
               "YANG Parameters", n.d.,
               <https://www.iana.org/assignments/yang-parameters>.
 
+   [IEEE-802-1ah]
+              "IEEE Standard for Local and metropolitan area networks --
+              Virtual Bridged Local Area Networks Amendment 7: Provider
+              Backbone Bridges", n.d.,
+              <https://standards.ieee.org/standard/802_1ah-2008.html>.
+
    [RFC2780]  Bradner, S. and V. Paxson, "IANA Allocation Guidelines For
               Values In the Internet Protocol and Related Headers",
               BCP 37, RFC 2780, DOI 10.17487/RFC2780, March 2000,
               <https://www.rfc-editor.org/rfc/rfc2780>.
-
-   [RFC4443]  Conta, A., Deering, S., and M. Gupta, Ed., "Internet
-              Control Message Protocol (ICMPv6) for the Internet
-              Protocol Version 6 (IPv6) Specification", STD 89,
-              RFC 4443, DOI 10.17487/RFC4443, March 2006,
-              <https://www.rfc-editor.org/rfc/rfc4443>.
 
    [RFC5237]  Arkko, J. and S. Bradner, "IANA Allocation Guidelines for
               the Protocol Field", BCP 37, RFC 5237,
@@ -2308,6 +2104,11 @@ module: ietf-acl-enh
               Bacher, "Dissemination of Flow Specification Rules",
               RFC 8955, DOI 10.17487/RFC8955, December 2020,
               <https://www.rfc-editor.org/rfc/rfc8955>.
+
+   [RFC9000]  Iyengar, J., Ed. and M. Thomson, Ed., "QUIC: A UDP-Based
+              Multiplexed and Secure Transport", RFC 9000,
+              DOI 10.17487/RFC9000, May 2021,
+              <https://www.rfc-editor.org/rfc/rfc9000>.
 
    [RFC9132]  Boucadair, M., Ed., Shallow, J., and T. Reddy.K,
               "Distributed Denial-of-Service Open Threat Signaling
@@ -3232,7 +3033,8 @@ C.1.  XSLT Template to Generate The IPv6 Extension Header Types IANA-
    </stylesheet>
    <CODE ENDS>
 
-C.2.  Initial Version of the The ICMPv6 Types IANA-Maintained Module
+C.2.  Initial Version of The IPv6 Extension Header Types IANA-Maintained
+      Module
 
    <CODE BEGINS> file "iana-ipv6-ext-types@2023-04-28.yang"
    module iana-ipv6-ext-types {
@@ -3389,7 +3191,7 @@ D.1.  Suboptimal Configuration: Lack of Support for Lists of Prefixes
    [RFC9132]).  The situation is even worse when both a list of sources
    and destination prefixes are involved in the filtering.
 
-   Figure 9 shows an example of the required ACL configuration for
+   Figure 2 shows an example of the required ACL configuration for
    filtering traffic from two prefixes.
 
    {
@@ -3467,7 +3269,7 @@ D.1.  Suboptimal Configuration: Lack of Support for Lists of Prefixes
      }
    }
 
-      Figure 9: Example Illustrating Sub-optimal Use of the ACL Model
+      Figure 2: Example Illustrating Sub-optimal Use of the ACL Model
                      with a Prefix List (Message Body)
 
    Such a configuration is suboptimal for both:
@@ -3588,7 +3390,270 @@ D.9.  Match MPLS Headers
    The ACLs could be used to create rules to match MPLS fields on a
    packet.  [RFC8519] does not support such function.
 
-Appendix E.  Acknowledgements
+Appendix E.  Examples
+
+   This section provides a few examples to illustrate the use of the
+   enhanced ACL module.
+
+   Figure 3 shows an example of a request to install a filter to discard
+   incoming TCP messages having all flags unset.
+
+E.1.  TCP Flags Handling
+
+   {
+      "ietf-access-control-list:acls":{
+         "acl":[
+            {
+               "name":"tcp-flags-example",
+               "aces":{
+                  "ace":[
+                     {
+                        "name":"null-attack",
+                        "matches":{
+                           "tcp":{
+                              "acl-enh:flags-bitmask":{
+                                 "operator":"not any",
+                                 "bitmask":4095
+                              }
+                           }
+                        },
+                        "actions":{
+                           "forwarding":"drop"
+                        }
+                     }
+                  ]
+               }
+            }
+         ]
+      }
+   }
+
+        Figure 3: Example of an ACL to Deny TCP Null Attack Messages
+                               (Request Body)
+
+E.2.  Fragments Handling
+
+   Figure 4 shows the content of a POST request to allow the traffic
+   destined to 198.51.100.0/24 and UDP port number 53, but to drop all
+   fragmented packets.  The following ACEs are defined (in this order):
+
+   *  "drop-all-fragments" ACE: discards all fragments.
+
+   *  "allow-dns-packets" ACE: accepts DNS packets destined to
+      198.51.100.0/24.
+
+   {
+      "ietf-access-control-list:acls":{
+         "acl":[
+            {
+               "name":"dns-fragments",
+               "type":"ipv4-acl-type",
+               "aces":{
+                  "ace":[
+                     {
+                        "name":"drop-all-fragments",
+                        "matches":{
+                           "ipv4":{
+                              "acl-enh:ipv4-fragment":{
+                                 "operator":"match",
+                                 "type":"isf"
+                              }
+                           }
+                        },
+                        "actions":{
+                           "forwarding":"drop"
+                        }
+                     },
+                     {
+                        "name":"allow-dns-packets",
+                        "matches":{
+                           "ipv4":{
+                              "destination-ipv4-network":"198.51.100.0/24"
+                           },
+                           "udp":{
+                              "destination-port":{
+                                 "operator":"eq",
+                                 "port":53
+                              }
+                           },
+                           "actions":{
+                              "forwarding":"accept"
+                           }
+                        }
+                     }
+                  ]
+               }
+            }
+         ]
+      }
+   }
+
+         Figure 4: Example Illustrating Candidate Filtering of IPv4
+                     Fragmented Packets (Message Body)
+
+   Figure 5 shows an example of the body of a POST request to allow the
+   traffic destined to 2001:db8::/32 and UDP port number 53, but to drop
+   all fragmented packets.  The following ACEs are defined (in this
+   order):
+
+   *  "drop-all-fragments" ACE: discards all fragments (including atomic
+      fragments).  That is, IPv6 packets that include a Fragment header
+      (44) are dropped.
+
+   *  "allow-dns-packets" ACE: accepts DNS packets destined to
+      2001:db8::/32.
+
+   {
+      "ietf-access-control-list:acls":{
+         "acl":[
+            {
+               "name":"dns-fragments",
+               "type":"ipv6-acl-type",
+               "aces":{
+                  "ace":[
+                     {
+                        "name":"drop-all-fragments",
+                        "matches":{
+                           "ipv6":{
+                              "acl-enh:ipv6-fragment":{
+                                 "operator":"match",
+                                 "type":"isf"
+                              }
+                           }
+                        },
+                        "actions":{
+                           "forwarding":"drop"
+                        }
+                     },
+                     {
+                        "name":"allow-dns-packets",
+                        "matches":{
+                           "ipv6":{
+                              "destination-ipv6-network":"2001:db8::/32"
+                           },
+                           "udp":{
+                              "destination-port":{
+                                 "operator":"eq",
+                                 "port":53
+                              }
+                           }
+                        },
+                        "actions":{
+                           "forwarding":"accept"
+                        }
+                     }
+                  ]
+               }
+            }
+         ]
+      }
+   }
+
+       Figure 5: An Example Illustrating Filtering of IPv6 Fragmented
+                           Packets (Message Body)
+
+E.3.  VLAN Filtering
+
+   Figure 6 shows an ACL example to illustrate how to apply a VLAN range
+   filter.
+
+   {
+      "ietf-acces-control-list:acls":{
+         "acl":[
+            {
+               "name":"VLAN_FILTER",
+               "aces":{
+                  "ace":[
+                     {
+                        "name":"1",
+                        "matches":{
+                           "ietf-acl-enh:vlan-filter":{
+                              "lower-vlan":10,
+                              "upper-vlan":20
+                           }
+                        },
+                        "actions":{
+                           "forwarding":"ietf-acces-control-list:accept"
+                        }
+                     }
+                  ]
+               }
+            }
+         ]
+      }
+   }
+
+              Figure 6: Example of VLAN Filter (Message Body)
+
+E.4.  ISID Filtering
+
+   Figure 7 shows an ACL example to illustrate the ISID range filtering.
+
+   {
+      "ietf-acces-control-list:acls":{
+         "acl":[
+            {
+               "name":"test",
+               "aces":{
+                  "ace":[
+                     {
+                        "name":"1",
+                        "matches":{
+                           "ietf-acl-enh:isid-filter":{
+                              "lower-isid":100,
+                              "upper-isid":200
+                           }
+                        },
+                        "actions":{
+                           "forwarding":"ietf-acces-control-list:accept"
+                        }
+                     }
+                  ]
+               }
+            }
+         ]
+      }
+   }
+
+                Figure 7: Example ISID Filter (Message Body)
+
+Appendix F.  Rate-Limit
+
+   Figure 8 shows an ACL example to rate-limit incoming SYNs during a
+   SYN flood attack.
+
+   {
+      "ietf-access-control-list:acls":{
+         "acl":[
+            {
+               "name":"tcp-flags-example-with-rate-limit",
+               "aces":{
+                  "ace":[
+                     {
+                        "name":"rate-limit-syn",
+                        "matches":{
+                           "tcp":{
+                              "acl-enh:flags-bitmask":{
+                                 "operator":"match",
+                                 "bitmask":2
+                              }
+                           }
+                        },
+                        "actions":{
+                           "forwarding":"accept",
+                           "acl-enh:rate-limit":"20.00"
+                        }
+                     }
+                  ]
+               }
+            }
+         ]
+      }
+   }
+
+    Figure 8: An Example of Rate-Limit Incoming TCP SYNs (Message Body).
+
+Acknowledgements
 
    Many thanks to Jon Shallow and Miguel Cros for the review and
    comments to the document, including prior to publishing the document.
