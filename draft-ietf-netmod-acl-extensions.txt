@@ -2070,9 +2070,9 @@ module: ietf-acl-enh
               <https://www.iana.org/assignments/yang-parameters>.
 
    [IEEE-802-1ah]
-              "IEEE Standard for Local and metropolitan area networks --
-              Virtual Bridged Local Area Networks Amendment 7: Provider
-              Backbone Bridges", n.d.,
+              IEEE, "IEEE Standard for Local and metropolitan area
+              networks -- Virtual Bridged Local Area Networks Amendment
+              7: Provider Backbone Bridges", August 2008,
               <https://standards.ieee.org/standard/802_1ah-2008.html>.
 
    [RFC2780]  Bradner, S. and V. Paxson, "IANA Allocation Guidelines For
