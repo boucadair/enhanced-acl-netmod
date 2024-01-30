@@ -1175,13 +1175,13 @@ the limitations of the ACL model as initially defined in RFC 8519.<a href="#sect
                 <p id="section-toc.1-1.3.2.6.1"><a href="#section-3.6" class="auto internal xref">3.6</a>.  <a href="#name-payload-based-filtering" class="internal xref">Payload-based Filtering</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.7">
-                <p id="section-toc.1-1.3.2.7.1"><a href="#section-3.7" class="auto internal xref">3.7</a>.  <a href="#name-match-mpls-headers" class="internal xref">Match MPLS Headers</a></p>
+                <p id="section-toc.1-1.3.2.7.1"><a href="#section-3.7" class="auto internal xref">3.7</a>.  <a href="#name-match-on-mpls-headers" class="internal xref">Match on MPLS Headers</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.8">
-                <p id="section-toc.1-1.3.2.8.1"><a href="#section-3.8" class="auto internal xref">3.8</a>.  <a href="#name-vlan-filter" class="internal xref">VLAN Filter</a></p>
+                <p id="section-toc.1-1.3.2.8.1"><a href="#section-3.8" class="auto internal xref">3.8</a>.  <a href="#name-vlan-filtering" class="internal xref">VLAN Filtering</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.9">
-                <p id="section-toc.1-1.3.2.9.1"><a href="#section-3.9" class="auto internal xref">3.9</a>.  <a href="#name-isid-filter" class="internal xref">ISID Filter</a></p>
+                <p id="section-toc.1-1.3.2.9.1"><a href="#section-3.9" class="auto internal xref">3.9</a>.  <a href="#name-instance-service-identifier" class="internal xref">Instance Service Identifier (I-SID) Filtering</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.10">
                 <p id="section-toc.1-1.3.2.10.1"><a href="#section-3.10" class="auto internal xref">3.10</a>. <a href="#name-additional-actions" class="internal xref">Additional Actions</a></p>
@@ -1291,7 +1291,7 @@ the limitations of the ACL model as initially defined in RFC 8519.<a href="#sect
                 <p id="section-toc.1-1.11.2.8.1"><a href="#appendix-D.8" class="auto internal xref">D.8</a>.  <a href="#name-reuse-the-acls-content-acro" class="internal xref">Reuse the ACLs Content Across Several Devices</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.9">
-                <p id="section-toc.1-1.11.2.9.1"><a href="#appendix-D.9" class="auto internal xref">D.9</a>.  <a href="#name-match-mpls-headers-2" class="internal xref">Match MPLS Headers</a></p>
+                <p id="section-toc.1-1.11.2.9.1"><a href="#appendix-D.9" class="auto internal xref">D.9</a>.  <a href="#name-match-mpls-headers" class="internal xref">Match MPLS Headers</a></p>
 </li>
             </ul>
 </li>
@@ -1305,7 +1305,7 @@ the limitations of the ACL model as initially defined in RFC 8519.<a href="#sect
                 <p id="section-toc.1-1.12.2.2.1"><a href="#appendix-E.2" class="auto internal xref">E.2</a>.  <a href="#name-fragments-handling-2" class="internal xref">Fragments Handling</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.3">
-                <p id="section-toc.1-1.12.2.3.1"><a href="#appendix-E.3" class="auto internal xref">E.3</a>.  <a href="#name-vlan-filtering" class="internal xref">VLAN Filtering</a></p>
+                <p id="section-toc.1-1.12.2.3.1"><a href="#appendix-E.3" class="auto internal xref">E.3</a>.  <a href="#name-vlan-filtering-2" class="internal xref">VLAN Filtering</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.4">
                 <p id="section-toc.1-1.12.2.4.1"><a href="#appendix-E.4" class="auto internal xref">E.4</a>.  <a href="#name-isid-filtering" class="internal xref">ISID Filtering</a></p>
@@ -1421,8 +1421,8 @@ The meaning of the symbols in the tree diagrams is defined in
         <h3 id="name-tree-structure">
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-tree-structure" class="section-name selfRef">Tree Structure</a>
         </h3>
-<p id="section-3.1-1"><a href="#enh-acl-tree" class="auto internal xref">Figure 1</a> shows the full enhanced ACL tree:<a href="#section-3.1-1" class="pilcrow">¶</a></p>
-<span id="name-enhanced-acl-tree"></span><div id="enh-acl-tree">
+<p id="section-3.1-1"><a href="#enh-acl-tree" class="auto internal xref">Figure 1</a> shows the full tree of the enhanced ACL module (<a href="#sec-module" class="auto internal xref">Section 4</a>):<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<span id="name-enhanced-acl-tree-structure"></span><div id="enh-acl-tree">
 <figure id="figure-1">
           <div class="alignLeft art-text artwork" id="section-3.1-2.1">
 <pre>
@@ -1532,7 +1532,64 @@ module: ietf-acl-enh
 </pre>
 </div>
 <figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
-<a href="#name-enhanced-acl-tree" class="selfRef">Enhanced ACL tree</a>
+<a href="#name-enhanced-acl-tree-structure" class="selfRef">Enhanced ACL Tree Structure</a>
+          </figcaption></figure>
+</div>
+<p id="section-3.1-3"><a href="#enh-acl-grp" class="auto internal xref">Figure 2</a> shows the reusable groupings that are defined in the enhanced ACL module:<a href="#section-3.1-3" class="pilcrow">¶</a></p>
+<span id="name-enhanced-acl-groupings"></span><div id="enh-acl-grp">
+<figure id="figure-2">
+          <div class="alignLeft art-text artwork" id="section-3.1-4.1">
+<pre>
+  grouping tcp-flags:
+    +-- (mode)?
+       +--:(explicit)
+       |  +-- operator?            operator
+       |  +-- explicit-tcp-flag*   identityref
+       +--:(builtin)
+          +-- bitmask?             uint16
+  grouping fragment-fields:
+    +-- operator?   operator
+    +-- type?       fragment-type
+  grouping mpls-match-parameters-config:
+    +-- traffic-class?       uint8
+    +-- label-position?      identityref
+    +-- upper-label-range?   rt-types:mpls-label
+    +-- lower-label-range?   rt-types:mpls-label
+    +-- label-block-name?    string
+    +-- ttl-value?           uint8
+  grouping payload:
+    +-- offset?       identityref
+    +-- offset-end?   uint64
+    +-- operator?     operator
+    +-- prefix?       binary
+  grouping alias:
+    +-- vlan*         uint16
+    +-- prefix*       inet:ip-prefix
+    +-- port-range* [lower-port]
+    |  +-- lower-port    inet:port-number
+    |  +-- upper-port?   inet:port-number
+    +-- protocol*     uint8
+    +-- fqdn*         inet:domain-name
+    +-- uri*          inet:uri
+  grouping icmpv4-header-fields:
+    +-- type?             iana-icmpv4-types:icmpv4-type
+    +-- code?             uint8
+    +-- rest-of-header?   binary
+  grouping icmpv6-header-fields:
+    +-- type?             iana-icmpv6-types:icmpv6-type
+    +-- code?             uint8
+    +-- rest-of-header?   binary
+  grouping acl-complementary-actions:
+    +-- log-action
+    |  +-- log-type?   identityref
+    |  +-- log-id?     string
+    +-- counter-action
+       +-- counter-type?   identityref
+       +-- counter-name*   string
+</pre>
+</div>
+<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
+<a href="#name-enhanced-acl-groupings" class="selfRef">Enhanced ACL Groupings</a>
           </figcaption></figure>
 </div>
 </section>
@@ -1636,10 +1693,10 @@ Each set is uniquely identified by a name and can be called from the relevant en
 <p id="section-3.6-1">Some transport protocols use existing protocols (e.g., TCP or UDP) as substrate. The match criteria for such protocols may rely upon the 'protocol' under 'l3', TCP/UDP match criteria, part of the TCP/UDP payload, or a combination thereof. A new feature, called "match-on-payload", is defined in the document. This can be used, for example, for QUIC <span>[<a href="#RFC9000" class="cite xref">RFC9000</a>]</span> or for tunneling protocols.<a href="#section-3.6-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="match-mpls-headers">
+<div id="match-on-mpls-headers">
 <section id="section-3.7">
-        <h3 id="name-match-mpls-headers">
-<a href="#section-3.7" class="section-number selfRef">3.7. </a><a href="#name-match-mpls-headers" class="section-name selfRef">Match MPLS Headers</a>
+        <h3 id="name-match-on-mpls-headers">
+<a href="#section-3.7" class="section-number selfRef">3.7. </a><a href="#name-match-on-mpls-headers" class="section-name selfRef">Match on MPLS Headers</a>
         </h3>
 <p id="section-3.7-1">The enhanced ACL module can be used to create rules to match against MPLS fields of a packet. The MPLS header defined in <span>[<a href="#RFC3032" class="cite xref">RFC3032</a>]</span> and <span>[<a href="#RFC5462" class="cite xref">RFC5462</a>]</span> contains the following fields:<a href="#section-3.7-1" class="pilcrow">¶</a></p>
 <ul class="normal">
@@ -1676,10 +1733,10 @@ Each set is uniquely identified by a name and can be called from the relevant en
         </ul>
 </section>
 </div>
-<div id="vlan-filter">
+<div id="vlan-filtering">
 <section id="section-3.8">
-        <h3 id="name-vlan-filter">
-<a href="#section-3.8" class="section-number selfRef">3.8. </a><a href="#name-vlan-filter" class="section-name selfRef">VLAN Filter</a>
+        <h3 id="name-vlan-filtering">
+<a href="#section-3.8" class="section-number selfRef">3.8. </a><a href="#name-vlan-filtering" class="section-name selfRef">VLAN Filtering</a>
         </h3>
 <p id="section-3.8-1">Being able to filter all packets that are bridged within a VLAN or that
 are routed into or out of a bridge domain is part of the VPN control
@@ -1689,10 +1746,10 @@ out of a VLAN can be captured, forwarded, translated, or discarded based
 on the network policy.<a href="#section-3.8-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="isid-filter">
+<div id="instance-service-identifier-i-sid-filtering">
 <section id="section-3.9">
-        <h3 id="name-isid-filter">
-<a href="#section-3.9" class="section-number selfRef">3.9. </a><a href="#name-isid-filter" class="section-name selfRef">ISID Filter</a>
+        <h3 id="name-instance-service-identifier">
+<a href="#section-3.9" class="section-number selfRef">3.9. </a><a href="#name-instance-service-identifier" class="section-name selfRef">Instance Service Identifier (I-SID) Filtering</a>
         </h3>
 <p id="section-3.9-1">Provider backbone bridging (PBB) was originally defined as Virtual
 Bridged Local Area Networks <span>[<a href="#IEEE-802-1ah" class="cite xref">IEEE-802-1ah</a>]</span>
@@ -1714,7 +1771,7 @@ the EVNP-PBB configuration.<a href="#section-3.9-3" class="pilcrow">¶</a></p>
         <h3 id="name-additional-actions">
 <a href="#section-3.10" class="section-number selfRef">3.10. </a><a href="#name-additional-actions" class="section-name selfRef">Additional Actions</a>
         </h3>
-<p id="section-3.10-1">In order to support rate-limiting (see <a href="#ps-rate" class="auto internal xref">Appendix D.6</a>), a new action called "rate-limit" is defined. Also, the model supports new actions to complement existing ones: Log ('log-action') and write a counter ('counter-action'). The current version of the module supports only local actions.<a href="#section-3.10-1" class="pilcrow">¶</a></p>
+<p id="section-3.10-1">In order to support rate-limiting (see <a href="#ps-rate" class="auto internal xref">Appendix D.6</a>), a new action called "rate-limit" is defined. Also, the model supports new actions to complement existing ones: Log ('log-action') and write a counter ('counter-action'). The version of the module defined in this document supports only local actions.<a href="#section-3.10-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -4553,9 +4610,9 @@ module iana-ipv6-ext-types {
 <p id="appendix-D.1-2">The same issue is encountered when ACLs have to be in place to mitigate DDoS
 attacks that involve a set of sources (e.g., <span>[<a href="#RFC9132" class="cite xref">RFC9132</a>]</span>). The situation is even worse when both a list of sources
 and destination prefixes are involved in the filtering.<a href="#appendix-D.1-2" class="pilcrow">¶</a></p>
-<p id="appendix-D.1-3"><a href="#example" class="auto internal xref">Figure 2</a> shows an example of the required ACL configuration for filtering traffic from two prefixes.<a href="#appendix-D.1-3" class="pilcrow">¶</a></p>
+<p id="appendix-D.1-3"><a href="#example" class="auto internal xref">Figure 3</a> shows an example of the required ACL configuration for filtering traffic from two prefixes.<a href="#appendix-D.1-3" class="pilcrow">¶</a></p>
 <span id="name-example-illustrating-sub-op"></span><div id="example">
-<figure id="figure-2">
+<figure id="figure-3">
           <div class="alignLeft art-text artwork" id="appendix-D.1-4.1">
 <pre>
 {
@@ -4634,7 +4691,7 @@ and destination prefixes are involved in the filtering.<a href="#appendix-D.1-2"
 }
 </pre>
 </div>
-<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
+<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
 <a href="#name-example-illustrating-sub-op" class="selfRef">Example Illustrating Sub-optimal Use of the ACL Model with a Prefix List (Message Body)</a>
           </figcaption></figure>
 </div>
@@ -4791,10 +4848,10 @@ logical infrastructure.<a href="#appendix-D.8-3.4.1" class="pilcrow">¶</a></p>
         </ul>
 </section>
 </div>
-<div id="match-mpls-headers-1">
+<div id="match-mpls-headers">
 <section id="appendix-D.9">
-        <h3 id="name-match-mpls-headers-2">
-<a href="#appendix-D.9" class="section-number selfRef">D.9. </a><a href="#name-match-mpls-headers-2" class="section-name selfRef">Match MPLS Headers</a>
+        <h3 id="name-match-mpls-headers">
+<a href="#appendix-D.9" class="section-number selfRef">D.9. </a><a href="#name-match-mpls-headers" class="section-name selfRef">Match MPLS Headers</a>
         </h3>
 <p id="appendix-D.9-1">The ACLs could be used to create rules to match MPLS fields on a packet. <span>[<a href="#RFC8519" class="cite xref">RFC8519</a>]</span> does not support such function.<a href="#appendix-D.9-1" class="pilcrow">¶</a></p>
 </section>
@@ -4807,14 +4864,14 @@ logical infrastructure.<a href="#appendix-D.8-3.4.1" class="pilcrow">¶</a></p>
 <a href="#appendix-E" class="section-number selfRef">Appendix E. </a><a href="#name-examples" class="section-name selfRef">Examples</a>
       </h2>
 <p id="appendix-E-1">This section provides a few examples to illustrate the use of the enhanced ACL module.<a href="#appendix-E-1" class="pilcrow">¶</a></p>
-<p id="appendix-E-2"><a href="#example_4" class="auto internal xref">Figure 3</a> shows an example of a request to install a filter to discard incoming TCP messages having all flags unset.<a href="#appendix-E-2" class="pilcrow">¶</a></p>
+<p id="appendix-E-2"><a href="#example_4" class="auto internal xref">Figure 4</a> shows an example of a request to install a filter to discard incoming TCP messages having all flags unset.<a href="#appendix-E-2" class="pilcrow">¶</a></p>
 <div id="tcp-flags-handling-1">
 <section id="appendix-E.1">
         <h3 id="name-tcp-flags-handling-2">
 <a href="#appendix-E.1" class="section-number selfRef">E.1. </a><a href="#name-tcp-flags-handling-2" class="section-name selfRef">TCP Flags Handling</a>
         </h3>
 <span id="name-example-of-an-acl-to-deny-t"></span><div id="example_4">
-<figure id="figure-3">
+<figure id="figure-4">
           <div class="lang-json sourcecode" id="appendix-E.1-1.1">
 <pre>
 {
@@ -4846,7 +4903,7 @@ logical infrastructure.<a href="#appendix-D.8-3.4.1" class="pilcrow">¶</a></p>
 }
 </pre>
 </div>
-<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
+<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
 <a href="#name-example-of-an-acl-to-deny-t" class="selfRef">Example of an ACL to Deny TCP Null Attack Messages (Request Body)</a>
           </figcaption></figure>
 </div>
@@ -4857,7 +4914,7 @@ logical infrastructure.<a href="#appendix-D.8-3.4.1" class="pilcrow">¶</a></p>
         <h3 id="name-fragments-handling-2">
 <a href="#appendix-E.2" class="section-number selfRef">E.2. </a><a href="#name-fragments-handling-2" class="section-name selfRef">Fragments Handling</a>
         </h3>
-<p id="appendix-E.2-1"><a href="#example_2" class="auto internal xref">Figure 4</a> shows the content of a POST request to allow the traffic destined to 198.51.100.0/24 and UDP port number 53, but to drop all fragmented
+<p id="appendix-E.2-1"><a href="#example_2" class="auto internal xref">Figure 5</a> shows the content of a POST request to allow the traffic destined to 198.51.100.0/24 and UDP port number 53, but to drop all fragmented
 packets.  The following ACEs are defined (in this order):<a href="#appendix-E.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-E.2-2.1">
@@ -4868,7 +4925,7 @@ packets.  The following ACEs are defined (in this order):<a href="#appendix-E.2-
 </li>
         </ul>
 <span id="name-example-illustrating-candid"></span><div id="example_2">
-<figure id="figure-4">
+<figure id="figure-5">
           <div class="lang-json sourcecode" id="appendix-E.2-3.1">
 <pre>
 {
@@ -4918,11 +4975,11 @@ packets.  The following ACEs are defined (in this order):<a href="#appendix-E.2-
 }
 </pre>
 </div>
-<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
+<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
 <a href="#name-example-illustrating-candid" class="selfRef">Example Illustrating Candidate Filtering of IPv4 Fragmented Packets (Message Body)</a>
           </figcaption></figure>
 </div>
-<p id="appendix-E.2-4"><a href="#example_3" class="auto internal xref">Figure 5</a> shows an example of the body of a POST request to allow the traffic destined to 2001:db8::/32 and UDP port number 53, but to drop all fragmented packets. The following ACEs are defined (in this order):<a href="#appendix-E.2-4" class="pilcrow">¶</a></p>
+<p id="appendix-E.2-4"><a href="#example_3" class="auto internal xref">Figure 6</a> shows an example of the body of a POST request to allow the traffic destined to 2001:db8::/32 and UDP port number 53, but to drop all fragmented packets. The following ACEs are defined (in this order):<a href="#appendix-E.2-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-E.2-5.1">
             <p id="appendix-E.2-5.1.1">"drop-all-fragments" ACE: discards all fragments (including atomic fragments). That is, IPv6 packets that include a Fragment header (44) are dropped.<a href="#appendix-E.2-5.1.1" class="pilcrow">¶</a></p>
@@ -4932,7 +4989,7 @@ packets.  The following ACEs are defined (in this order):<a href="#appendix-E.2-
 </li>
         </ul>
 <span id="name-an-example-illustrating-fil"></span><div id="example_3">
-<figure id="figure-5">
+<figure id="figure-6">
           <div class="lang-json sourcecode" id="appendix-E.2-6.1">
 <pre>
 {
@@ -4982,20 +5039,20 @@ packets.  The following ACEs are defined (in this order):<a href="#appendix-E.2-
 }
 </pre>
 </div>
-<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
+<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
 <a href="#name-an-example-illustrating-fil" class="selfRef">An Example Illustrating Filtering of IPv6 Fragmented Packets (Message Body)</a>
           </figcaption></figure>
 </div>
 </section>
 </div>
-<div id="vlan-filtering">
+<div id="vlan-filtering-1">
 <section id="appendix-E.3">
-        <h3 id="name-vlan-filtering">
-<a href="#appendix-E.3" class="section-number selfRef">E.3. </a><a href="#name-vlan-filtering" class="section-name selfRef">VLAN Filtering</a>
+        <h3 id="name-vlan-filtering-2">
+<a href="#appendix-E.3" class="section-number selfRef">E.3. </a><a href="#name-vlan-filtering-2" class="section-name selfRef">VLAN Filtering</a>
         </h3>
-<p id="appendix-E.3-1"><a href="#example_7" class="auto internal xref">Figure 6</a> shows an ACL example to illustrate how to apply a VLAN range filter.<a href="#appendix-E.3-1" class="pilcrow">¶</a></p>
+<p id="appendix-E.3-1"><a href="#example_7" class="auto internal xref">Figure 7</a> shows an ACL example to illustrate how to apply a VLAN range filter.<a href="#appendix-E.3-1" class="pilcrow">¶</a></p>
 <span id="name-example-of-vlan-filter-mess"></span><div id="example_7">
-<figure id="figure-6">
+<figure id="figure-7">
           <div class="lang-json sourcecode" id="appendix-E.3-2.1">
 <pre>
 {
@@ -5025,7 +5082,7 @@ packets.  The following ACEs are defined (in this order):<a href="#appendix-E.2-
 }
 </pre>
 </div>
-<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
+<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
 <a href="#name-example-of-vlan-filter-mess" class="selfRef">Example of VLAN Filter (Message Body)</a>
           </figcaption></figure>
 </div>
@@ -5036,9 +5093,9 @@ packets.  The following ACEs are defined (in this order):<a href="#appendix-E.2-
         <h3 id="name-isid-filtering">
 <a href="#appendix-E.4" class="section-number selfRef">E.4. </a><a href="#name-isid-filtering" class="section-name selfRef">ISID Filtering</a>
         </h3>
-<p id="appendix-E.4-1"><a href="#example_6" class="auto internal xref">Figure 7</a> shows an ACL example to illustrate the ISID range filtering.<a href="#appendix-E.4-1" class="pilcrow">¶</a></p>
+<p id="appendix-E.4-1"><a href="#example_6" class="auto internal xref">Figure 8</a> shows an ACL example to illustrate the ISID range filtering.<a href="#appendix-E.4-1" class="pilcrow">¶</a></p>
 <span id="name-example-isid-filter-message"></span><div id="example_6">
-<figure id="figure-7">
+<figure id="figure-8">
           <div class="lang-json sourcecode" id="appendix-E.4-2.1">
 <pre>
 {
@@ -5068,7 +5125,7 @@ packets.  The following ACEs are defined (in this order):<a href="#appendix-E.2-
 }
 </pre>
 </div>
-<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
+<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
 <a href="#name-example-isid-filter-message" class="selfRef">Example ISID Filter (Message Body)</a>
           </figcaption></figure>
 </div>
@@ -5079,9 +5136,9 @@ packets.  The following ACEs are defined (in this order):<a href="#appendix-E.2-
         <h3 id="name-rate-limit">
 <a href="#appendix-E.5" class="section-number selfRef">E.5. </a><a href="#name-rate-limit" class="section-name selfRef">Rate-Limit</a>
         </h3>
-<p id="appendix-E.5-1"><a href="#example_5" class="auto internal xref">Figure 8</a> shows an ACL example to rate-limit incoming SYNs during a SYN flood attack.<a href="#appendix-E.5-1" class="pilcrow">¶</a></p>
+<p id="appendix-E.5-1"><a href="#example_5" class="auto internal xref">Figure 9</a> shows an ACL example to rate-limit incoming SYNs during a SYN flood attack.<a href="#appendix-E.5-1" class="pilcrow">¶</a></p>
 <span id="name-an-example-of-rate-limit-in"></span><div id="example_5">
-<figure id="figure-8">
+<figure id="figure-9">
           <div class="lang-json sourcecode" id="appendix-E.5-2.1">
 <pre>
 {
@@ -5114,7 +5171,7 @@ packets.  The following ACEs are defined (in this order):<a href="#appendix-E.2-
 }
 </pre>
 </div>
-<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
+<figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
 <a href="#name-an-example-of-rate-limit-in" class="selfRef">An Example of Rate-Limit Incoming TCP SYNs (Message Body).</a>
           </figcaption></figure>
 </div>
