@@ -2659,7 +2659,7 @@ grouping mpls-match-parameters-config {
   }
 
   augment "/acl:acls/acl:acl/acl:aces"
-        + "/acl:ace/acl:matches/acl:l4/acl:tcp" {
+        + "/acl:ace/acl:matches/acl:l4/acl:tcp/acl:tcp" {
     description
       "Handles TCP flags and port sets.";
     container flags-bitmask {
@@ -2685,7 +2685,7 @@ grouping mpls-match-parameters-config {
   }
 
   augment "/acl:acls/acl:acl/acl:aces"
-        + "/acl:ace/acl:matches/acl:l4/acl:udp" {
+        + "/acl:ace/acl:matches/acl:l4/acl:udp/acl:udp" {
     description
       "Handle UDP port sets.";
     leaf source-udp-port-set {
@@ -2701,7 +2701,7 @@ grouping mpls-match-parameters-config {
   }
 
   augment "/acl:acls/acl:acl/acl:aces"
-        + "/acl:ace/acl:matches/acl:l4/acl:icmp" {
+        + "/acl:ace/acl:matches/acl:l4/acl:icmp/acl:icmp" {
     description
       "Handle ICMP type sets.";
     leaf icmpv4-set {
