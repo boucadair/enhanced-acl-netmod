@@ -78,9 +78,9 @@ Table of Contents
      3.4.  TCP Flags Handling
      3.5.  Fragments Handling
      3.6.  Payload-based Filtering
-     3.7.  Match MPLS Headers
-     3.8.  VLAN Filter
-     3.9.  ISID Filter
+     3.7.  Match on MPLS Headers
+     3.8.  VLAN Filtering
+     3.9.  Instance Service Identifier (I-SID) Filtering
      3.10. Additional Actions
    4.  Enhanced ACL YANG Module
    5.  Security Considerations
@@ -241,7 +241,7 @@ Table of Contents
 
 3.1.  Tree Structure
 
-   Figure 1 shows the full enhanced ACL tree:
+   Figure 1 shows the full tree of the enhanced ACL module (Section 4):
 
    module: ietf-acl-enh
      +--rw defined-sets
@@ -347,7 +347,59 @@ Table of Contents
        +---u acl-complementary-actions
        +--rw rate-limit?                  decimal64
 
-                        Figure 1: Enhanced ACL tree
+                   Figure 1: Enhanced ACL Tree Structure
+
+   Figure 2 shows the reusable groupings that are defined in the
+   enhanced ACL module:
+
+     grouping tcp-flags:
+       +-- (mode)?
+          +--:(explicit)
+          |  +-- operator?            operator
+          |  +-- explicit-tcp-flag*   identityref
+          +--:(builtin)
+             +-- bitmask?             uint16
+     grouping fragment-fields:
+       +-- operator?   operator
+       +-- type?       fragment-type
+     grouping mpls-match-parameters-config:
+       +-- traffic-class?       uint8
+       +-- label-position?      identityref
+       +-- upper-label-range?   rt-types:mpls-label
+       +-- lower-label-range?   rt-types:mpls-label
+       +-- label-block-name?    string
+       +-- ttl-value?           uint8
+     grouping payload:
+       +-- offset?       identityref
+       +-- offset-end?   uint64
+       +-- operator?     operator
+       +-- prefix?       binary
+     grouping alias:
+       +-- vlan*         uint16
+       +-- prefix*       inet:ip-prefix
+       +-- port-range* [lower-port]
+       |  +-- lower-port    inet:port-number
+       |  +-- upper-port?   inet:port-number
+       +-- protocol*     uint8
+       +-- fqdn*         inet:domain-name
+       +-- uri*          inet:uri
+     grouping icmpv4-header-fields:
+       +-- type?             iana-icmpv4-types:icmpv4-type
+       +-- code?             uint8
+       +-- rest-of-header?   binary
+     grouping icmpv6-header-fields:
+       +-- type?             iana-icmpv6-types:icmpv6-type
+       +-- code?             uint8
+       +-- rest-of-header?   binary
+     grouping acl-complementary-actions:
+       +-- log-action
+       |  +-- log-type?   identityref
+       |  +-- log-id?     string
+       +-- counter-action
+          +-- counter-type?   identityref
+          +-- counter-name*   string
+
+                      Figure 2: Enhanced ACL Groupings
 
 3.2.  Defined Sets
 
@@ -414,7 +466,7 @@ Table of Contents
    payload", is defined in the document.  This can be used, for example,
    for QUIC [RFC9000] or for tunneling protocols.
 
-3.7.  Match MPLS Headers
+3.7.  Match on MPLS Headers
 
    The enhanced ACL module can be used to create rules to match against
    MPLS fields of a packet.  The MPLS header defined in [RFC3032] and
@@ -443,7 +495,7 @@ Table of Contents
 
    *  "ttl-value"
 
-3.8.  VLAN Filter
+3.8.  VLAN Filtering
 
    Being able to filter all packets that are bridged within a VLAN or
    that are routed into or out of a bridge domain is part of the VPN
@@ -452,7 +504,7 @@ Table of Contents
    out of a VLAN can be captured, forwarded, translated, or discarded
    based on the network policy.
 
-3.9.  ISID Filter
+3.9.  Instance Service Identifier (I-SID) Filtering
 
    Provider backbone bridging (PBB) was originally defined as Virtual
    Bridged Local Area Networks [IEEE-802-1ah] standard.  However,
@@ -475,8 +527,8 @@ Table of Contents
    In order to support rate-limiting (see Appendix D.6), a new action
    called "rate-limit" is defined.  Also, the model supports new actions
    to complement existing ones: Log ('log-action') and write a counter
-   ('counter-action').  The current version of the module supports only
-   local actions.
+   ('counter-action').  The version of the module defined in this
+   document supports only local actions.
 
 4.  Enhanced ACL YANG Module
 
@@ -3149,7 +3201,7 @@ D.1.  Suboptimal Configuration: Lack of Support for Lists of Prefixes
    [RFC9132]).  The situation is even worse when both a list of sources
    and destination prefixes are involved in the filtering.
 
-   Figure 2 shows an example of the required ACL configuration for
+   Figure 3 shows an example of the required ACL configuration for
    filtering traffic from two prefixes.
 
    {
@@ -3227,7 +3279,7 @@ D.1.  Suboptimal Configuration: Lack of Support for Lists of Prefixes
      }
    }
 
-      Figure 2: Example Illustrating Sub-optimal Use of the ACL Model
+      Figure 3: Example Illustrating Sub-optimal Use of the ACL Model
                      with a Prefix List (Message Body)
 
    Such a configuration is suboptimal for both:
@@ -3353,7 +3405,7 @@ Appendix E.  Examples
    This section provides a few examples to illustrate the use of the
    enhanced ACL module.
 
-   Figure 3 shows an example of a request to install a filter to discard
+   Figure 4 shows an example of a request to install a filter to discard
    incoming TCP messages having all flags unset.
 
 E.1.  TCP Flags Handling
@@ -3386,12 +3438,12 @@ E.1.  TCP Flags Handling
       }
    }
 
-        Figure 3: Example of an ACL to Deny TCP Null Attack Messages
+        Figure 4: Example of an ACL to Deny TCP Null Attack Messages
                                (Request Body)
 
 E.2.  Fragments Handling
 
-   Figure 4 shows the content of a POST request to allow the traffic
+   Figure 5 shows the content of a POST request to allow the traffic
    destined to 198.51.100.0/24 and UDP port number 53, but to drop all
    fragmented packets.  The following ACEs are defined (in this order):
 
@@ -3446,10 +3498,10 @@ E.2.  Fragments Handling
       }
    }
 
-         Figure 4: Example Illustrating Candidate Filtering of IPv4
+         Figure 5: Example Illustrating Candidate Filtering of IPv4
                      Fragmented Packets (Message Body)
 
-   Figure 5 shows an example of the body of a POST request to allow the
+   Figure 6 shows an example of the body of a POST request to allow the
    traffic destined to 2001:db8::/32 and UDP port number 53, but to drop
    all fragmented packets.  The following ACEs are defined (in this
    order):
@@ -3507,12 +3559,12 @@ E.2.  Fragments Handling
       }
    }
 
-       Figure 5: An Example Illustrating Filtering of IPv6 Fragmented
+       Figure 6: An Example Illustrating Filtering of IPv6 Fragmented
                            Packets (Message Body)
 
 E.3.  VLAN Filtering
 
-   Figure 6 shows an ACL example to illustrate how to apply a VLAN range
+   Figure 7 shows an ACL example to illustrate how to apply a VLAN range
    filter.
 
    {
@@ -3541,11 +3593,11 @@ E.3.  VLAN Filtering
       }
    }
 
-              Figure 6: Example of VLAN Filter (Message Body)
+              Figure 7: Example of VLAN Filter (Message Body)
 
 E.4.  ISID Filtering
 
-   Figure 7 shows an ACL example to illustrate the ISID range filtering.
+   Figure 8 shows an ACL example to illustrate the ISID range filtering.
 
    {
       "ietf-acces-control-list:acls":{
@@ -3573,11 +3625,11 @@ E.4.  ISID Filtering
       }
    }
 
-                Figure 7: Example ISID Filter (Message Body)
+                Figure 8: Example ISID Filter (Message Body)
 
 E.5.  Rate-Limit
 
-   Figure 8 shows an ACL example to rate-limit incoming SYNs during a
+   Figure 9 shows an ACL example to rate-limit incoming SYNs during a
    SYN flood attack.
 
    {
@@ -3609,7 +3661,7 @@ E.5.  Rate-Limit
       }
    }
 
-    Figure 8: An Example of Rate-Limit Incoming TCP SYNs (Message Body).
+    Figure 9: An Example of Rate-Limit Incoming TCP SYNs (Message Body).
 
 Acknowledgements
 
