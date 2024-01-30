@@ -1418,7 +1418,7 @@ module: ietf-acl-enh
        description
          "Handles TCP flags and port sets.";
        container flags-bitmask {
-         must "not(./acl:flags)" {
+         must "not(../acl:flags)" {
            error-message
              "Either flags or flags-bitmask should be provided, but not
               both.";
